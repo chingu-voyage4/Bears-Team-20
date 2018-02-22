@@ -6,6 +6,15 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "dependencies": {
+    "cookie-parser": "*",
+    "dotenv": "*",
+    "express": "^4.16.2",
+    "jsonwebtoken": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-google": "*"
+  },
   "author": "",
   "license": "ISC"
 }
