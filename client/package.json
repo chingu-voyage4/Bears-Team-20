@@ -4,12 +4,12 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "bulma": "^0.6.2",
-    "font-awesome": "^4.7.0",
+    "material-ui": "^1.0.0-beta.34",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "typeface-roboto": "^0.0.54"
   },
   "scripts": {
     "start": "react-scripts start",

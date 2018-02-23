@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { TextField, Button, Typography } from 'material-ui';
+import "./Login.css";
 
 
 export default class Login extends Component {
@@ -32,46 +34,39 @@ export default class Login extends Component {
     }
 
     render() {
-        return <div className="columns">
-            <div className="column is-4 is-offset-4">
-                <div className="field">
-                    <p className="control has-icons-left has-icons-right">
-                        <input className="input" 
-                        name="email" 
-                        type="email" 
-                        placeholder="Email" 
-                        value={this.state.email}
-                        onChange={this.handleInputChange}
-                        />
-                        <span className="icon is-small is-left">
-                        <i className="fa fa-envelope"></i>
-                        </span>
-                        <span className="icon is-small is-right">
-                        <i className="fa fa-check"></i>
-                        </span>
-                    </p>
-                    </div>
-                    <div className="field">
-                    <p className="control has-icons-left">
-                        <input className="input" 
-                        name="password" 
-                        type="password" 
-                        placeholder="Password" 
-                        value={this.state.password}
-                        onChange={this.handleInputChange}
-                        />
-                        <span className="icon is-small is-left">
-                        <i className="fa fa-lock"></i>
-                        </span>
-                    </p>
-                    </div>
-                    <div className="field">
-                    <p className="control">
-                        <button className="button is-success" onClick={this.handleLoginClick}>
-                        Login
-                        </button>
-                    </p>
-                </div>
+
+        return <div id="login-container">
+            <div id="login-form-container">
+                <Typography align="center" id="login-logo">
+                    App logo here
+                </Typography>
+
+                <TextField className="login-form-field" id="login-textfield-email" type="email" name="email"
+                autoFocus={true}
+                value={this.state.email}
+                onChange={this.handleInputChange}
+                placeholder="Email"
+                InputLabelProps={{
+                    required: true
+                }}
+                />
+
+                <TextField className="login-form-field" id="login-textfield-password" type="password" name="password"
+                value={this.state.password}
+                onChange={this.handleInputChange}
+                placeholder="Password"
+                InputLabelProps={{
+                    required: true
+                }}
+                />
+
+                <Button className="login-form-field" id="login-button"
+                color="primary"
+                onClick={this.handleLoginClick}
+                >
+                Login
+                </Button>
+                
             </div>
         </div>
     }
