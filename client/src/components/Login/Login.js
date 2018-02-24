@@ -3,6 +3,8 @@ import { TextField, Button, Typography } from 'material-ui';
 import "./Login.css";
 
 
+
+
 export default class Login extends Component {
 
     constructor(props) {
@@ -30,7 +32,14 @@ export default class Login extends Component {
 
     handleLoginClick() {
         //HERE RUNS THE ACTION REQUIRED FOR LOGIN
-        console.log("Login CLICKED!!!");
+        const{ onSubmitLogin } = this.props;
+        const { email, password } = this.state;
+        console.log("Login CLICKED!!! Use the onSubmitLogin prop", onSubmitLogin );
+        if(!onSubmitLogin) return;
+        onSubmitLogin({
+            email,
+            password
+        })
     }
 
     render() {
