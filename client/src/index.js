@@ -1,8 +1,30 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import './index.css';
-import App from './App';
+import configureStore from './store/configureStore';
+
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import App from './App';
+
+
+// Initial state
+const initialState = {
+  auth: {
+    username: '',
+  },
+};
+
+
+const store = configureStore(initialState); // no param default to initial state
+
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);
+
 registerServiceWorker();
