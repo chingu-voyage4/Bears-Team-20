@@ -16,6 +16,7 @@ const App = () => (
 );
 
 // Maps the state or parts of it to props
+// Disabled linter next line because of the unused variable rule.
 // eslint-disable-next-line
 const mapStateToProps = state => ({
   // Write here the state properties you want to map to props
@@ -25,6 +26,7 @@ const mapStateToProps = state => ({
 
 
 // Maps dispatch(Actions) to props
+// Disabled linter next line because of the unused variable rule.
 // eslint-disable-next-line
 const mapDispatchToProps = dispatch => ({
   // Write here the dispatch(ACTION) you want to map to props
