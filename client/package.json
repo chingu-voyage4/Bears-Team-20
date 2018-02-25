@@ -9,7 +9,7 @@
     "react-scripts": "1.1.1"
   },
   "scripts": {
-    "lint": "node_modules/.bin/eslint src/*.js",
+    "lint": "node_modules/.bin/eslint src/*.js --quiet",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
