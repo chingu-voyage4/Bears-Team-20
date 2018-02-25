@@ -9,7 +9,8 @@
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.1",
     "redux": "^3.7.2",
-    "redux-thunk": "^2.2.0"
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^0.16.0"
   },
   "scripts": {
     "lint": "node_modules/.bin/eslint src/*.js --quiet",
