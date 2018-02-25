@@ -8,18 +8,14 @@
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run lint"
-    }
-  },
   "scripts": {
     "lint": "node_modules/.bin/eslint src/*.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "precommit": "npm run lint",
+    "prepush": "npm run lint"
   },
   "devDependencies": {
     "eslint": "^4.18.1",
@@ -27,6 +23,6 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "husky": "^0.15.0-rc.8"
+    "husky": "^0.14.3"
   }
 }
