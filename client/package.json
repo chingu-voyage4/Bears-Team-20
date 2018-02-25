@@ -8,7 +8,14 @@
     "react-dom": "^16.2.0",
     "react-scripts": "1.1.1"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
+    }
+  },
   "scripts": {
+    "lint": "node_modules/.bin/eslint src/*.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
