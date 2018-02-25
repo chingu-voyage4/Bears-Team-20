@@ -1,10 +1,30 @@
+import 'typeface-roboto/index.css';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
+import { Provider } from 'react-redux';
 import './index.css';
-import App from './App';
+import configureStore from './store/configureStore';
 import registerServiceWorker from './registerServiceWorker';
-import 'typeface-roboto';
+
+import App from './App';
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// Initial state
+const initialState = {
+  auth: {
+    username: '',
+  },
+};
+
+
+const store = configureStore(initialState); // no param default to initial state
+
+
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);
+
 registerServiceWorker();
