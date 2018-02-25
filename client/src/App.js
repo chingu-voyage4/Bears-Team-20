@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 
@@ -18,4 +19,23 @@ class App extends Component {
   }
 }
 
-export default App;
+
+const mapStateToProps = (state) => {
+	return {
+    // Write here the state properties you want to map to props
+    // For example:
+		// auth: state.auth,
+	}
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+    // Write here the dispatch(ACTION) you want to map to props
+    // For example: 
+    // login: (url, params) => dispatch(loginAction(url, params))
+	};
+};
+
+
+export default connect( mapStateToProps , mapDispatchToProps)(App);
