@@ -5,7 +5,7 @@ import "./Login.css";
 
 
 
-export default class Login extends Component {
+export class Login extends Component {
 
     constructor(props) {
         super(props);
@@ -34,7 +34,6 @@ export default class Login extends Component {
         //HERE RUNS THE ACTION REQUIRED FOR LOGIN
         const{ onSubmitLogin } = this.props;
         const { email, password } = this.state;
-        console.log("Login CLICKED!!! Use the onSubmitLogin prop", onSubmitLogin );
         if(!onSubmitLogin) return;
         onSubmitLogin({
             email,
