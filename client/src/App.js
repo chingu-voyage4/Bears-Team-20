@@ -3,7 +3,15 @@ import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 
-const App = () => (
+
+// non-default export of component required due to redux testing problem.
+// Problem: testing the default exported component fails due to undefined store
+// Solution: testing the actual component and not the Connect component exported(default)
+
+// Had to rename App to AppComponent cuz the linter didnt like to have the
+// default export called the same as an export.
+// It was either rename component or disable linter when using the default export
+export const AppComponent = () => (
   <div className="App">
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
@@ -35,4 +43,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
