@@ -4,7 +4,6 @@
 #
 version: 2
 jobs:
-  general:
   build:
     docker:
       # specify the version you desire here
@@ -36,4 +35,5 @@ jobs:
         
       # run tests!
       - run: cd client && yarn test
+
 
