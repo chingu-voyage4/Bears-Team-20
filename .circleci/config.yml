@@ -14,26 +14,26 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/repo
+    working_directory: ~/Bears-Team-20
 
     steps:
       - checkout
-      - run: cd client
 
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-{{ checksum "client/package.json" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run: cd client && yarn install
 
       - save_cache:
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - ~/Bears-Team-20/client/node_modules
+          key: v1-dependencies-{{ checksum "client/package.json" }}
         
       # run tests!
-      - run: yarn test
+      - run: cd client && yarn test
+
 
