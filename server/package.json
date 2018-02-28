@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "precommit": "npx xo",
+    "prepush": "npm xo",
     "start": "npx babel-node app.js",
     "dev": "  npx nodemon --watch 'app.js' --exec 'clear && babel-node app.js'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "xo"
   },
   "dependencies": {
     "cookie-parser": "*",
@@ -25,6 +27,8 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
-    "nodemon": "^1.17.1"
+    "husky": "^0.14.3",
+    "nodemon": "^1.17.1",
+    "xo": "^0.20.3"
   }
 }
