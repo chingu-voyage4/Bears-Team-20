@@ -1,7 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import logger from 'redux-logger';
-import createSagaMiddleware, { END } from 'redux-saga';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
+import rootSaga from "../sagas";
 
 
 // Redux devtools compose
@@ -13,14 +14,18 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default function configureStore(initialState) {
     const sagaMiddleware = createSagaMiddleware()
     
+    /* eslint-disable no-underscore-dangle */
     const store = createStore(
         rootReducer,
         initialState,
-        applyMiddleware(
-            sagaMiddleware,
-            logger
+        composeEnhancers(
+            applyMiddleware(
+                sagaMiddleware,
+                logger
+            )
         )
     );
+    /* eslint-enable */
     
     if (module.hot) {
         // Enable Webpack hot module replacement for reducers
@@ -29,7 +34,6 @@ export default function configureStore(initialState) {
             store.replaceReducer(nextRootReducer)
         })
     }
-    store.runSaga = sagaMiddleware.run
-    store.close = () => store.dispatch(END)
+    sagaMiddleware.run(rootSaga);
     return store
 }
