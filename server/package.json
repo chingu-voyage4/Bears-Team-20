@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "precommit": "npx xo",
+    "prepush": "npm xo",
+    "start": "npx babel-node app.js",
+    "dev": "  npx nodemon --watch 'app.js' --exec 'clear && babel-node app.js'",
+    "test": "xo"
   },
   "dependencies": {
     "cookie-parser": "*",
@@ -16,5 +20,15 @@
     "passport-google": "*"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "husky": "^0.14.3",
+    "nodemon": "^1.17.1",
+    "xo": "^0.20.3"
+  }
 }
