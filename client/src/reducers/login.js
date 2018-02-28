@@ -5,8 +5,6 @@ import {
 
 const initialState = {
     isFetching: false,
-    email: "",
-    password: "",
     pause: false,
     errors: {}
 };

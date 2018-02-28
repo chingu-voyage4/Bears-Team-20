@@ -21,7 +21,7 @@ export default function configureStore(initialState) {
         composeEnhancers(
             applyMiddleware(
                 sagaMiddleware,
-                logger,
+                logger
             )
         )
     );

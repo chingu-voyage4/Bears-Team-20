@@ -6,6 +6,7 @@ import * as userActions from "../actions/user";
 
 
 function* login_process(action) {
+    console.log("LOGIN IN!!!", action);
     try {
         const payload = yield call(
             postLoginToAPI,
@@ -38,5 +39,5 @@ const postLoginToAPI = data => {
 };
 
 export function* watchLoginRequest() {
-    yield* takeEvery( loginActions.LOGIN_REQUEST, login_process );
+    yield takeEvery( loginActions.LOGIN_REQUEST, login_process );
 }

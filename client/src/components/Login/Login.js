@@ -48,11 +48,12 @@ export class LoginComponent extends Component {
                 <Typography align="center" id="login-logo">
                     App logo here
                 </Typography>
-
+                
                 <TextField className="login-form-field" id="login-textfield-email" type="email" name="email"
                 autoFocus={true}
                 value={this.state.email}
                 onChange={this.handleInputChange}
+                onKeyDown={ (e) => {if(e.keyCode===13) this.handleLoginClick();} } //Allow "Enter" to submit
                 placeholder="Email"
                 InputLabelProps={{
                     required: true
@@ -62,6 +63,7 @@ export class LoginComponent extends Component {
                 <TextField className="login-form-field" id="login-textfield-password" type="password" name="password"
                 value={this.state.password}
                 onChange={this.handleInputChange}
+                onKeyDown={ (e) => {if(e.keyCode===13) this.handleLoginClick();} } //Allow "Enter" to submit
                 placeholder="Password"
                 InputLabelProps={{
                     required: true

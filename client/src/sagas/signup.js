@@ -41,5 +41,5 @@ const postSignupToAPI = data => {
 };
 
 export function* watchSignupRequest() {
-    yield* takeEvery( signupActions.SIGNUP_REQUEST, signup_process );
+    yield takeEvery( signupActions.SIGNUP_REQUEST, signup_process );
 }
