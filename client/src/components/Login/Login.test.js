@@ -39,11 +39,6 @@ describe('Login Component', () => {
         const passwordInput = passwordInputList.first();
         expect(passwordInput.prop('name')).toEqual('password');
     });
-    
-    it('should called the onSubmit callback when login button is clicked', () => {
-        wrapper.find('#login-button').simulate('click');
-        expect(mockLoginCallback).toHaveBeenCalledTimes(1);
-    });
 
     it('should change the state parameter "email" after editing input' , () => {
         const emailInput = wrapper.find('#login-textfield-email');
