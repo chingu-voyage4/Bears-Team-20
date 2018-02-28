@@ -1,5 +1,4 @@
-import { takeEvery, delay } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 
 import * as loginActions from "../actions/login";
@@ -8,7 +7,6 @@ import * as userActions from "../actions/user";
 
 function* login_process(action) {
     try {
-
         const payload = yield call(
             postLoginToAPI,
             action.loginData
@@ -25,12 +23,12 @@ function* login_process(action) {
         }
     } catch (e) {
         console.log("login error", e);
+        yield put(loginActions.loginFailed(e.message));
     }
 }
 
 
 const postLoginToAPI = data => {
-
     let bodydata = JSON.stringify({
         email: data.email,
         password: data.password

@@ -1,10 +1,10 @@
-import { fork } from "redux-saga/effects";
+import { fork, all } from "redux-saga/effects";
 import { watchLoginRequest } from "./login";
 import { watchSignupRequest } from "./signup";
 
 export default function* Root() {
-    yield [
+    yield all([
         fork(watchLoginRequest),
         fork(watchSignupRequest)
-    ];
+    ]);
 }

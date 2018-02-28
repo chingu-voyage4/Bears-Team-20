@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
 import { TextField, Button, Typography } from 'material-ui';
+import * as actions from "../../actions/login";
 import "./Login.css";
 
 
 
 
-export class Login extends Component {
+export class LoginComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -31,11 +33,9 @@ export class Login extends Component {
     }
 
     handleLoginClick() {
-        //HERE RUNS THE ACTION REQUIRED FOR LOGIN
-        const{ onSubmitLogin } = this.props;
+        const{ loginRequest } = this.props;
         const { email, password } = this.state;
-        if(!onSubmitLogin) return;
-        onSubmitLogin({
+        loginRequest({
             email,
             password
         })
@@ -69,6 +69,7 @@ export class Login extends Component {
                 />
 
                 <Button className="login-form-field" id="login-button"
+                disabled={this.props.isFetching}
                 color="primary"
                 onClick={this.handleLoginClick}
                 >
@@ -79,3 +80,37 @@ export class Login extends Component {
         </div>
     }
 }
+
+const mapStateToProps = ({ login }) => ({
+    errors: login.errors,
+    isFetching: login.isFetching,
+    pause: login.pause
+});
+
+
+const mapDispatchToProps = dispatch => ({
+    //inputChange: (change) => dispatch(actions.loginInputChange(change)),
+    loginRequest: (loginData) => {
+        // Front Validation
+        let newErrors = {};
+        let hasErrors = false;
+        let { email, password } = loginData;
+        if ( !email || email.length < 2) {
+            newErrors.email = "min 2";
+            hasErrors = true;
+        }
+        if ( !password || password.length < 2) {
+            newErrors.password = "min 2";
+            hasErrors = true;
+        }
+        if ( !hasErrors ){
+            dispatch(actions.loginRequest(loginData));
+        } else {
+            dispatch(actions.loginFailed(newErrors));
+        }
+    }
+});
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);

@@ -1,5 +1,4 @@
-import { takeEvery, delay } from "redux-saga";
-import { call, put, select } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import axios from "axios";
 
 import * as signupActions from "../actions/signup";
@@ -26,6 +25,7 @@ function* signup_process(action) {
 
     } catch (e) {
         console.log(e);
+        yield put(signupActions.signupFailed(e.message));
     }
 }
 

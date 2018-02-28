@@ -8,12 +8,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 import App from './App';
 
-
 // Initial state
 const initialState = {
-  auth: {
-    username: '',
-  },
 };
 
 
