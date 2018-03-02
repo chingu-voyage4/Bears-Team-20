@@ -13,7 +13,7 @@
     "redux-saga": "^0.16.0"
   },
   "scripts": {
-    "lint": "node_modules/.bin/eslint src/*.js --quiet",
+    "lint": "node_modules/.bin/eslint src --quiet",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
