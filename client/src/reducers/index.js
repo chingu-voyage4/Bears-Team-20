@@ -3,9 +3,9 @@ import { combineReducers } from 'redux';
 
 // Uses combineReducers to combine all the reducers
 const appReducer = combineReducers({
-    //Add here the different reducers
-    // For example
-    // auth,
+  // Add here the different reducers
+  // For example
+  // auth,
 });
 
 

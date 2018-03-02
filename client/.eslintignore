@@ -1,2 +1,2 @@
-App.test.js
+*.test.js
 registerServiceWorker.js
