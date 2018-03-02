@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "material-ui": "^1.0.0-beta.34",
+    "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.7",
@@ -15,7 +16,7 @@
     "typeface-roboto": "^0.0.54"
   },
   "scripts": {
-    "lint": "node_modules/.bin/eslint src/*.js --quiet",
+    "lint": "node_modules/.bin/eslint src --quiet",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
