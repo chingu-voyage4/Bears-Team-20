@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-import express from 'express';
-
-const app = express();
-
-const port = process.env.PORT || 3009;
-
-app.listeppv
-
-export default app;
-=======
 const express = require('express');
 const dotenv = require('dotenv');
 const webtoken = require('jsonwebtoken');
