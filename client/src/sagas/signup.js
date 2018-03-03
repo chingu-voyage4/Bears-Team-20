@@ -25,7 +25,9 @@ function* signup_process(action) {
 
     } catch (e) {
         console.log(e);
-        yield put(signupActions.signupFailed(e.message));
+        yield put(signupActions.signupFailed({
+            request: e.message
+        }));
     }
 }
 

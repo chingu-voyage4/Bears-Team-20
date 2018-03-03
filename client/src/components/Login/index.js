@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 import { TextField, Button, Typography } from 'material-ui';
 import * as actions from "../../actions/login";
 import "./Login.css";
@@ -82,6 +83,15 @@ export class LoginComponent extends Component {
         </div>
     }
 }
+
+LoginComponent.propTypes = {
+    isFetching: PropTypes.bool,
+    errors: PropTypes.object,
+    loginRequest: PropTypes.func,
+    inputChange: PropTypes.func,
+    email: PropTypes.string,
+    password: PropTypes.string
+};
 
 const mapStateToProps = ({ login }) => ({
     errors: login.errors,

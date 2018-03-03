@@ -23,7 +23,9 @@ function* login_process(action) {
         }
     } catch (e) {
         console.log("login error", e);
-        yield put(loginActions.loginFailed(e.message));
+        yield put(loginActions.loginFailed({
+            request: e.message
+        }));
     }
 }
 
