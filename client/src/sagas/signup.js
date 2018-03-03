@@ -30,13 +30,12 @@ function* signup_process(action) {
 }
 
 const postSignupToAPI = data => {
-
-    let bodydata = JSON.stringify({
+    
+    return axios.post("/api/signup", {
+        username: data.username,
         email: data.email,
         password: data.password
     });
-
-    return axios.post("/api/signup", bodydata);
 
 };
 

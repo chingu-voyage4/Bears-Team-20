@@ -6,7 +6,6 @@ import * as userActions from "../actions/user";
 
 
 function* login_process(action) {
-    console.log("LOGIN IN!!!", action);
     try {
         const payload = yield call(
             postLoginToAPI,
@@ -30,12 +29,11 @@ function* login_process(action) {
 
 
 const postLoginToAPI = data => {
-    let bodydata = JSON.stringify({
+
+    return axios.post("/api/login", {
         email: data.email,
         password: data.password
     });
-
-    return axios.post("/api/login", bodydata);
 };
 
 export function* watchLoginRequest() {

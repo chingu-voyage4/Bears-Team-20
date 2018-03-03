@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 import { TextField, Button, Typography } from 'material-ui';
 import * as actions from "../../actions/signup";
 import "./Signup.css";
@@ -7,12 +8,13 @@ import "./Signup.css";
 
 
 
-export class LoginComponent extends Component {
+export class SignupComponent extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            username: "",
             email: "",
             password: ""
         }
@@ -33,9 +35,10 @@ export class LoginComponent extends Component {
     }
 
     handleLoginClick() {
-        const{ loginRequest } = this.props;
-        const { email, password } = this.state;
-        loginRequest({
+        const{ signupRequest } = this.props;
+        const { email, password, username } = this.state;
+        signupRequest({
+            username,
             email,
             password
         })
@@ -43,13 +46,24 @@ export class LoginComponent extends Component {
 
     render() {
 
-        return <div id="login-container">
-            <div id="login-form-container">
-                <Typography align="center" id="login-logo">
+        return <div id="signup-container">
+            <div id="signup-form-container">
+                <Typography align="center" id="signup-logo">
                     App logo here
                 </Typography>
+
+                <TextField className="signup-form-field" id="signup-textfield-username" type="username" name="username"
+                autoFocus={true}
+                value={this.state.username}
+                onChange={this.handleInputChange}
+                onKeyDown={ (e) => {if(e.keyCode===13) this.handleLoginClick();} } //Allow "Enter" to submit
+                placeholder="Username"
+                InputLabelProps={{
+                    required: true
+                }}
+                />
                 
-                <TextField className="login-form-field" id="login-textfield-email" type="email" name="email"
+                <TextField className="signup-form-field" id="signup-textfield-email" type="email" name="email"
                 autoFocus={true}
                 value={this.state.email}
                 onChange={this.handleInputChange}
@@ -60,7 +74,7 @@ export class LoginComponent extends Component {
                 }}
                 />
 
-                <TextField className="login-form-field" id="login-textfield-password" type="password" name="password"
+                <TextField className="signup-form-field" id="signup-textfield-password" type="password" name="password"
                 value={this.state.password}
                 onChange={this.handleInputChange}
                 onKeyDown={ (e) => {if(e.keyCode===13) this.handleLoginClick();} } //Allow "Enter" to submit
@@ -70,7 +84,7 @@ export class LoginComponent extends Component {
                 }}
                 />
 
-                <Button className="login-form-field" id="login-button"
+                <Button className="signup-form-field" id="signup-button"
                 disabled={this.props.isFetching}
                 color="primary"
                 onClick={this.handleLoginClick}
@@ -83,22 +97,33 @@ export class LoginComponent extends Component {
     }
 }
 
-const mapStateToProps = ({ login }) => ({
-    errors: login.errors,
-    isFetching: login.isFetching,
-    pause: login.pause
+
+SignupComponent.propTypes = {
+    isFetching: PropTypes.bool,
+    errors: PropTypes.object,
+    signupRequest: PropTypes.func,
+    email: PropTypes.string,
+    password: PropTypes.string,
+    username: PropTypes.string
+};
+
+const mapStateToProps = ({ signup }) => ({
+    errors: signup.errors,
+    isFetching: signup.isFetching
 });
 
-
 const mapDispatchToProps = dispatch => ({
-    //inputChange: (change) => dispatch(actions.loginInputChange(change)),
-    loginRequest: (signupData) => {
+    signupRequest: (signupData) => {
         // Front Validation
         let newErrors = {};
         let hasErrors = false;
-        let { email, password } = signupData;
+        let { email, password, username } = signupData;
         if ( !email || email.length < 2) {
             newErrors.email = "min 2";
+            hasErrors = true;
+        }
+        if ( !username || username.length < 2) {
+            newErrors.username = "min 2";
             hasErrors = true;
         }
         if ( !password || password.length < 2) {
@@ -115,4 +140,5 @@ const mapDispatchToProps = dispatch => ({
 
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(SignupComponent);
+
