@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, fork } from "redux-saga/effects";
 import axios from "axios";
 
 import * as loginActions from "../actions/login";
@@ -38,7 +38,8 @@ const postLoginToAPI = data => {
 };
 
 export function* watchLoginRequest() {
-    yield takeEvery(
+    yield fork(
+        takeEvery,
         loginActions.LOGIN_REQUEST,
         login_process
     );

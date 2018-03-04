@@ -5,10 +5,11 @@ import { takeEvery, fork } from 'redux-saga/effects';
 
 
 describe('Login saga stuff', () => {
+
     it('should trigger on LOGIN_REQUEST', () => {
-        const gen = watchLoginRequest();
-        expect( gen.next().value ).toEqual(
-            fork(login_process, actions.LOGIN_REQUEST )
+        const watchTask = watchLoginRequest();
+        expect( JSON.stringify(watchTask.next().value) ).toEqual(
+            JSON.stringify( takeEvery( actions.LOGIN_REQUEST, login_process ) )
         );
     })
 
@@ -20,4 +21,16 @@ describe('Login saga stuff', () => {
         const gen = login_process({ loginData });
         expect(gen.next().value.CALL.args).toEqual([loginData]);
     } )
+
+    it('should trigger user login action on success', () => {
+        
+    })
+
+    it('should trigger login failed action on fail', () => {
+        
+    })
+
+    it('should handle errors correctly', () => {
+
+    })
 })
