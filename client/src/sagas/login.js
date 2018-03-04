@@ -5,7 +5,7 @@ import * as loginActions from "../actions/login";
 import * as userActions from "../actions/user";
 
 
-function* login_process(action) {
+export function* login_process(action) {
     try {
         const payload = yield call(
             postLoginToAPI,
@@ -31,7 +31,6 @@ function* login_process(action) {
 
 
 const postLoginToAPI = data => {
-
     return axios.post("/api/login", {
         email: data.email,
         password: data.password
@@ -39,5 +38,8 @@ const postLoginToAPI = data => {
 };
 
 export function* watchLoginRequest() {
-    yield takeEvery( loginActions.LOGIN_REQUEST, login_process );
+    yield takeEvery(
+        loginActions.LOGIN_REQUEST,
+        login_process
+    );
 }
