@@ -1,11 +1,11 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery, fork } from "redux-saga/effects";
 import axios from "axios";
 
 import * as signupActions from "../actions/signup";
 import * as userActions from "../actions/user";
 
 
-function* signup_process(action) {
+export function* signup_process(action) {
     try {
         const payload = yield call(
             postSignupToAPI,
@@ -42,5 +42,9 @@ const postSignupToAPI = data => {
 };
 
 export function* watchSignupRequest() {
-    yield takeEvery( signupActions.SIGNUP_REQUEST, signup_process );
+    yield fork(
+        takeEvery,
+        signupActions.SIGNUP_REQUEST,
+        signup_process
+    );
 }
