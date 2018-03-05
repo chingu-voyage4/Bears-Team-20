@@ -1,4 +1,4 @@
-import { watchSignupRequest, signup_process } from './signup';
+import { watchSignupRequest, signupProcess } from './signup';
 import * as actions from '../actions/signup';
 import { takeEvery, fork } from 'redux-saga/effects';
 
@@ -9,7 +9,7 @@ describe('Signup saga stuff', () => {
     it('should trigger on SIGNUP_REQUEST', () => {
         const watchTask = watchSignupRequest();
         expect( JSON.stringify(watchTask.next().value) ).toEqual(
-            JSON.stringify( takeEvery( actions.SIGNUP_REQUEST, signup_process ) )
+            JSON.stringify( takeEvery( actions.SIGNUP_REQUEST, signupProcess ) )
         );
     })
 
@@ -19,7 +19,7 @@ describe('Signup saga stuff', () => {
             email: "test@email.com",
             password: "asd123"
         }
-        const gen = signup_process({ signupData });
+        const gen = signupProcess({ signupData });
         expect(gen.next().value.CALL.args).toEqual([signupData]);
     } )
 

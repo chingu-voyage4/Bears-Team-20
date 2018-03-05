@@ -1,29 +1,28 @@
 import {
-    SIGNUP_REQUEST,
-    SIGNUP_FAILED,
-} from "../actions/signup";
+  SIGNUP_REQUEST,
+  SIGNUP_FAILED,
+} from '../actions/signup';
 
 const initialState = {
-    isFetching: false,
-    pause: false,
-    errors: {}
+  isFetching: false,
+  pause: false,
+  errors: {},
 };
 
-export default (state=initialState, action={}) => {
-    switch (action.type) {
+export default (state = initialState, action = {}) => {
+  switch (action.type) {
+    case SIGNUP_REQUEST:
+      return { ...state, isFetching: true, errors: {} };
 
-        case SIGNUP_REQUEST:
-            return { ...state, isFetching: true, errors: {} };
+    case SIGNUP_FAILED:
+      return {
+        ...state,
+        isFetching: false,
+        errors: action.errors,
+        pause: true,
+      };
 
-        case SIGNUP_FAILED:
-            return {
-                ...state,
-                isFetching: false,
-                errors: action.errors,
-                pause: true
-            };
-
-        default: 
-            return state;
-    }
+    default:
+      return state;
+  }
 };
