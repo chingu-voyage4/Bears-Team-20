@@ -8,12 +8,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 import App from './App';
 
-// Initial state
-const initialState = {
-};
 
-
-const store = configureStore(initialState); // no param default to initial state
+const store = configureStore({}); // no param default to initial state
 
 
 render(
