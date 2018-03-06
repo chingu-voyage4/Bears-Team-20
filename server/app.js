@@ -22,7 +22,7 @@ app.listen(3000,()=>{
 });
 
 var localURL = "mongodb://localhost:127.0.0.1:27017/musichub";
-var mlabURL = "mongodb://cferreira:l0stplanet@ds245548.mlab.com:45548/musichub";
+var mlabURL = "mongodb://vitof:bear20@ds245548.mlab.com:45548/musichub";
 
 
 mongodb.connect(mlabURL,function(err,db){
