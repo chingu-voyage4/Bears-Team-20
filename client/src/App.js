@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import logo from './logo.svg';
+import Navbar from './components/Navbar';
 import './App.css';
 
 
@@ -13,6 +14,7 @@ import './App.css';
 // It was either rename component or disable linter when using the default export
 export const AppComponent = () => (
   <div className="App">
+    <Navbar />
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <h1 className="App-title">Welcome to React</h1>
