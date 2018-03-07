@@ -41,7 +41,7 @@ export class LoginComponent extends Component {
 
   render() {
     const { errors } = this.props;
-    if (Object.keys(errors).length) console.log(errors);
+    if (errors.length) console.log(errors);
 
     return (
       <div id="login-container">
@@ -102,13 +102,13 @@ export class LoginComponent extends Component {
 
 LoginComponent.propTypes = {
   isFetching: PropTypes.bool,
-  errors: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   loginRequest: PropTypes.func,
 };
 
 LoginComponent.defaultProps = {
   isFetching: false,
-  errors: {},
+  errors: [],
   loginRequest: () => {},
 };
 
@@ -123,18 +123,15 @@ const mapDispatchToProps = dispatch => ({
   // inputChange: (change) => dispatch(actions.loginInputChange(change)),
   loginRequest: (loginData) => {
     // Front Validation
-    const newErrors = {};
-    let hasErrors = false;
+    const newErrors = [];
     const { email, password } = loginData;
     if (!email || email.length < 2) {
-      newErrors.email = 'min 2';
-      hasErrors = true;
+      newErrors.push({ type: 'email', message: 'min 2' });
     }
     if (!password || password.length < 2) {
-      newErrors.password = 'min 2';
-      hasErrors = true;
+      newErrors.push({ type: 'password', message: 'min 2' });
     }
-    if (!hasErrors) {
+    if (!newErrors.length) {
       dispatch(actions.loginRequest(loginData));
     } else {
       dispatch(actions.loginFailed(newErrors));

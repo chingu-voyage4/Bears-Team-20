@@ -5,7 +5,7 @@ import * as actions from '../actions/login';
 const initialState = {
     isFetching: false,
     pause: false,
-    errors: {},
+    errors: [],
 };
   
 
@@ -14,12 +14,7 @@ describe('login reducer', () => {
     let state;
 
     beforeEach(() => {
-        state = {
-          isFetching: false,
-          pause: false,
-          errors: {},
-        };
-        
+        state = initialState;
     }) 
 
     it('should return the same state if invalid action type', () => {
@@ -34,9 +29,12 @@ describe('login reducer', () => {
     })
 
     it('should set errors and pause on LOGIN_FAILED', () => {
-        const errors = {
-            a: "asd", b: 3, c: 312.3
-        }
+        const errors = [
+            {
+                type: "my error type",
+                message: "asdasdad"
+            }
+        ]
         expect(loginReducer(state, actions.loginFailed(errors))).toEqual({
             ...state,
             pause: true,

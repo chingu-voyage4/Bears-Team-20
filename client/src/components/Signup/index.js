@@ -43,7 +43,7 @@ export class SignupComponent extends Component {
 
   render() {
     const { errors } = this.props;
-    if (Object.keys(errors).length) console.log(errors);
+    if (errors.length) console.log(errors);
 
     return (
       <div id="signup-container">
@@ -123,13 +123,13 @@ export class SignupComponent extends Component {
 
 SignupComponent.propTypes = {
   isFetching: PropTypes.bool,
-  errors: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   signupRequest: PropTypes.func,
 };
 
 SignupComponent.defaultProps = {
   isFetching: false,
-  errors: {},
+  errors: [],
   signupRequest: () => {},
 };
 
@@ -141,22 +141,18 @@ const mapStateToProps = ({ signup }) => ({
 const mapDispatchToProps = dispatch => ({
   signupRequest: (signupData) => {
     // Front Validation
-    const newErrors = {};
-    let hasErrors = false;
+    const newErrors = [];
     const { email, password, username } = signupData;
     if (!email || email.length < 2) {
-      newErrors.email = 'min 2';
-      hasErrors = true;
+      newErrors.push({ type: 'email', message: 'min 2' });
     }
     if (!username || username.length < 2) {
-      newErrors.username = 'min 2';
-      hasErrors = true;
+      newErrors.push({ type: 'username', message: 'min 2' });
     }
     if (!password || password.length < 2) {
-      newErrors.password = 'min 2';
-      hasErrors = true;
+      newErrors.push({ type: 'password', message: 'min 2' });
     }
-    if (!hasErrors) {
+    if (!newErrors.length) {
       dispatch(actions.signupRequest(signupData));
     } else {
       dispatch(actions.signupFailed(newErrors));

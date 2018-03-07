@@ -15,9 +15,12 @@ describe('signup actions', ()=> {
     })
 
     it('should return the right type and payload on signupFailed', () => {
-        const errors = {
-            a:1, b: "asdasd", c: { d: ""}
-        }
+        const errors = [
+            {
+                type: "errorType", 
+                message: "asdasd"
+            }
+        ]
         expect(actions.signupFailed(errors)).toEqual({
             type: 'SIGNUP_FAILED',
             errors

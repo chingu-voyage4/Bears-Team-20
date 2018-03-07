@@ -13,12 +13,7 @@ describe('user reducer', () => {
     let state;
 
     beforeEach(() => {
-        state = {
-          isFetching: false,
-          pause: false,
-          errors: {},
-        };
-        
+        state = initialState;
     }) 
 
     it('should return the same state if invalid action type', () => {
