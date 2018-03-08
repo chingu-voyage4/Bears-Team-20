@@ -1,7 +1,7 @@
 import {
-  LOGIN_REQUEST,
-  LOGIN_FAILED,
-} from '../actions/login';
+  SIGNUP_REQUEST,
+  SIGNUP_FAILED,
+} from '../actions/signup';
 
 const initialState = {
   isFetching: false,
@@ -11,10 +11,10 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case LOGIN_REQUEST:
+    case SIGNUP_REQUEST:
       return { ...state, isFetching: true, errors: [] };
 
-    case LOGIN_FAILED:
+    case SIGNUP_FAILED:
       return {
         ...state,
         isFetching: false,
@@ -22,6 +22,7 @@ export default (state = initialState, action = {}) => {
         pause: true,
       };
 
-    default: return state;
+    default:
+      return state;
   }
 };
