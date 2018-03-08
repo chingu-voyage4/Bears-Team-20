@@ -12,10 +12,11 @@
   },
   "dependencies": {
     "cookie-parser": "*",
-    "dotenv": "*",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "jsonwebtoken": "*",
     "mongoose": "*",
+    "morgan": "^1.9.0",
     "passport": "*",
     "passport-google": "*"
   },
