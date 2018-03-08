@@ -1,7 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const webtoken = require('jsonwebtoken');
-const monoose = require('mongoose');
+const mongoose = require('mongoose');
 const passport = require('passport');
 const google = require('passport-google');
 const mongodb = require('mongodb').MongoClient();
@@ -21,6 +21,28 @@ app.listen(3000,()=>{
   console.log("Port listening");
 });
 
+
+
+var mlabURL = "mongodb://vitof:bear20@ds245548.mlab.com:45548/musichub";
+
+
+var User = mongoose.model("user", {
+  username: String,
+  password: String
+})
+
+
+
+mongoose.connect(mlabURL, () => {
+  console.log("DB is connected");
+})
+
+
+
+
+
+
+/*
 var localURL = "mongodb://localhost:127.0.0.1:27017/musichub";
 var mlabURL = "mongodb://vitof:bear20@ds245548.mlab.com:45548/musichub";
 
@@ -33,4 +55,4 @@ mongodb.connect(mlabURL,function(err,db){
       }
 
 });
-
+*/
