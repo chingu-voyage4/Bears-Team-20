@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "precommit": "npx xo",
-    "prepush": "npm xo",
+    "prepush": "npx xo",
     "start": "npx babel-node app.js",
     "dev": "  npx nodemon --watch 'app.js' --exec 'clear && babel-node app.js'",
     "test": "xo"
