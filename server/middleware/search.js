@@ -8,6 +8,18 @@ youTube.setKey(process.env.KEY_YOUTUBE);
  * Parameters:
  * 	-query: text to be searched
  * 	-maxResults: max qty of results
+ *
+ * Return: res.locals.searchResults[service]
+ *
+ * Return format:
+ * {
+ * 		title: String
+ * 		serviceSource: String
+ * 		link: String
+ * 		description: String || null
+ * 		thumbnail: String || null
+ * }
+ *
  */
 
 function mwYoutubeSearch(req, res, next) {
@@ -16,7 +28,7 @@ function mwYoutubeSearch(req, res, next) {
 		res.locals.searchResults = {};
 	}
 
-    youTube.search(query, maxResults || 10, (error, result) => {
+    youTube.search(query, maxResults || 10, {type: 'video'}, (error, result) => {
     	if (error) {
             console.log(error);
             res.locals.searchResults = {
@@ -26,7 +38,13 @@ function mwYoutubeSearch(req, res, next) {
     	} else {
     		res.locals.searchResults = {
     			...res.locals.searchResults,
-    			youtube: result.items
+    			youtube: result.items.map(e => ({
+    				title: e.snippet.title,
+    				serviceSource: 'youtube',
+    				link: 'https://www.youtube.com/watch?v=' + e.id.videoId,
+    				description: e.snippet.description,
+    				thumbnail: e.snippet.thumbnails.default.url
+    			}))
     		};
     	}
         next();
