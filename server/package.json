@@ -5,17 +5,18 @@
   "main": "index.js",
   "scripts": {
     "precommit": "npx xo",
-    "prepush": "npm xo",
+    "prepush": "npx xo",
     "start": "npx babel-node app.js",
     "dev": "  npx nodemon --watch 'app.js' --exec 'clear && babel-node app.js'",
     "test": "xo"
   },
   "dependencies": {
     "cookie-parser": "*",
-    "dotenv": "*",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
     "jsonwebtoken": "*",
     "mongoose": "*",
+    "morgan": "^1.9.0",
     "passport": "*",
     "passport-google": "*"
   },

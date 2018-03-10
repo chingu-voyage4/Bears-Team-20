@@ -16,7 +16,7 @@ describe('Login Component', () => {
     beforeEach(() => {
         // pass the mock function as the login prop 
         mockLoginCallback = jest.fn();
-        wrapper = Enzyme.shallow(<Login onSubmitLogin={mockLoginCallback}/>)
+        wrapper = Enzyme.shallow(<Login loginRequest={mockLoginCallback}/>)
     });
     
     it('renders without crashing', () => {
@@ -66,5 +66,10 @@ describe('Login Component', () => {
             }
         })
         expect(wrapper.state('password')).toEqual(testString);
+    })
+
+    it('should call the login callback after button click', () => {
+        wrapper.find('#login-button').simulate('click');
+        expect(mockLoginCallback).toHaveBeenCalledTimes(1);
     })
 });
