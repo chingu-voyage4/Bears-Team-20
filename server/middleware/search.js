@@ -10,7 +10,6 @@ youTube.setKey(process.env.KEY_YOUTUBE);
  * 	-maxResults: max qty of results
  */
 
-
 function mwYoutubeSearch(req, res, next) {
 	const {query, maxResults} = req.query;
 	if (!res.locals.searchResults) {
