@@ -8,7 +8,7 @@
     "prepush": "npx xo",
     "start": "npx babel-node app.js",
     "dev": "  npx nodemon --watch 'app.js' --exec 'clear && babel-node app.js'",
-    "test": "mocha './{,!(node_modules)/**}/*.test.js'"
+    "test": "mocha \"./{,!(node_modules)/**}/*.test.js\""
   },
   "dependencies": {
     "cookie-parser": "^1.4.3",

@@ -15,12 +15,12 @@ function mwYoutubeSearch(req, res, next) {
             console.log(error);
             res.locals.searchResults = {
     			...res.locals.searchResults,
-    			youtube: null
+    			youtube: []
     		};
     	} else {
     		res.locals.searchResults = {
     			...res.locals.searchResults,
-    			youtube: result
+    			youtube: result.items
     		};
     	}
         next();
