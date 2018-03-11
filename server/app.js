@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const authRoutes = require('./routes/auth');
+const searchRoutes = require('./routes/search');
 
 const app = express();
 
@@ -21,6 +22,7 @@ mongoose.connect(dbUrl)
 	});
 
 app.use('/auth', authRoutes);
+app.use('/api/search', searchRoutes);
 
 app.get('/', (req, res) => {
 	res.send('Port 3000');
