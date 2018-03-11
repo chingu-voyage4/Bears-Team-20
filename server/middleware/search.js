@@ -1,6 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 const YouTube = require('youtube-node');
 const SC = require('node-soundcloud');
+const each = require('async/each');
 
 /**
  * Parameters:
@@ -32,7 +33,7 @@ youTube.setKey(process.env.YOUTUBE_KEY);
 	accessToken: process.env.SOUNDCLOUD_TOKEN
 }); */
 
-function youtube(req, res, next) {
+function __youtube(req, res, next) {
 	const {query, maxResults} = req.query;
 	if (!res.locals.searchResults) {
 		res.locals.searchResults = {};
@@ -69,7 +70,7 @@ function youtube(req, res, next) {
  * @param {*} res
  * @param {*} next
  */
-function soundcloud(req, res, next) {
+function __soundcloud(req, res, next) {
 	const {query} = req.query;
 	if (!res.locals.searchResults) {
 		res.locals.searchResults = {};
@@ -85,7 +86,21 @@ function soundcloud(req, res, next) {
 		.catch(console.log);
 }
 
+/**
+ * Middleware that handles all the different services in parallel
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+function parallelSearch(req, res, next) {
+	const middlewares = [__youtube];
+	each(middlewares, (mw, cb) => {
+		mw(req, res, cb);
+	}, next);
+}
+
 module.exports = {
-	youtube,
-	soundcloud
+	parallelSearch,
+	__youtube,
+	__soundcloud
 };

@@ -11,6 +11,7 @@
     "test": "mocha \"./{,!(node_modules)/**}/*.test.js\""
   },
   "dependencies": {
+    "async": "^2.6.0",
     "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
