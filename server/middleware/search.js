@@ -1,8 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 const YouTube = require('youtube-node');
-
-const youTube = new YouTube();
-youTube.setKey(process.env.KEY_YOUTUBE);
+const SC = require('node-soundcloud');
 
 /**
  * Parameters:
@@ -22,7 +20,19 @@ youTube.setKey(process.env.KEY_YOUTUBE);
  *
  */
 
-function mwYoutubeSearch(req, res, next) {
+// Youtube initialization
+const youTube = new YouTube();
+youTube.setKey(process.env.YOUTUBE_KEY);
+
+// Soundcloud initialization
+/* SC.init({
+	id: process.env.SOUNDCLOUD_ID,
+	secret: process.env.SOUNDCLOUD_SECRET,
+	//uri: 'your SoundCloud redirect URI',
+	accessToken: process.env.SOUNDCLOUD_TOKEN
+}); */
+
+function youtube(req, res, next) {
 	const {query, maxResults} = req.query;
 	if (!res.locals.searchResults) {
 		res.locals.searchResults = {};
@@ -51,6 +61,31 @@ function mwYoutubeSearch(req, res, next) {
     });
 }
 
+/**
+ * DO NOT USE THIS MIDDLEWARE YET.
+ * Soundcloud is not giving API keys for the time being.
+ * Therefore soundcloud integration will be on hold until this is solved
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
+function soundcloud(req, res, next) {
+	const {query} = req.query;
+	if (!res.locals.searchResults) {
+		res.locals.searchResults = {};
+	}
+
+	SC.get('/tracks', {
+		q: query
+	})
+		.then(tracks => {
+		console.log(tracks);
+		next();
+		})
+		.catch(console.log);
+}
+
 module.exports = {
-	mwYoutubeSearch
+	youtube,
+	soundcloud
 };
