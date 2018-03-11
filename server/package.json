@@ -5,19 +5,21 @@
   "main": "index.js",
   "scripts": {
     "precommit": "npx xo",
-    "prepush": "npm xo",
+    "prepush": "npx xo",
     "start": "npx babel-node app.js",
     "dev": "  npx nodemon --watch 'app.js' --exec 'clear && babel-node app.js'",
-    "test": "xo"
+    "test": "mocha \"./{,!(node_modules)/**}/*.test.js\""
   },
   "dependencies": {
-    "cookie-parser": "*",
-    "dotenv": "*",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^5.0.1",
     "express": "^4.16.2",
-    "jsonwebtoken": "*",
-    "mongoose": "*",
-    "passport": "*",
-    "passport-google": "*"
+    "jsonwebtoken": "^8.2.0",
+    "mongoose": "^5.0.9",
+    "morgan": "^1.9.0",
+    "passport": "^0.4.0",
+    "passport-google": "^0.3.0",
+    "youtube-node": "^1.3.2"
   },
   "author": "",
   "license": "ISC",
@@ -27,8 +29,11 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
+    "chai": "^4.1.2",
     "husky": "^0.14.3",
+    "mocha": "^5.0.4",
     "nodemon": "^1.17.1",
+    "sinon": "^4.4.2",
     "xo": "^0.20.3"
   }
 }

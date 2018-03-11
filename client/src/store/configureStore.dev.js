@@ -12,6 +12,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export default function configureStore(initialState) {
   const sagaMiddleware = createSagaMiddleware();
 
+  /* eslint-disable no-underscore-dangle */
   const store = createStore(
     rootReducer,
     initialState,
@@ -20,10 +21,12 @@ export default function configureStore(initialState) {
       logger,
     )),
   );
+    /* eslint-enable */
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
+      /* eslint-disable global-require */
       const nextRootReducer = require('../reducers').default;
       store.replaceReducer(nextRootReducer);
     });

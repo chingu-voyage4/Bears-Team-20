@@ -1,20 +1,16 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
+import { call, put, takeEvery, fork } from 'redux-saga/effects';
 import axios from 'axios';
 
 import * as loginActions from '../actions/login';
 import * as userActions from '../actions/user';
 
 
-const postLoginToAPI = (data) => {
-  const bodydata = JSON.stringify({
-    email: data.email,
-    password: data.password,
-  });
+const postLoginToAPI = data => axios.post('/api/login', {
+  email: data.email,
+  password: data.password,
+});
 
-  return axios.post('/api/login', bodydata);
-};
-
-function* loginProcess(action) {
+export function* loginProcess(action) {
   try {
     const payload = yield call(
       postLoginToAPI,
@@ -31,10 +27,18 @@ function* loginProcess(action) {
       yield put(userActions.userLogin(payload.data.user));
     }
   } catch (e) {
-    yield put(loginActions.loginFailed(e.message));
+    console.log('login error', e);
+    yield put(loginActions.loginFailed({
+      request: e.message,
+    }));
   }
 }
 
-export default function* watchLoginRequest() {
-  yield takeEvery(loginActions.LOGIN_REQUEST, loginProcess);
+
+export function* watchLoginRequest() {
+  yield fork(
+    takeEvery,
+    loginActions.LOGIN_REQUEST,
+    loginProcess,
+  );
 }
