@@ -8,7 +8,7 @@ const each = require('async/each');
  * 	-query: text to be searched
  * 	-maxResults: max qty of results
  *
- * Return: res.locals.searchResults[service]
+ * Return: res.locals.searchResults => Array[ Objects ]
  *
  * Return format:
  * {
@@ -36,27 +36,23 @@ youTube.setKey(process.env.YOUTUBE_KEY);
 function __youtube(req, res, next) {
 	const {query, maxResults} = req.query;
 	if (!res.locals.searchResults) {
-		res.locals.searchResults = {};
+		res.locals.searchResults = [];
 	}
 
     youTube.search(query, maxResults || 10, {type: 'video'}, (error, result) => {
     	if (error) {
             console.log(error);
-            res.locals.searchResults = {
-    			...res.locals.searchResults,
-    			youtube: []
-    		};
     	} else {
-    		res.locals.searchResults = {
+    		res.locals.searchResults = [
     			...res.locals.searchResults,
-    			youtube: result.items.map(e => ({
+    			...result.items.map(e => ({
     				title: e.snippet.title,
     				serviceSource: 'youtube',
     				link: 'https://www.youtube.com/watch?v=' + e.id.videoId,
     				description: e.snippet.description,
     				thumbnail: e.snippet.thumbnails.default.url
     			}))
-    		};
+    		];
     	}
         next();
     });
@@ -73,7 +69,7 @@ function __youtube(req, res, next) {
 function __soundcloud(req, res, next) {
 	const {query} = req.query;
 	if (!res.locals.searchResults) {
-		res.locals.searchResults = {};
+		res.locals.searchResults = [];
 	}
 
 	SC.get('/tracks', {
