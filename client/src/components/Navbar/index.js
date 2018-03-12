@@ -1,15 +1,17 @@
 import React from 'react';
 
-import './css/index.css';
+import './Navbar.css';
 
 const Navbar = () => (
-  <ul>
-    <li>Home</li>
-    <li>Playlists</li>
-    <li className="logo">Logo</li>
-    <li>Login/Signout</li>
-    <li>Profile</li>
-  </ul>
+  <nav>
+    <h1 className="logo">Logo</h1>
+    <ul>
+      <li>Home</li>
+      <li>Playlists</li>
+      <li>Login/Signout</li>
+      <li>Profile</li>
+    </ul>
+  </nav>
 );
 
 export default Navbar;
