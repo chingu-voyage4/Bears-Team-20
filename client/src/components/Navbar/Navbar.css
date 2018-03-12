@@ -1,13 +1,22 @@
 nav {
-  color: white;
   background-color: #2196F3;
   padding: 20px;
   display: flex;
   flex-direction: row;
-  align-items: space-between;
+  justify-content: space-between;
+}
+
+h1, a {
+  text-decoration: none;
+  color: white;
+}
+
+h1 {
+  margin-left: 100px;
 }
 
 ul {
+  margin-right: 100px;
   list-style: none;
   display: flex;
   flex-direction: row;
