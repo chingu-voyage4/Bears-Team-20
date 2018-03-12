@@ -12,6 +12,7 @@ export class SearchComponent extends Component {
     super(props);
 
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSearch() {
@@ -30,8 +31,7 @@ export class SearchComponent extends Component {
     const {
       errors, input, isFetching, results,
     } = this.props;
-    if (errors.length) console.log(errors);
-    if (isFetching) console.log('IS FETCHING!');
+    if (errors.length) console.log('ERRORS', errors);
 
     return (
       <div id="search-container">
@@ -39,6 +39,8 @@ export class SearchComponent extends Component {
           <SearchInput
             value={input}
             onChange={this.handleSearchInputChange}
+            onEnter={this.handleSearch}
+            isFetching={isFetching}
           />
         </div>
         <div id="search-results-container">
@@ -80,7 +82,10 @@ const mapStateToProps = ({ search }) => ({
 
 const mapDispatchToProps = dispatch => ({
   inputChange: input => dispatch(actions.searchInputChange(input)),
-  search: input => dispatch(actions.searchRequest(input)),
+  search: (input) => {
+    if (!input.length) return;
+    dispatch(actions.searchRequest(input));
+  },
 });
 
 

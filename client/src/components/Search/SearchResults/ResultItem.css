@@ -1,0 +1,31 @@
+.result-item-card {
+    display: flex;
+}
+
+.result-item-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.result-item-content {
+    flex: 1 0 auto;
+}
+
+.result-item-cover {
+    display: flex;
+    flex-direction: column;
+}
+
+.result-item-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-item-controls > button { 
+}
+
+.result-item-play-icon {
+    height: 1.25em !important;
+    width: 1.25em !important;
+}

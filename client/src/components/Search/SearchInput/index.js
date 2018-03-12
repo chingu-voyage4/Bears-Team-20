@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 
 export default function SearchInput(props) {
-  const { value, onChange } = props;
+  const { value, onChange, onEnter } = props;
   return (
     <div id="search-container">
       <Input
@@ -12,6 +12,10 @@ export default function SearchInput(props) {
         fullWidth
         onChange={onChange}
         value={value}
+        onKeyDown={(e) => {
+          // Filter "Enter"
+          if (e.keyCode === 13) onEnter();
+        }}
       />
     </div>);
 }
@@ -20,10 +24,12 @@ export default function SearchInput(props) {
 SearchInput.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
+  onEnter: PropTypes.func,
 };
 
 SearchInput.defaultProps = {
   value: '',
   onChange: () => {},
+  onEnter: () => {},
 };
 

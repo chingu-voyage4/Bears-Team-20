@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ResultItem from './ResultItem';
 
 
 export default class SearchResults extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      results: props.results,
-    };
+    this.handleStuff = this.handleStuff.bind(this);
+  }
+
+  handleStuff() {
+    const { results } = this.props;
+    console.log(results);
   }
 
   render() {
-    const { results } = this.state;
+    const { results } = this.props;
     return (
       <div>
-        RESULTS!!
-        {results}
+        {results.map(result => <ResultItem key={result.title} result={result} />)}
       </div>);
   }
 }

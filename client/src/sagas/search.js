@@ -5,7 +5,9 @@ import * as searchActions from '../actions/search';
 
 
 const getResultsFromAPI = input => axios.get('/api/search', {
-  query: input,
+  params: {
+    query: input,
+  },
 });
 
 export function* searchProcess(action) {
@@ -19,7 +21,7 @@ export function* searchProcess(action) {
     if (payload.data.errors) {
       yield put(searchActions.searchFailed(payload.data.errors));
     } else {
-      yield put(searchActions.searchSuccess(payload));
+      yield put(searchActions.searchSuccess(payload.data));
     }
   } catch (e) {
     console.log('search error', e);
