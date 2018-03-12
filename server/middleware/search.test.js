@@ -5,7 +5,7 @@ const {expect} = require('chai');
 const sinon = require('sinon');
 const YouTube = require('youtube-node');
 const {
-	mwYoutubeSearch
+	__youtube
 } = require('./search');
 
 const youTube = new YouTube();
@@ -34,7 +34,7 @@ describe('youtube search middleware', () => {
     	youTubeStub = sinon.stub(youTube, 'search')
     		.yields(null, {statusCode: 200}, [{name: 'org-one'}, {name: 'org-two'}]);
     	consoleSpy = sinon.spy(console, 'log');
-        mwYoutubeSearch({body: {}}, {locals: {}}, mockNext);
+        __youtube({body: {}}, {locals: {}}, mockNext);
         expect(mockNext.called).to.equal(true);
         done();
     });
@@ -43,7 +43,7 @@ describe('youtube search middleware', () => {
     	youTubeStub = sinon.stub(youTube, 'search')
     		.yields(null, {statusCode: 500}, [{name: 'org-one'}]);
     	consoleSpy = sinon.spy(console, 'log');
-        mwYoutubeSearch({body: {}}, {locals: {}}, mockNext);
+        __youtube({body: {}}, {locals: {}}, mockNext);
         expect(mockNext.called).to.equal(true);
         done();
     });
@@ -52,13 +52,13 @@ describe('youtube search middleware', () => {
     	youTubeStub = sinon.stub(youTube, 'search')
     		.yields(null, {statusCode: 500}, [{name: 'org-one'}]);
     	consoleSpy = sinon.spy(console, 'log');
-        mwYoutubeSearch({body: {}}, {locals: {}}, mockNext);
+        __youtube({body: {}}, {locals: {}}, mockNext);
         expect(consoleSpy.called).to.equal(true);
         done();
     });
 
     it('should parse response correctly', done => {
-        mwYoutubeSearch({body: {}}, {locals: {}}, mockNext);
+        __youtube({body: {}}, {locals: {}}, mockNext);
         done();
     });
 });
