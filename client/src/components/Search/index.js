@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import debouce from 'debounce';
 import SearchInput from './SearchInput';
 import SearchResults from './SearchResults';
 import * as actions from '../../actions/search';
@@ -13,6 +14,7 @@ export class SearchComponent extends Component {
 
     this.handleSearchInputChange = this.handleSearchInputChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.debouncedSearch = debouce(this.debouncedSearch, 500);
   }
 
   handleSearch() {
@@ -20,12 +22,15 @@ export class SearchComponent extends Component {
     search(input);
   }
 
-
   handleSearchInputChange(e) {
     const { inputChange } = this.props;
     inputChange(e.target.value);
+    this.debouncedSearch();
   }
 
+  debouncedSearch() {
+    this.handleSearch();
+  }
 
   render() {
     const {
