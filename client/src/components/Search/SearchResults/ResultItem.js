@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, IconButton } from 'material-ui';
-import Card, { CardContent } from 'material-ui/Card';
 import { PlaylistAdd, PlayArrow } from 'material-ui-icons';
 import './ResultItem.css';
 
@@ -10,14 +9,18 @@ export default function ResultItem(props) {
   const { result } = props;
   return (
     <div>
-      <Card className="result-item-card">
+      <div className="result-item-card">
         <div className="result-item-details">
-          <CardContent className="result-item-content">
+          <div className="result-item-content">
             <Typography variant="headline">{result.title}</Typography>
-            <Typography variant="subheading" color="textSecondary">
-              {result.description || 'NO DESCR!!'}
+            <Typography variant="body1" color="textSecondary" >
+              {result.description.length > 75 ?
+              `${result.description.substr(0, 75)}...`
+              :
+              result.description
+              }
             </Typography>
-          </CardContent>
+          </div>
           <div className="result-item-controls">
             <IconButton aria-label="Add to playlist" color="primary">
               <PlaylistAdd />
@@ -27,13 +30,14 @@ export default function ResultItem(props) {
             </IconButton>
           </div>
         </div>
-        <img
-          className="result-item-cover"
-          src={result.thumbnail}
-          title={result.title}
-          alt={result.title}
-        />
-      </Card>
+        <div className="result-item-cover">
+          <img
+            src={result.thumbnail}
+            title={result.title}
+            alt={result.title}
+          />
+        </div>
+      </div>
     </div>
   );
 }

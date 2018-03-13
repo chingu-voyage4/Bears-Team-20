@@ -1,6 +1,22 @@
+/* eslint no-bitwise: ["error", { "allow": ["<<", "|="] }] */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ResultItem from './ResultItem';
+
+
+function generateKey(title, index) {
+  const pre = `${title}_${index}_${Date.now()}`;
+  let hash = 0;
+  let i;
+  let chr;
+  if (pre.length === 0) return hash;
+  for (i = 0; i < pre.length; i += 1) {
+    chr = pre.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
 
 
 export default class SearchResults extends Component {
@@ -20,7 +36,7 @@ export default class SearchResults extends Component {
 
     return (
       <div>
-        {results.map(result => <ResultItem key={result.title} result={result} />)}
+        {results.map((r, i) => <ResultItem key={generateKey(r.title, i)} result={r} />)}
       </div>);
   }
 }
