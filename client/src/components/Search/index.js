@@ -51,6 +51,7 @@ export class SearchComponent extends Component {
         <div id="search-results-container">
           <SearchResults
             results={results}
+            isFetching={isFetching}
           />
         </div>
 

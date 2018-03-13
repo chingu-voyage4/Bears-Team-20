@@ -11,12 +11,13 @@ export default class SearchResults extends Component {
   }
 
   handleStuff() {
-    const { results } = this.props;
-    console.log(results);
+    const { results, isFetching } = this.props;
+    console.log(results, isFetching);
   }
 
   render() {
     const { results } = this.props;
+
     return (
       <div>
         {results.map(result => <ResultItem key={result.title} result={result} />)}
@@ -27,9 +28,11 @@ export default class SearchResults extends Component {
 
 SearchResults.propTypes = {
   results: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  isFetching: PropTypes.bool,
 };
 
 SearchResults.defaultProps = {
   results: [],
+  isFetching: false,
 };
 

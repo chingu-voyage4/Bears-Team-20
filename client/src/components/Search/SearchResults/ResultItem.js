@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, IconButton } from 'material-ui';
 import Card, { CardContent } from 'material-ui/Card';
-import { SkipPrevious, PlayArrow, SkipNext } from 'material-ui-icons';
+import { PlaylistAdd, PlayArrow } from 'material-ui-icons';
 import './ResultItem.css';
 
 
@@ -19,14 +19,11 @@ export default function ResultItem(props) {
             </Typography>
           </CardContent>
           <div className="result-item-controls">
-            <IconButton aria-label="Previous" color="primary">
-              <SkipPrevious />
+            <IconButton aria-label="Add to playlist" color="primary">
+              <PlaylistAdd />
             </IconButton>
             <IconButton aria-label="Play/pause" color="primary">
               <PlayArrow className="result-item-play-icon" />
-            </IconButton>
-            <IconButton aria-label="Next" color="primary">
-              <SkipNext />
             </IconButton>
           </div>
         </div>
