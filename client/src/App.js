@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 
-import Search from './components/Search';
+// import Search from './components/Search';
 
 // non-default export of component required due to redux testing problem.
 // Problem: testing the default exported component fails due to undefined store
@@ -14,7 +14,7 @@ import Search from './components/Search';
 // It was either rename component or disable linter when using the default export
 export const AppComponent = () => (
   <div className="App">
-    <Search />
+    {/* <Search /> */}
     <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <h1 className="App-title">Welcome to React</h1>

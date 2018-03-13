@@ -25,7 +25,7 @@
     "lint": "node_modules/.bin/eslint src --quiet",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --env=jsdom --silent",
     "eject": "react-scripts eject",
     "precommit": "npm run lint",
     "prepush": "npm run lint"
