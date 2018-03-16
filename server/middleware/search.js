@@ -1,8 +1,9 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
+import axios from 'axios';
+
 const YouTube = require('youtube-node');
 const SC = require('node-soundcloud');
 const each = require('async/each');
-import axios from 'axios';
 
 /**
  * Parameters:
@@ -61,32 +62,29 @@ function __youtube(req, res, next) {
 
 async function __deezer(req, res, next) {
 	const DEEZER_URL = 'https://api.deezer.com/search/track?q=';
-	const { query, maxResults } = req.query;
+	const {query} = req.query;
 	if (!res.locals.searchResults) {
 		res.locals.searchResults = [];
 	}
 	try {
 		const response = await axios.get(`${DEEZER_URL}${query}&limit=10`);
-		const tracks = response.data
+		const tracks = response.data;
 		res.locals.searchResults = [
 			...res.locals.searchResults,
-            ...tracks.map(t => ({
+			...tracks.map(t => ({
 			  title: t.title,
 			  serviceSource: 'Deezer',
 			  link: t.link,
 			  description: t.artist.name,
-			  thumbnail: t.album.cover_small, 
-			})),
-		]
+			  thumbnail: t.album.cover_small
+			}))
+		];
 	} catch (err) {
 		console.error('err at __deezer call', err);
 	} finally {
 		next();
 	}
-
-
 }
-
 
 /**
  * DO NOT USE THIS MIDDLEWARE YET.
@@ -119,7 +117,7 @@ function __soundcloud(req, res, next) {
  * @param {*} next
  */
 function parallelSearch(req, res, next) {
-	const middlewares = [__youtube];
+	const middlewares = [__youtube, __deezer];
 	each(middlewares, (mw, cb) => {
 		mw(req, res, cb);
 	}, next);
@@ -128,5 +126,6 @@ function parallelSearch(req, res, next) {
 module.exports = {
 	parallelSearch,
 	__youtube,
-	__soundcloud
+	__soundcloud,
+	__deezer
 };
