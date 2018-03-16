@@ -2,6 +2,7 @@
 const YouTube = require('youtube-node');
 const SC = require('node-soundcloud');
 const each = require('async/each');
+import axios from 'axios';
 
 /**
  * Parameters:
@@ -47,7 +48,7 @@ function __youtube(req, res, next) {
     			...res.locals.searchResults,
     			...result.items.map(e => ({
     				title: e.snippet.title,
-    				serviceSource: 'youtube',
+    				serviceSource: 'Youtube',
     				link: 'https://www.youtube.com/watch?v=' + e.id.videoId,
     				description: e.snippet.description,
     				thumbnail: e.snippet.thumbnails.default.url
@@ -57,6 +58,35 @@ function __youtube(req, res, next) {
         next();
     });
 }
+
+async function __deezer(req, res, next) {
+	const DEEZER_URL = 'https://api.deezer.com/search/track?q=';
+	const { query, maxResults } = req.query;
+	if (!res.locals.searchResults) {
+		res.locals.searchResults = [];
+	}
+	try {
+		const response = await axios.get(`${DEEZER_URL}${query}&limit=10`);
+		const tracks = response.data
+		res.locals.searchResults = [
+			...res.locals.searchResults,
+            ...tracks.map(t => ({
+			  title: t.title,
+			  serviceSource: 'Deezer',
+			  link: t.link,
+			  description: t.artist.name,
+			  thumbnail: t.album.cover_small, 
+			})),
+		]
+	} catch (err) {
+		console.error('err at __deezer call', err);
+	} finally {
+		next();
+	}
+
+
+}
+
 
 /**
  * DO NOT USE THIS MIDDLEWARE YET.
