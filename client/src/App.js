@@ -39,7 +39,7 @@ export const AppComponent = () => (
           <Route path="/playlists" component={Playlist} />
           <Route path="/music" component={Music} />
           <Route path="/profile" component={Profile} />
-          <Route path="/landing" component={Landing} />
+          <Route path="/" exact component={Landing} />
         </Switch>
       </div>
     </React.Fragment>
