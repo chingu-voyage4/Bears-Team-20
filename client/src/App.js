@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 
 import Login from './components/Login';
 import Signup from './components/Signup';
-import LandingPage from './components/Landing';
+import Landing from './components/Landing';
 import Music from './components/Music';
 import Profile from './components/Profile';
 import Playlist from './components/Playlist';
@@ -34,12 +34,12 @@ export const AppComponent = () => (
       </p>
       <div>
         <Switch>
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/playlists" component={Playlist} />
-          <Route exact path="/music" component={Music} />
-          <Route exact path="/profile" component={Profile} />
-          <Route exact path="/landing" component={LandingPage} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/playlists" component={Playlist} />
+          <Route path="/music" component={Music} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/landing" component={Landing} />
         </Switch>
       </div>
     </React.Fragment>
@@ -66,4 +66,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppComponent));
