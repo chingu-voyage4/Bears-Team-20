@@ -1,5 +1,13 @@
 import React from 'react';
+import Player from '../Player';
 
-const Music = () => <h1>Music Search and Play!</h1>;
+function Music() {
+  return (
+    <div>
+      <h1>Music Search and Play!</h1>
+      <Player />
+    </div>
+  );
+}
 
 export default Music;
