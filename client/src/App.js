@@ -1,5 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Route, Switch, withRouter } from 'react-router-dom';
+
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Landing from './components/Landing';
+import Music from './components/Music';
+import Profile from './components/Profile';
+import Playlist from './components/Playlist';
+import Navbar from './components/Navbar';
+
 import logo from './logo.svg';
 import './App.css';
 
@@ -13,13 +23,26 @@ import './App.css';
 // It was either rename component or disable linter when using the default export
 export const AppComponent = () => (
   <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1 className="App-title">Welcome to React</h1>
-    </header>
-    <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-    </p>
+    <Navbar />
+    <React.Fragment>
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <h1 className="App-title">Welcome to React</h1>
+      </header>
+      <p className="App-intro">
+            To get started, edit <code>src/App.js</code> and save to reload.
+      </p>
+      <div>
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/playlists" component={Playlist} />
+          <Route path="/music" component={Music} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/" exact component={Landing} />
+        </Switch>
+      </div>
+    </React.Fragment>
   </div>
 );
 
@@ -43,4 +66,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppComponent));
