@@ -68,7 +68,7 @@ async function __deezer(req, res, next) {
 	}
 	try {
 		const response = await axios.get(`${DEEZER_URL}${query}&limit=10`);
-		const tracks = response.data;
+		const tracks = response.data.data;
 		res.locals.searchResults = [
 			...res.locals.searchResults,
 			...tracks.map(t => ({
