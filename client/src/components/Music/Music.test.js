@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { MemoryRouter } from 'react-router-dom';
-import { AppComponent as App } from './App';
+import Music from '.';
 
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<MemoryRouter>
-    <App />
-  </MemoryRouter>, div);
+  ReactDOM.render(<Music />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
