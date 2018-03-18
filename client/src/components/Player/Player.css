@@ -1,0 +1,43 @@
+#player-container {
+    display: flex;
+    min-height: 10vh;
+    flex-direction: column;
+    
+    border: 1px solid black;
+
+    padding: 0 2em;
+}
+
+.player-row-container {
+
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex: 1;
+
+    align-items: center;
+}
+
+#player-controls-volume {
+    display: flex;
+    flex-direction: row;
+    
+    min-width: 30vh;
+}
+
+#player-song-info {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+#player-volume-slider {
+    width: 100%;
+    display: flex;
+
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}

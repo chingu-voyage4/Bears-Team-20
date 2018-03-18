@@ -8,6 +8,9 @@ const initialState = {
   isMuted: false,
   currentSong: null,
   currentPlaylist: [],
+
+  duration: null,
+  progress: null, // eg { played: 0.12, playedSeconds: 11.3, loaded: 0.34, loadedSeconds: 16.7 }
 };
 
 
