@@ -10,10 +10,24 @@ import * as actions from '../../actions/player';
 import './Player.css';
 
 function PlayerComponent(props) {
+  function parseToHHMMSS(value) {
+    const secNum = parseInt(value, 10);
+    let hours = Math.floor(secNum / 3600);
+    let minutes = Math.floor((secNum - (hours * 3600)) / 60);
+    let seconds = secNum - (hours * 3600) - (minutes * 60);
+
+    if (hours < 10) { hours = `0${hours}`; }
+    if (minutes < 10) { minutes = `0${minutes}`; }
+    if (seconds < 10) { seconds = `0${seconds}`; }
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+
   const {
-    onPlay, isPlaying
-    , setVolume, volume,
+    onPlay, isPlaying,
+    setVolume, volume,
     toggleMute, isMuted,
+    setDuration, duration,
   } = props;
   return (
     <div id="player-container">
@@ -50,8 +64,14 @@ function PlayerComponent(props) {
         </div>
       </div>
 
+      {/* Progress bar, duration stuff */}
       <div className="player-row-container">
         <Slider min={0} max={100} value={volume * 100} onChange={setVolume} />
+        <div id="player-duration-label" >
+          <Typography noWrap>
+            {`${parseToHHMMSS(0)} / ${parseToHHMMSS(duration)}`}
+          </Typography>
+        </div>
       </div>
 
 
@@ -60,7 +80,8 @@ function PlayerComponent(props) {
         playing={isPlaying}
         volume={volume}
         muted={isMuted}
-        id="player-player"
+        onDuration={setDuration}
+        id="player-engine"
         width="0px"
         height="0px"
       />
@@ -73,24 +94,29 @@ PlayerComponent.propTypes = {
   onPlay: PropTypes.func,
   setVolume: PropTypes.func,
   toggleMute: PropTypes.func,
+  setDuration: PropTypes.func,
   isPlaying: PropTypes.bool,
   volume: PropTypes.number,
   isMuted: PropTypes.bool,
+  duration: PropTypes.number,
 };
 
 PlayerComponent.defaultProps = {
   onPlay: () => {},
   setVolume: () => {},
   toggleMute: () => {},
+  setDuration: () => {},
   isPlaying: false,
   volume: 1,
   isMuted: false,
+  duration: 0,
 };
 
 const mapStateToProps = ({ player }) => ({
   isPlaying: player.isPlaying,
   volume: player.volume,
   isMuted: player.isMuted,
+  duration: player.duration,
 });
 
 
@@ -98,6 +124,7 @@ const mapDispatchToProps = dispatch => ({
   onPlay: () => dispatch(actions.playerPlayPause()),
   setVolume: val => dispatch(actions.playerSetVolume(val / 100)),
   toggleMute: () => dispatch(actions.playerToggleMute()),
+  setDuration: duration => dispatch(actions.playerSetDuration(duration)),
 });
 
 

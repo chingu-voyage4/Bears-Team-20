@@ -41,3 +41,8 @@
     flex-direction: column;
     text-align: center;
 }
+
+#player-duration-label {
+    display: flex;
+    margin-left: 1em;
+}
