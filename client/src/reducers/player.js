@@ -2,6 +2,7 @@ import * as actions from '../actions/player';
 
 
 const initialState = {
+  isReady: false,
   isPlaying: false,
   isLooping: false,
   volume: 1,
@@ -16,8 +17,14 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
+    case actions.PLAYER_READY:
+      return { ...state, isReady: action.isReady };
     case actions.PLAYER_PLAY_PAUSE:
       return { ...state, isPlaying: !state.isPlaying };
+    case actions.PLAYER_PLAY:
+      return { ...state, isPlaying: true };
+    case actions.PLAYER_PAUSE:
+      return { ...state, isPlaying: false };
     case actions.PLAYER_TOGGLE_LOOP:
       return { ...state, isLooping: !state.isLooping };
     case actions.PLAYER_SET_VOLUME:

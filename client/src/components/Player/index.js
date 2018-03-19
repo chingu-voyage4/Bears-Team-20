@@ -18,18 +18,24 @@ const sampleSong = {
   thumbnail: null,
 };
 
+function parseToHHMMSS(value) {
+  const secNum = parseInt(value, 10);
+  let hours = Math.floor(secNum / 3600);
+  let minutes = Math.floor((secNum - (hours * 3600)) / 60);
+  let seconds = secNum - (hours * 3600) - (minutes * 60);
+
+  if (hours < 10) { hours = `0${hours}`; }
+  if (minutes < 10) { minutes = `0${minutes}`; }
+  if (seconds < 10) { seconds = `0${seconds}`; }
+  return `${hours}:${minutes}:${seconds}`;
+}
+
 
 class PlayerComponent extends React.Component {
-  static parseToHHMMSS(value) {
-    const secNum = parseInt(value, 10);
-    let hours = Math.floor(secNum / 3600);
-    let minutes = Math.floor((secNum - (hours * 3600)) / 60);
-    let seconds = secNum - (hours * 3600) - (minutes * 60);
+  constructor(props) {
+    super(props);
 
-    if (hours < 10) { hours = `0${hours}`; }
-    if (minutes < 10) { minutes = `0${minutes}`; }
-    if (seconds < 10) { seconds = `0${seconds}`; }
-    return `${hours}:${minutes}:${seconds}`;
+    this.handleSeek = this.handleSeek.bind(this);
   }
 
   componentDidMount() {
@@ -40,35 +46,40 @@ class PlayerComponent extends React.Component {
   handleSeek(seekSeconds) {
     const { seekProgress } = this.props;
     seekProgress(seekSeconds);
-    this.player.seekTo(parseFloat(seekSeconds));
+    this.engine.seekTo(parseFloat(seekSeconds));
   }
 
 
   render() {
     const {
-      togglePlayPause, isPlaying,
+      setReady, isReady,
+      togglePlayPause, isPlaying, setPlay, setPause,
       setVolume, volume,
       toggleMute, isMuted,
       setDuration, duration,
-      setProgress, seekProgress, progress,
+      setProgress, progress,
       toggleLoop, isLooping,
       currentSong,
     } = this.props;
 
     return (
-      <div id="player-container">
+      <div id="player-container" disabled={isReady}>
         <div className="player-row-container">
 
           <div id="player-controls-playback">
             <IconButton aria-label="Play/pause" color="primary" onClick={togglePlayPause}>
               { isPlaying ?
-                <Pause className="player-control-icon" />
+                <Pause className="player-control-icon" color="secondary" />
                 :
-                <PlayArrow className="player-control-icon" />
+                <PlayArrow className="player-control-icon" color="primary" />
               }
             </IconButton>
-            <IconButton aria-label="Play/pause" color="primary" onClick={toggleLoop}>
-              <Loop className={`player-control-icon ${isLooping ? 'player-control-icon-hl' : ''}`} />
+            <IconButton
+              aria-label="Play/pause"
+              color={isLooping ? 'secondary' : 'primary'}
+              onClick={toggleLoop}
+            >
+              <Loop className="player-control-icon" />
             </IconButton>
           </div>
 
@@ -81,9 +92,9 @@ class PlayerComponent extends React.Component {
           <div id="player-controls-volume">
             <IconButton aria-label="Volume" color="primary" onClick={toggleMute}>
               { isMuted ?
-                <VolumeOff className="player-control-icon" />
+                <VolumeOff className="player-control-icon" color="secondary" />
               :
-                <VolumeUp className="player-control-icon" />
+                <VolumeUp className="player-control-icon" color="primary" />
               }
 
             </IconButton>
@@ -101,17 +112,17 @@ class PlayerComponent extends React.Component {
 
         {/* Progress bar, duration stuff */}
         <div className="player-row-container">
-          <Slider min={0} max={duration} value={progress} onChange={seekProgress} />
+          <Slider min={0} max={duration} value={progress} onChange={this.handleSeek} />
           <div id="player-duration-label" >
             <Typography noWrap>
-              {`${this.parseToHHMMSS(progress)} / ${this.parseToHHMMSS(duration)}`}
+              {`${parseToHHMMSS(progress)} / ${parseToHHMMSS(duration)}`}
             </Typography>
           </div>
         </div>
 
 
         <ReactPlayer
-          ref={(player) => { this.player = player; }}
+          ref={(engine) => { this.engine = engine; }}
           url={currentSong.link || ''}
           playing={isPlaying}
           volume={volume}
@@ -120,9 +131,10 @@ class PlayerComponent extends React.Component {
           onDuration={setDuration}
           onProgress={setProgress}
           onError={console.log}
-          /* CHECKEAR QUE SE LLAME READY SI O SI?? */
-          onReady={() => console.log('READY!')}
+          onReady={setReady}
           onBuffer={() => console.log('BUFFER!')}
+          onStart={setPlay}
+          onPause={setPause}
           id="player-engine"
           width="0px"
           height="0px"
@@ -134,7 +146,10 @@ class PlayerComponent extends React.Component {
 
 
 PlayerComponent.propTypes = {
+  setReady: PropTypes.func,
   togglePlayPause: PropTypes.func,
+  setPlay: PropTypes.func,
+  setPause: PropTypes.func,
   setVolume: PropTypes.func,
   toggleMute: PropTypes.func,
   toggleLoop: PropTypes.func,
@@ -142,23 +157,21 @@ PlayerComponent.propTypes = {
   setProgress: PropTypes.func,
   seekProgress: PropTypes.func,
   setCurrentSong: PropTypes.func,
+  isReady: PropTypes.bool,
   isPlaying: PropTypes.bool,
   volume: PropTypes.number,
   isMuted: PropTypes.bool,
   isLooping: PropTypes.bool,
   duration: PropTypes.number,
   progress: PropTypes.number,
-  currentSong: {
-    title: PropTypes.string,
-    link: PropTypes.string,
-    serviceSource: PropTypes.string,
-    description: PropTypes.string,
-    thumbnail: PropTypes.string,
-  },
+  currentSong: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 PlayerComponent.defaultProps = {
+  setReady: () => {},
   togglePlayPause: () => {},
+  setPlay: () => {},
+  setPause: () => {},
   setVolume: () => {},
   toggleMute: () => {},
   toggleLoop: () => {},
@@ -166,6 +179,7 @@ PlayerComponent.defaultProps = {
   setProgress: () => {},
   seekProgress: () => {},
   setCurrentSong: () => {},
+  isReady: false,
   isPlaying: false,
   volume: 1,
   isMuted: false,
@@ -176,6 +190,7 @@ PlayerComponent.defaultProps = {
 };
 
 const mapStateToProps = ({ player }) => ({
+  isReady: player.isReady,
   isPlaying: player.isPlaying,
   volume: player.volume,
   isMuted: player.isMuted,
@@ -187,14 +202,17 @@ const mapStateToProps = ({ player }) => ({
 
 
 const mapDispatchToProps = dispatch => ({
+  setReady: () => dispatch(actions.playerSetReady(true)),
   togglePlayPause: () => dispatch(actions.playerPlayPause()),
+  setPlay: () => dispatch(actions.playerSetPlay()),
+  setPause: () => dispatch(actions.playerSetPause()),
   setVolume: val => dispatch(actions.playerSetVolume(val / 100)),
   toggleMute: () => dispatch(actions.playerToggleMute()),
   toggleLoop: () => dispatch(actions.playerToggleLoop()),
   setDuration: duration => dispatch(actions.playerSetDuration(duration)),
   setProgress: progressObj => dispatch(actions.playerSetProgress(progressObj.playedSeconds)),
   seekProgress: seekSeconds => dispatch(actions.playerSetProgress(seekSeconds)),
-  setCurrentSong: currentSong => dispatch(actions.playerSetSong(currentSong)),
+  setCurrentSong: song => dispatch(actions.playerSetSong(song)),
 });
 
 

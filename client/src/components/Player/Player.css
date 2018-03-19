@@ -3,7 +3,7 @@
     min-height: 10vh;
     flex-direction: column;
     
-    border: 1px solid black;
+    border-top: 1px solid black;
     padding: 0 2em;
 
     position: fixed;
@@ -52,4 +52,8 @@
 #player-duration-label {
     display: flex;
     margin-left: 1em;
+}
+
+.player-control-icon-hl {
+    background-color: #111;
 }
