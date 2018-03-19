@@ -4,8 +4,12 @@
     flex-direction: column;
     
     border: 1px solid black;
-
     padding: 0 2em;
+
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 .player-row-container {
@@ -31,7 +35,10 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
+
+    overflow: hidden;
 }
+
 
 #player-volume-slider {
     width: 100%;

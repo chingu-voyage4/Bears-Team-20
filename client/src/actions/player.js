@@ -5,6 +5,7 @@ export const PLAYER_TOGGLE_MUTE = 'PLAYER_TOGGLE_MUTE';
 export const PLAYER_SET_SONG = 'PLAYER_SET_SONG';
 export const PLAYER_SET_PLAYLIST = 'PLAYER_SET_PLAYLIST';
 export const PLAYER_SET_DURATION = 'PLAYER_SET_DURATION';
+export const PLAYER_SET_PROGRESS = 'PLAYER_SET_PROGRESS';
 
 
 export const playerPlayPause = () => ({
@@ -37,5 +38,10 @@ export const playerSetPlaylist = playlist => ({
 export const playerSetDuration = duration => ({
   type: PLAYER_SET_DURATION,
   duration,
+});
+
+export const playerSetProgress = progress => ({
+  type: PLAYER_SET_PROGRESS,
+  progress,
 });
 

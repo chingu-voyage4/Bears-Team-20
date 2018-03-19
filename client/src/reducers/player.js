@@ -6,11 +6,11 @@ const initialState = {
   isLooping: false,
   volume: 1,
   isMuted: false,
-  currentSong: null,
+  currentSong: {},
   currentPlaylist: [],
 
   duration: 0,
-  progress: null, // eg { played: 0.12, playedSeconds: 11.3, loaded: 0.34, loadedSeconds: 16.7 }
+  progress: 0,
 };
 
 
@@ -30,6 +30,8 @@ export default (state = initialState, action = {}) => {
       return { ...state, currentPlaylist: action.playlist };
     case actions.PLAYER_SET_DURATION:
       return { ...state, duration: action.duration };
+    case actions.PLAYER_SET_PROGRESS:
+      return { ...state, progress: action.progress };
     default: return state;
   }
 };
