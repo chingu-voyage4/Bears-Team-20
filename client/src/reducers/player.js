@@ -33,6 +33,8 @@ export default (state = initialState, action = {}) => {
       return { ...state, isMuted: !state.isMuted };
     case actions.PLAYER_SET_SONG:
       return { ...state, currentSong: action.song };
+    case actions.PLAYER_PLAY_SONG:
+      return { ...state, currentSong: action.song, isPlaying: true };
     case actions.PLAYER_SET_PLAYLIST:
       return { ...state, currentPlaylist: action.playlist };
     case actions.PLAYER_SET_DURATION:

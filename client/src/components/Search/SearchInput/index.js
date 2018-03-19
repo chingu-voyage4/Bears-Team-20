@@ -4,33 +4,41 @@ import { Search } from 'material-ui-icons';
 import PropTypes from 'prop-types';
 
 
-export default function SearchInput(props) {
-  const {
-    value, onChange, onEnter, isFetching,
-  } = props;
-  return (
-    <div id="search-container">
-      <Input
-        placeholder="Search for music, artists or albums"
-        fullWidth
-        onChange={onChange}
-        value={value}
-        onKeyDown={(e) => {
-          // Filter "Enter"
-          if (e.keyCode === 13) onEnter();
-        }}
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton
-              aria-label="Search"
-              color={isFetching ? 'default' : 'primary'}
-              onClick={onEnter}
-            >
-              <Search />
-            </IconButton>
-          </InputAdornment>}
-      />
-    </div>);
+export default class SearchInput extends React.Component {
+  componentDidMount() {
+    this.refInput.focus();
+  }
+
+  render() {
+    const {
+      value, onChange, onEnter, isFetching,
+    } = this.props;
+    return (
+      <div id="search-container">
+        <Input
+          inputRef={(refInput) => { this.refInput = refInput; }}
+          placeholder="Search for music, artists or albums"
+          fullWidth
+          onChange={onChange}
+          value={value}
+          onKeyDown={(e) => {
+            // Filter "Enter"
+            if (e.keyCode === 13) onEnter();
+          }}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="Search"
+                color={isFetching ? 'default' : 'primary'}
+                onClick={onEnter}
+              >
+                <Search />
+              </IconButton>
+            </InputAdornment>}
+        />
+      </div>
+    );
+  }
 }
 
 

@@ -6,6 +6,7 @@ export const PLAYER_TOGGLE_LOOP = 'PLAYER_TOGGLE_LOOP';
 export const PLAYER_SET_VOLUME = 'PLAYER_SET_VOLUME';
 export const PLAYER_TOGGLE_MUTE = 'PLAYER_TOGGLE_MUTE';
 export const PLAYER_SET_SONG = 'PLAYER_SET_SONG';
+export const PLAYER_PLAY_SONG = 'PLAYER_PLAY_SONG';
 export const PLAYER_SET_PLAYLIST = 'PLAYER_SET_PLAYLIST';
 export const PLAYER_SET_DURATION = 'PLAYER_SET_DURATION';
 export const PLAYER_SET_PROGRESS = 'PLAYER_SET_PROGRESS';
@@ -39,6 +40,12 @@ export const playerSetVolume = volume => ({
 
 export const playerToggleMute = () => ({
   type: PLAYER_TOGGLE_MUTE,
+});
+
+
+export const playerPlaySong = song => ({
+  type: PLAYER_PLAY_SONG,
+  song,
 });
 
 export const playerSetSong = song => ({
