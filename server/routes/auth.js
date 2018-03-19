@@ -1,15 +1,35 @@
-const router = require('express').Router(); // eslint-disable-line new-cap
 
-router.get('/login', (req, res) => {
-        res.render('login');
-});
+module.exports = function(router,passport){
 
-router.get('logout', (req, res) => {
-    res.send('logging out');
-});
+    router.get('/', (req, res) => {
 
-router.get('/google', (req, res) => {
-    res.send('loggin in with google');
-});
+        res.render('../views/index.ejs')
+        
+    });
 
-module.exports = router;
+    router.get('logout', (req, res) => {
+        res.send('logging out');
+    });
+
+    router.get('/google', (req, res) => {
+         res.send('loggin in with google');
+    });
+
+    router.get('/fail',(req,res) =>{
+            res.send("fail login");
+    });
+
+    router.post('/signup', passport.authenticate('local', {
+        successRedirect : '/succ', // redirect to the secure profile section
+        failureRedirect : '/fail', // redirect back to the signup page if there is an error
+        failureFlash : true // allow flash messages
+    }));
+
+    router.get('/succ',(req,res)=> {
+            res.send('Success login!!!');
+    });
+
+
+}
+
+
