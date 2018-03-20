@@ -16,14 +16,22 @@ module.exports = function(passport){
 
   passport.use('local',new LocalStrategy(
     function(username, password, done) {
-      User.findOne({ username: username }, function (err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        if (!user.verifyPassword(password)) { return done(null, false); }
-        return done(null, user);
-      });
-    }
-  ));
+          User.getUserByUserName(username,function(err,user){
+            if(err) throw err;
+            if(!user){
+              return done(null,false,{message:"unknow user"});
+            }
+            User.comparePassword(password,user.password,function(err,match){
+              if(err) throw err;
+              if(match) {
+                return done(null,user)
+              }else{
+                return done(null,false,{message:"invalid password"});
+              }
+            })
+
+          });
+    }));
 
 }
 

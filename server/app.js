@@ -12,6 +12,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
+
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.use(morgan('combined'));
 
@@ -37,9 +38,7 @@ app.use(bodyParser());
 
 require('./routes/auth')(app,passport);
 
-
-
-//Passport
+const User = require("./models/user");
 
 app.listen(port, () => {
   console.log('Listening port ' + port);

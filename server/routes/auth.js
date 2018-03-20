@@ -11,6 +11,7 @@ module.exports = function(router,passport){
         res.send('logging out');
     });
 
+    
     router.get('/google', (req, res) => {
          res.send('loggin in with google');
     });
