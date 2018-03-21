@@ -4,12 +4,15 @@ import './CurrentPlaylist.css';
 
 
 export default function CurrentPlaylist(props) {
-  const { playlist } = props;
+  const { playlist, isShowing } = props;
 
   return (
-    <div id="current-playlist-container" >
+    <div
+      id="current-playlist-container"
+      className={`${isShowing ? '' : 'player-hidden'}`}
+    >
       <p>PLAYLIST</p>
-      { playlist.map(songObj => <PlaylistItem song={songObj} />)}
+      { playlist.map(songObj => <PlaylistItem key={songObj.link} song={songObj} />)}
     </div>
   );
 }
@@ -18,19 +21,21 @@ export default function CurrentPlaylist(props) {
 function PlaylistItem(props) {
   const { song } = props;
   return (
-    <div>
-      {song.title}
-    </div>
+    <React.Fragment>
+      <td>{song.title}</td>
+    </React.Fragment>
   );
 }
 
 
 CurrentPlaylist.propTypes = {
   playlist: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  isShowing: PropTypes.bool,
 };
 
 CurrentPlaylist.defaultProps = {
   playlist: [],
+  isShowing: false,
 };
 
 

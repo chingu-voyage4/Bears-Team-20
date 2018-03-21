@@ -201,4 +201,17 @@ describe('player reducer', () => {
             progress: mockProgress
         });
     })
+
+    it('should set song on PLAYER_SET_PLAYLIST_SHOW', () => {
+        let mockPlShowing = true;
+        expect(playerReducer(state, actions.playerSetPlaylistShow(mockPlShowing))).toEqual({
+            ...state,
+            plShowing: mockPlShowing
+        });
+        mockPlShowing = false;
+        expect(playerReducer(state, actions.playerSetPlaylistShow(mockPlShowing))).toEqual({
+            ...state,
+            plShowing: mockPlShowing
+        });
+    })
 })

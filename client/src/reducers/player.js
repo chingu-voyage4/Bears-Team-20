@@ -9,7 +9,7 @@ const initialState = {
   isMuted: false,
   currentSong: {},
   currentPlaylist: [],
-
+  plShowing: false,
   duration: 0,
   progress: 0,
 };
@@ -41,6 +41,8 @@ export default (state = initialState, action = {}) => {
       return { ...state, duration: action.duration };
     case actions.PLAYER_SET_PROGRESS:
       return { ...state, progress: action.progress };
+    case actions.PLAYER_SET_PLAYLIST_SHOW:
+      return { ...state, plShowing: action.plShowing };
     default: return state;
   }
 };

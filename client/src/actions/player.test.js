@@ -105,4 +105,17 @@ describe('player actions', ()=> {
             progress: mockProgress
         })
     })
+    
+    it('should return on playerSetPlaylistShow', () => {
+        let mockShowing = false;
+        expect(actions.playerSetPlaylistShow(mockShowing)).toEqual({
+            type: actions.PLAYER_SET_PLAYLIST_SHOW,
+            plShowing: mockShowing
+        })
+        mockShowing = true;
+        expect(actions.playerSetPlaylistShow(mockShowing)).toEqual({
+            type: actions.PLAYER_SET_PLAYLIST_SHOW,
+            plShowing: mockShowing
+        })
+    })
 })

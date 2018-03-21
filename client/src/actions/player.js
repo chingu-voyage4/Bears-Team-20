@@ -10,6 +10,7 @@ export const PLAYER_PLAY_SONG = 'PLAYER_PLAY_SONG';
 export const PLAYER_SET_PLAYLIST = 'PLAYER_SET_PLAYLIST';
 export const PLAYER_SET_DURATION = 'PLAYER_SET_DURATION';
 export const PLAYER_SET_PROGRESS = 'PLAYER_SET_PROGRESS';
+export const PLAYER_SET_PLAYLIST_SHOW = 'PLAYER_SET_PLAYLIST_SHOW';
 
 
 export const playerSetReady = isReady => ({
@@ -66,5 +67,10 @@ export const playerSetDuration = duration => ({
 export const playerSetProgress = progress => ({
   type: PLAYER_SET_PROGRESS,
   progress,
+});
+
+export const playerSetPlaylistShow = plShowing => ({
+  type: PLAYER_SET_PLAYLIST_SHOW,
+  plShowing,
 });
 

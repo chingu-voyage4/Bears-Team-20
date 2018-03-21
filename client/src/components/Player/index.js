@@ -29,6 +29,7 @@ class PlayerComponent extends React.Component {
     super(props);
 
     this.handleSeek = this.handleSeek.bind(this);
+    this.handleShowPlaylist = this.handleShowPlaylist.bind(this);
   }
 
   handleSeek(seekSeconds) {
@@ -37,6 +38,10 @@ class PlayerComponent extends React.Component {
     this.engine.seekTo(parseFloat(seekSeconds));
   }
 
+  handleShowPlaylist() {
+    const { setPlaylistShow, plShowing } = this.props;
+    setPlaylistShow(!plShowing);
+  }
 
   render() {
     const {
@@ -48,14 +53,14 @@ class PlayerComponent extends React.Component {
       setProgress, progress,
       toggleLoop, isLooping,
       currentSong, setCurrentSong,
-      currentPlaylist,
+      currentPlaylist, plShowing,
     } = this.props;
 
     return (
       <div id="player-container" disabled={!isReady || !currentSong.link}>
         <div id="player-overlay" className={`${!isReady || !currentSong.link ? '' : 'player-hidden'}`} />
         <CurrentPlaylist
-          isShowing
+          isShowing={plShowing}
           playlist={currentPlaylist}
           setSong={setCurrentSong}
         />
@@ -78,8 +83,8 @@ class PlayerComponent extends React.Component {
 
             <IconButton
               aria-label="Current playlist"
-              color={isLooping ? 'secondary' : 'primary'}
-              onClick={toggleLoop}
+              color={plShowing ? 'secondary' : 'primary'}
+              onClick={this.handleShowPlaylist}
             >
               <PlaylistPlay className="player-control-icon" />
             </IconButton>
@@ -159,6 +164,8 @@ PlayerComponent.propTypes = {
   setProgress: PropTypes.func,
   seekProgress: PropTypes.func,
   setCurrentSong: PropTypes.func,
+  setPlaylistShow: PropTypes.func,
+
   isReady: PropTypes.bool,
   isPlaying: PropTypes.bool,
   volume: PropTypes.number,
@@ -168,6 +175,7 @@ PlayerComponent.propTypes = {
   progress: PropTypes.number,
   currentSong: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   currentPlaylist: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  plShowing: PropTypes.bool,
 };
 
 PlayerComponent.defaultProps = {
@@ -182,6 +190,8 @@ PlayerComponent.defaultProps = {
   setProgress: () => {},
   seekProgress: () => {},
   setCurrentSong: () => {},
+  setPlaylistShow: () => {},
+
   isReady: false,
   isPlaying: false,
   volume: 1,
@@ -191,6 +201,7 @@ PlayerComponent.defaultProps = {
   progress: 0,
   currentSong: {},
   currentPlaylist: [],
+  plShowing: false,
 };
 
 const mapStateToProps = ({ player }) => ({
@@ -203,6 +214,7 @@ const mapStateToProps = ({ player }) => ({
   progress: player.progress,
   currentSong: player.currentSong,
   currentPlaylist: player.currentPlaylist,
+  plShowing: player.plShowing,
 });
 
 
@@ -218,6 +230,7 @@ const mapDispatchToProps = dispatch => ({
   setProgress: progressObj => dispatch(actions.playerSetProgress(progressObj.playedSeconds)),
   seekProgress: seekSeconds => dispatch(actions.playerSetProgress(seekSeconds)),
   setCurrentSong: song => dispatch(actions.playerSetSong(song)),
+  setPlaylistShow: isShowing => dispatch(actions.playerSetPlaylistShow(isShowing)),
 });
 
 
