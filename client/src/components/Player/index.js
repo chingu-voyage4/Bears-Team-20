@@ -3,20 +3,13 @@ import { connect } from 'react-redux';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import { Typography, IconButton } from 'material-ui';
-import { PlayArrow, Pause, VolumeUp, VolumeOff, Loop } from 'material-ui-icons';
+import { PlayArrow, Pause, VolumeUp, VolumeOff, Loop, PlaylistPlay } from 'material-ui-icons';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import CurrentPlaylist from './CurrentPlaylist';
 import * as actions from '../../actions/player';
 import './Player.css';
 
-
-const sampleSong = {
-  title: 'Test title of the coolest song in the worldddd!!!!',
-  link: 'https://www.youtube.com/watch?v=ysz5S6PUM-U',
-  serviceSource: 'Youtube',
-  description: null,
-  thumbnail: null,
-};
 
 function parseToHHMMSS(value) {
   const secNum = parseInt(value, 10);
@@ -38,11 +31,6 @@ class PlayerComponent extends React.Component {
     this.handleSeek = this.handleSeek.bind(this);
   }
 
-  componentDidMount() {
-    const { setCurrentSong } = this.props;
-    setCurrentSong(sampleSong);
-  }
-
   handleSeek(seekSeconds) {
     const { seekProgress } = this.props;
     seekProgress(seekSeconds);
@@ -59,13 +47,19 @@ class PlayerComponent extends React.Component {
       setDuration, duration,
       setProgress, progress,
       toggleLoop, isLooping,
-      currentSong,
+      currentSong, setCurrentSong,
+      currentPlaylist,
     } = this.props;
 
     return (
-      <div id="player-container" disabled={isReady}>
+      <div id="player-container" disabled={!isReady || !currentSong.link}>
+        <div id="player-overlay" className={`${!isReady || !currentSong.link ? '' : 'player-hidden'}`} />
+        <CurrentPlaylist
+          isShowing
+          playlist={currentPlaylist}
+          setSong={setCurrentSong}
+        />
         <div className="player-row-container">
-
           <div id="player-controls-playback">
             <IconButton aria-label="Play/pause" color="primary" onClick={togglePlayPause}>
               { isPlaying ?
@@ -75,11 +69,19 @@ class PlayerComponent extends React.Component {
               }
             </IconButton>
             <IconButton
-              aria-label="Play/pause"
+              aria-label="Toggle loop"
               color={isLooping ? 'secondary' : 'primary'}
               onClick={toggleLoop}
             >
               <Loop className="player-control-icon" />
+            </IconButton>
+
+            <IconButton
+              aria-label="Current playlist"
+              color={isLooping ? 'secondary' : 'primary'}
+              onClick={toggleLoop}
+            >
+              <PlaylistPlay className="player-control-icon" />
             </IconButton>
           </div>
 
@@ -165,6 +167,7 @@ PlayerComponent.propTypes = {
   duration: PropTypes.number,
   progress: PropTypes.number,
   currentSong: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  currentPlaylist: PropTypes.array, // eslint-disable-line react/forbid-prop-types
 };
 
 PlayerComponent.defaultProps = {
@@ -187,6 +190,7 @@ PlayerComponent.defaultProps = {
   duration: 0,
   progress: 0,
   currentSong: {},
+  currentPlaylist: [],
 };
 
 const mapStateToProps = ({ player }) => ({
@@ -198,6 +202,7 @@ const mapStateToProps = ({ player }) => ({
   duration: player.duration,
   progress: player.progress,
   currentSong: player.currentSong,
+  currentPlaylist: player.currentPlaylist,
 });
 
 

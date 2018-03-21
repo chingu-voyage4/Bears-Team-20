@@ -2,6 +2,7 @@ import React from 'react';
 import { Input, InputAdornment, IconButton } from 'material-ui';
 import { Search } from 'material-ui-icons';
 import PropTypes from 'prop-types';
+import './SearchInput.css';
 
 
 export default class SearchInput extends React.Component {
@@ -18,6 +19,7 @@ export default class SearchInput extends React.Component {
         <Input
           inputRef={(refInput) => { this.refInput = refInput; }}
           placeholder="Search for music, artists or albums"
+          id="search-input"
           fullWidth
           onChange={onChange}
           value={value}
