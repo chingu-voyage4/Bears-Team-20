@@ -16,14 +16,6 @@ const bodyParser = require('body-parser');
 app.set('view engine', 'ejs'); // set up ejs for templating
 app.use(morgan('combined'));
 
-mongoose.connect(process.env.DB_PROD_URL)
-	.then(() => {
-    console.log('Connected DB successfully ');
-	})
-	.catch(err => {
-  console.log(err);
-	});
-
 
 require('./middleware/passport')(passport);
 
@@ -38,7 +30,16 @@ app.use(bodyParser());
 
 require('./routes/auth')(app,passport);
 
-const User = require("./models/user");
+
+mongoose.connect(process.env.DB_PROD_URL)
+	.then(() => {
+    console.log('Connected DB successfully ');
+	})
+	.catch(err => {
+  console.log(err);
+	});
+
+
 
 app.listen(port, () => {
   console.log('Listening port ' + port);

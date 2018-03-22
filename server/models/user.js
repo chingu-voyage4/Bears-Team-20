@@ -2,10 +2,9 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+var Schema = mongoose.Schema;
 
-const Schema = mongoose.Schema;
-
-const userSchema = new Schema({
+var userSchema = new Schema({
 	username: {type: String, required: true},
 	email: {type: String, required: true, unique: true},
 	password: {type: String, required: true},
@@ -14,18 +13,16 @@ const userSchema = new Schema({
 	updatedAt: Date
 });
 
-let User = mongoose.model('User', userSchema);
-
-module.exports.getUserByUserName = function(username,callback){
-		let query = {username:username};
-		User.findOne(query,callback);		
+userSchema.methods.getUserByUserName = function(username,callback){
+	 return this.findOne({username:username},callback);		
 }
 
-module.exports.comparePassword = function(password,hash,callback){
-			console.log("PASSWORD");
+userSchema.methods.verifyPassword = function(password,hash,callback){
 			bcrypt.compare(password,hash,function(err,match){
 				if(err) throw err;
 				callback(null,match);
 			})
 }
-module.exports = User;
+var User = mongoose.model('User', userSchema);
+
+module.exports =  User;

@@ -20,17 +20,19 @@ module.exports = function(router,passport){
             res.send("fail login");
     });
 
-    router.post('/signup', passport.authenticate('local', {
-        successRedirect : '/succ', // redirect to the secure profile section
-        failureRedirect : '/fail', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
-
     router.get('/succ',(req,res)=> {
-            res.send('Success login!!!');
+        res.send('Success login!!!');
     });
 
-
+    router.post('/signup', passport.authenticate('local', {
+        successRedirect : '/succ', // si es exitosa 
+        failureRedirect : '/fail', // si no lo es
+        failureFlash : true // allow flash messages
+    }));
+    
+    router.post('/test',(req,res)=>{
+        console.log(req.body);
+    });
 }
 
 
