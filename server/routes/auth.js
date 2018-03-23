@@ -9,11 +9,11 @@ module.exports = function (router, passport) {
     });
 
     router.post('/api/auth/login', passport.authenticate('local'), (req, res) => {
-        res.sendStatus(200);
+        res.json(req.user);
     });
 
     router.post('/api/auth/signup', passport.authenticate('local'), (req, res) => {
-        res.sendStatus(200);
+        res.json(req.user);
     });
 };
 
