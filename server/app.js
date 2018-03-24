@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -36,6 +37,9 @@ app.use(passport.session());
 require('./routes/auth')(app, passport);
 
 app.use('/api/search', require('./routes/search'));
+
+// Serve react app
+app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
 
 app.listen(port, () => {
 	console.log('Listening port ' + port);

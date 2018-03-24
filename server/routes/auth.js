@@ -1,20 +1,36 @@
 
-module.exports = function (router, passport) {
-    router.get('/api/auth/logout', (req, res) => {
-        req.logout();
-        res.sendStatus(200);
-    });
+module.exports = function (app, passport) {
+	app.get('/api/auth/logout', (req, res) => {
+		req.logout();
+		res.sendStatus(200);
+	});
 
-    router.get('/api/auth/google', (req, res) => {
-         res.send('loggin in with google. Not implemented yet :( ');
-    });
+	app.get(
+		'/api/auth/google',
+		passport.authenticate('google', {scope: ['profile']})
+	);
 
-    router.post('/api/auth/login', passport.authenticate('local-login'), (req, res) => {
-        res.json(req.user);
-    });
+	app.get(
+		'/api/auth/google/callback',
+		passport.authenticate('google', {failureRedirect: '/login'}),
+		(req, res) => {
+			res.redirect('/');
+		}
+	);
 
-    router.post('/api/auth/signup', passport.authenticate('local-signup'), (req, res) => {
-        res.json(req.user);
-    });
+	app.get('/api/auth/profile', (req, res) => {
+		if (req.isAuthenticated()) {
+			return res.json(req.user);
+		}
+		return res.sendStatus(401);
+	});
+
+	app.post('/api/auth/login', passport.authenticate('local-login'), (req, res) => {
+		res.json(req.user);
+	});
+
+	app.post('/api/auth/signup', passport.authenticate('local-signup'), (req, res) => {
+		res.json(req.user);
+	});
 };
 

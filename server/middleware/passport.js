@@ -1,5 +1,5 @@
-// Const passport = require("passport");
 const LocalStrategy = require('passport-local').Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../models/user');
 
 module.exports = function (passport) {
@@ -13,6 +13,9 @@ module.exports = function (passport) {
 		});
 	});
 
+	/**
+	* Local login stratetgy
+	*/
 	passport.use('local-login', new LocalStrategy({
 		usernameField: 'email',
 		passwordField: 'password'
@@ -32,6 +35,9 @@ module.exports = function (passport) {
 		});
 	}));
 
+	/**
+	* Local signup stratetgy
+	*/
 	passport.use('local-signup', new LocalStrategy({
 		usernameField: 'email',
 		passwordField: 'password',
@@ -61,15 +67,47 @@ module.exports = function (passport) {
 				newUser.email = email;
 				newUser.password = newUser.generateHash(password);
 
-					// Save the user
-					newUser.save(err => {
-						if (err) {
-							throw err;
-						}
-						return done(null, newUser);
-					});
+				// Save the user
+				newUser.save(err => {
+					if (err) {
+						throw err;
+					}
+					return done(null, newUser);
+				});
 			});
 		});
 		})));
+
+	/**
+	* Google's oauth2 login stratetgy
+	*/
+	passport.use('google', new GoogleStrategy({
+		clientID: process.env.GOOGLE_CLIENT_ID,
+		clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+		callbackURL: '/api/auth/google/callback'
+	},
+		((accessToken, refreshToken, profile, done) => {
+		User.findOne({googleId: profile.id}, (err, user) => {
+			if (err) {
+				return done(err);
+			}
+			if (user) {
+				return done(null, user);
+			}
+
+			const newUser = new User({
+				username: profile.displayName,
+				googleId: profile.id
+			});
+			// Save the user
+			newUser.save(err => {
+				if (err) {
+					throw err;
+				}
+				return done(null, newUser);
+			});
+		});
+		})
+	));
 };
 
