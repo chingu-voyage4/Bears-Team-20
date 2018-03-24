@@ -12,7 +12,7 @@ const bodyParser = require('body-parser');
 
 mongoose.connect(dbUrl)
 	.then(() => {
-	console.log('Connected DB successfully ');
+		console.log('Connected DB successfully', dbUrl);
 	})
 	.catch(err => {
 	console.log(err);

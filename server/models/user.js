@@ -13,12 +13,18 @@ const userSchema = new Schema({
 	updatedAt: Date
 });
 
+userSchema.methods.generateHash = function (password) {
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
 userSchema.statics.getUserByUserName = function (username, callback) {
 	return this.findOne({username}, callback);
 };
 
 userSchema.methods.validPassword = function (password) {
-	return bcrypt.compareSync(password, this.local.password);
+	const ret = bcrypt.compareSync(password, this.password);
+	console.log('IS PASSWORD' + password + ' valid: ', ret);
+	return ret;
 };
 const User = mongoose.model('User', userSchema);
 
