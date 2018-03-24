@@ -22,9 +22,7 @@ userSchema.statics.getUserByUserName = function (username, callback) {
 };
 
 userSchema.methods.validPassword = function (password) {
-	const ret = bcrypt.compareSync(password, this.password);
-	console.log('IS PASSWORD' + password + ' valid: ', ret);
-	return ret;
+	return bcrypt.compareSync(password, this.password);
 };
 const User = mongoose.model('User', userSchema);
 
