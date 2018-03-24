@@ -25,6 +25,7 @@ export function* loginProcess(action) {
     // User data
     if (payload.data) {
       yield put(userActions.userLogin(payload.data));
+      yield put(loginActions.loginSuccess());
     }
   } catch (e) {
     console.log('login error', e);

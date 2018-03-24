@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { TextField, Button, Typography } from 'material-ui';
 import * as actions from '../../actions/signup';
@@ -14,10 +15,12 @@ export class SignupComponent extends Component {
       username: '',
       email: '',
       password: '',
+      redirectLogin: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleBackToLogin = this.handleBackToLogin.bind(this);
   }
 
 
@@ -41,9 +44,19 @@ export class SignupComponent extends Component {
     });
   }
 
+  handleBackToLogin() {
+    this.setState({
+      redirectLogin: true,
+    });
+  }
+
   render() {
-    const { errors } = this.props;
+    const { errors, isAuthenticated } = this.props;
+    const { redirectLogin } = this.state;
     if (errors.length) console.log(errors);
+
+    if (isAuthenticated) return <Redirect to="/" />;
+    if (redirectLogin) return <Redirect to="/login" />;
 
     return (
       <div id="signup-container">
@@ -51,6 +64,16 @@ export class SignupComponent extends Component {
           <Typography align="center" id="signup-logo">
                     App logo here
           </Typography>
+
+          <Button
+            className="signup-form-field"
+            id="signup-button"
+            disabled={this.props.isFetching}
+            color="primary"
+            onClick={this.handleBackToLogin}
+          >
+          Back to login
+          </Button>
 
           <TextField
             className="signup-form-field"
@@ -122,18 +145,21 @@ export class SignupComponent extends Component {
 
 
 SignupComponent.propTypes = {
+  isAuthenticated: PropTypes.bool,
   isFetching: PropTypes.bool,
   errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   signupRequest: PropTypes.func,
 };
 
 SignupComponent.defaultProps = {
+  isAuthenticated: false,
   isFetching: false,
   errors: [],
   signupRequest: () => {},
 };
 
-const mapStateToProps = ({ signup }) => ({
+const mapStateToProps = ({ signup, user }) => ({
+  isAuthenticated: user.isAuthenticated,
   errors: signup.errors,
   isFetching: signup.isFetching,
 });

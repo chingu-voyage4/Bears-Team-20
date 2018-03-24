@@ -27,6 +27,7 @@ export function* signupProcess(action) {
     // User data
     if (payload.data) {
       yield put(userActions.userLogin(payload.data));
+      yield put(signupActions.signupSuccess());
     }
   } catch (e) {
     console.log(e);
