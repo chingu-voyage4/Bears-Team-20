@@ -5,7 +5,7 @@ import * as actions from '../actions/user';
 
 const initialState = {
     isAuthenticated: false,
-    email: '',
+    username: '',
 };
 
 describe('user reducer', () => {
@@ -20,19 +20,19 @@ describe('user reducer', () => {
         expect(userReducer(state, { type: 'INVALID ACTION' })).toEqual(state);
     })
 
-    it('should set isAuthenticated and email on USER_LOGIN', () => {
-        const user = { email: "asda@test.com" };
+    it('should set isAuthenticated and username on USER_LOGIN', () => {
+        const user = { username: "asda@test.com" };
         expect(userReducer(state, actions.userLogin(user))).toEqual({
             ...state,
-            email: user.email, 
+            username: user.username, 
             isAuthenticated: true
         });
     })
 
-    it('should set isAuthenticated to false and blank email on USER_LOGOUT', () => {
+    it('should set isAuthenticated to false and blank username on USER_LOGOUT', () => {
         expect(userReducer(state, actions.userLogout())).toEqual({
             ...state,
-            email: '',
+            username: '',
             isAuthenticated: false
         });
     })

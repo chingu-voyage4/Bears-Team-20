@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { TextField, Button, Typography } from 'material-ui';
@@ -17,8 +18,8 @@ export class LoginComponent extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
   }
-
 
   handleInputChange(event) {
     const { target } = event;
@@ -39,9 +40,16 @@ export class LoginComponent extends Component {
     });
   }
 
+  handleGoogleLogin() {
+    const { isAuthenticated } = this.props; // eslint-disable-line no-unused-vars
+    window.location.href = '/api/auth/google';
+  }
+
   render() {
-    const { errors } = this.props;
+    const { errors, isAuthenticated } = this.props;
     if (errors.length) console.log(errors);
+
+    if (isAuthenticated) return <Redirect to="/" />;
 
     return (
       <div id="login-container">
@@ -96,23 +104,35 @@ export class LoginComponent extends Component {
           </Button>
 
         </div>
+
+        <Button
+          id="login-google-button"
+          disabled={this.props.isFetching}
+          color="primary"
+          onClick={this.handleGoogleLogin}
+        >
+          Login with google
+        </Button>
       </div>);
   }
 }
 
 LoginComponent.propTypes = {
+  isAuthenticated: PropTypes.bool,
   isFetching: PropTypes.bool,
   errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   loginRequest: PropTypes.func,
 };
 
 LoginComponent.defaultProps = {
+  isAuthenticated: false,
   isFetching: false,
   errors: [],
   loginRequest: () => {},
 };
 
-const mapStateToProps = ({ login }) => ({
+const mapStateToProps = ({ login, user }) => ({
+  isAuthenticated: user.isAuthenticated,
   errors: login.errors,
   isFetching: login.isFetching,
   pause: login.pause,

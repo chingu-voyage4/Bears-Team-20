@@ -5,12 +5,11 @@ const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-	username: {type: String, required: true},
-	email: {type: String, required: true, unique: true},
-	password: {type: String, required: true},
-	admin: Boolean,
-	createdAt: Date,
-	updatedAt: Date
+	username: {type: String},
+	email: {type: String},
+	password: {type: String},
+	googleId: {type: String},
+	admin: {type: Boolean, default: false}
 });
 
 userSchema.methods.generateHash = function (password) {

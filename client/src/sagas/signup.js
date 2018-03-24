@@ -5,7 +5,7 @@ import * as signupActions from '../actions/signup';
 import * as userActions from '../actions/user';
 
 
-const postSignupToAPI = data => axios.post('/api/signup', {
+const postSignupToAPI = data => axios.post('/api/auth/signup', {
   username: data.username,
   email: data.email,
   password: data.password,
@@ -25,9 +25,8 @@ export function* signupProcess(action) {
     }
 
     // User data
-    if (payload.data.user) {
-      yield put(userActions.userLogin(payload.data.user));
-      // REDIRECT??
+    if (payload.data) {
+      yield put(userActions.userLogin(payload.data));
     }
   } catch (e) {
     console.log(e);
