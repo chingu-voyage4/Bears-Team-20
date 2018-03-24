@@ -67,7 +67,7 @@ export class SignupComponent extends Component {
 
           <Button
             className="signup-form-field"
-            id="signup-button"
+            id="signup-redirect-login-button"
             disabled={this.props.isFetching}
             color="primary"
             onClick={this.handleBackToLogin}
