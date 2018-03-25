@@ -3,39 +3,41 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
-const authRoutes = require('./routes/auth');
-const searchRoutes = require('./routes/search');
 
 const app = express();
-
 const port = process.env.PORT || 3000;
 const dbUrl = process.env.ENV === 'prod' ? process.env.DB_PROD_URL : process.env.DB_LOCAL_URL;
+const session = require('express-session');
+const bodyParser = require('body-parser');
 
-app.use(morgan('combined'));
-
-mongoose.connect(process.env.DB_PROD_URL)
+mongoose.connect(dbUrl)
 	.then(() => {
-    console.log('Connected DB successfully ');
+	console.log('Connected DB successfully ');
 	})
 	.catch(err => {
-  console.log(err);
+	console.log(err);
 	});
 
-app.use('/auth', authRoutes);
-app.use('/api/search', searchRoutes);
+require('./middleware/passport')(passport);
 
-app.get('/', (req, res) => {
-	res.send('Port 3000');
-});
+app.use(morgan('combined'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.set('view engine', 'ejs'); // Set up ejs for templating
 
+app.use(session({
+	secret: 'musicalhub',
+	resave: true,
+	saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-//Passport
-app.post('/login',
-   passport.authenticate('local', { failureRedirect: '/login' }),
-    function(req, res) {
-      res.redirect('/');
-    });
+require('./routes/auth')(app, passport);
+
+app.use('/api/search', require('./routes/search'));
 
 app.listen(port, () => {
-  console.log('Listening port ' + port);
+	console.log('Listening port ' + port);
 });
+
