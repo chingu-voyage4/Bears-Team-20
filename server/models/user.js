@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const playlist = require('./playlist');
 
-
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
