@@ -17,6 +17,7 @@ const userSchema = new Schema({
 	admin: {type: Boolean, default: false}
 });
 
+
 userSchema.methods.generateHash = function (password) {
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
