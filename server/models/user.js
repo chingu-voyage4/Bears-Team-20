@@ -7,12 +7,11 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
 	username: {type: String, required: true},
-	email: {type: String, required: true, unique: true},
-	password: {type: String, required: true},
-	admin: Boolean,
+	email: {type: String},
+	password: {type: String},
 	createdAt: Date,
 	updatedAt: Date,
-	playlists:[playlist],
+	playlists: [playlist],
 	googleId: {type: String},
 	admin: {type: Boolean, default: false}
 });
