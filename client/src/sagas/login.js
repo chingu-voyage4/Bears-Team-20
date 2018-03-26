@@ -5,7 +5,7 @@ import * as loginActions from '../actions/login';
 import * as userActions from '../actions/user';
 
 
-const postLoginToAPI = data => axios.post('/api/login', {
+const postLoginToAPI = data => axios.post('/api/auth/login', {
   email: data.email,
   password: data.password,
 });
@@ -23,8 +23,9 @@ export function* loginProcess(action) {
     }
 
     // User data
-    if (payload.data.user) {
-      yield put(userActions.userLogin(payload.data.user));
+    if (payload.data) {
+      yield put(userActions.userLogin(payload.data));
+      yield put(loginActions.loginSuccess());
     }
   } catch (e) {
     console.log('login error', e);

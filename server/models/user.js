@@ -12,15 +12,21 @@ const userSchema = new Schema({
 	admin: Boolean,
 	createdAt: Date,
 	updatedAt: Date,
-	playlists:[playlist]
+	playlists:[playlist],
+	googleId: {type: String},
+	admin: {type: Boolean, default: false}
 });
+
+userSchema.methods.generateHash = function (password) {
+	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
 
 userSchema.statics.getUserByUserName = function (username, callback) {
 	return this.findOne({username}, callback);
 };
 
 userSchema.methods.validPassword = function (password) {
-	return bcrypt.compareSync(password, this.local.password);
+	return bcrypt.compareSync(password, this.password);
 };
 const User = mongoose.model('User', userSchema);
 
