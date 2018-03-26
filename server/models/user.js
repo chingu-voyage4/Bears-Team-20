@@ -7,7 +7,6 @@ const playlist = require('./playlist');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-<<<<<<< HEAD
 	username: {type: String, required: true},
 	email: {type: String, required: true, unique: true},
 	password: {type: String, required: true},
@@ -15,13 +14,7 @@ const userSchema = new Schema({
 	createdAt: Date,
 	updatedAt: Date,
 	playlists:[playlist]
-=======
-	username: {type: String},
-	email: {type: String},
-	password: {type: String},
-	googleId: {type: String},
-	admin: {type: Boolean, default: false}
->>>>>>> 13a785f316ee8905a8ef2c9ccb725aba6efd4d59
+
 });
 
 userSchema.methods.generateHash = function (password) {
