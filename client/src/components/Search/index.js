@@ -5,6 +5,7 @@ import debouce from 'debounce';
 import SearchInput from './SearchInput';
 import SearchResults from './SearchResults';
 import * as actions from '../../actions/search';
+import * as playerActions from '../../actions/player';
 import './Search.css';
 
 
@@ -35,6 +36,7 @@ export class SearchComponent extends Component {
   render() {
     const {
       errors, input, isFetching, results,
+      playSong,
     } = this.props;
     if (errors.length) console.log('ERRORS', errors);
 
@@ -52,6 +54,7 @@ export class SearchComponent extends Component {
           <SearchResults
             results={results}
             isFetching={isFetching}
+            playSong={playSong}
           />
         </div>
 
@@ -67,6 +70,7 @@ SearchComponent.propTypes = {
   input: PropTypes.string,
   inputChange: PropTypes.func,
   search: PropTypes.func,
+  playSong: PropTypes.func,
 };
 
 SearchComponent.defaultProps = {
@@ -76,6 +80,7 @@ SearchComponent.defaultProps = {
   input: '',
   inputChange: () => {},
   search: () => {},
+  playSong: () => {},
 };
 
 const mapStateToProps = ({ search }) => ({
@@ -92,6 +97,7 @@ const mapDispatchToProps = dispatch => ({
     if (!input.length) return;
     dispatch(actions.searchRequest(input));
   },
+  playSong: song => dispatch(playerActions.playerPlaySong(song)),
 });
 
 

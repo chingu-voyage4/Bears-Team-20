@@ -1,0 +1,15 @@
+
+#current-playlist-container {
+    position: absolute;
+
+    width: 33vw;
+    height: 45vh;
+    
+    top: -45vh;
+    left: 0vw;
+
+
+    background-color: white;
+    border: 1px solid black;
+    border-bottom: none;
+}
