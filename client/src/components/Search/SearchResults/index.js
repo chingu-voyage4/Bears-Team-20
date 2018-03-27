@@ -32,11 +32,12 @@ export default class SearchResults extends Component {
   }
 
   render() {
-    const { results } = this.props;
+    const { results, playSong } = this.props;
 
     return (
       <div>
-        {results.map((r, i) => <ResultItem key={generateKey(r.title, i)} result={r} />)}
+        {results.map((r, i) =>
+          <ResultItem key={generateKey(r.title, i)} result={r} playSong={playSong} />)}
       </div>);
   }
 }
@@ -45,10 +46,12 @@ export default class SearchResults extends Component {
 SearchResults.propTypes = {
   results: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
+  playSong: PropTypes.func,
 };
 
 SearchResults.defaultProps = {
   results: [],
   isFetching: false,
+  playSong: () => {},
 };
 
