@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import login from '../reducers/login';
+import profile from '../reducers/profile';
 import signup from '../reducers/signup';
 import user from '../reducers/user';
 import search from '../reducers/search';
@@ -9,6 +10,7 @@ const appReducer = combineReducers({
   // Add here the different reducers
   login,
   signup,
+  profile,
   user,
   search,
 });
