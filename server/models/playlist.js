@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
-const Song = require('./song');
+const SongSchema = require('./song').schema;
 
 const Schema = mongoose.Schema;
 
-const playlistSchame = new Schema({
+const playlistSchema = new Schema({
 	name: {type: String, required: true},
 	description: {type: String},
 	public: {type: Boolean, required: true, default: false},
 	creator: {type: String, required: true},
-	songs: [Song]
+	songs: [SongSchema]
 });
 
-const Playlist = mongoose.model('Playlist', playlistSchame);
+const Playlist = mongoose.model('Playlist', playlistSchema);
 
 module.exports = Playlist;
