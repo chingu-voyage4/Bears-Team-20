@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const playlist = require('./playlist');
+const playlistSchema = require('./playlist').schema;
 
 const Schema = mongoose.Schema;
 
@@ -11,7 +11,7 @@ const userSchema = new Schema({
 	password: {type: String},
 	createdAt: Date,
 	updatedAt: Date,
-	playlists: [playlist],
+	playlists: [playlistSchema],
 	googleId: {type: String},
 	admin: {type: Boolean, default: false}
 });
