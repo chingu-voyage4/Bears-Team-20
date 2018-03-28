@@ -108,7 +108,7 @@ class ChangePasswordComponent extends React.Component {
 
 ChangePasswordComponent.propTypes = {
   isFetching: PropTypes.bool,
-  errors: PropTypes.arrayOf,
+  errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   changePassword: PropTypes.func,
 };
 
