@@ -1,5 +1,14 @@
 import React from 'react';
+import Player from '../Player';
+import Search from '../Search';
 
-const Music = () => <h1>Music Search and Play!</h1>;
+function Music() {
+  return (
+    <div>
+      <Search />
+      <Player />
+    </div>
+  );
+}
 
 export default Music;

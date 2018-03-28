@@ -4,6 +4,7 @@ import profile from '../reducers/profile';
 import signup from '../reducers/signup';
 import user from '../reducers/user';
 import search from '../reducers/search';
+import player from '../reducers/player';
 
 // Uses combineReducers to combine all the reducers
 const appReducer = combineReducers({
@@ -13,6 +14,7 @@ const appReducer = combineReducers({
   profile,
   user,
   search,
+  player,
 });
 
 
