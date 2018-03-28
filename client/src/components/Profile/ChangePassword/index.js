@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { TextField, Button } from 'material-ui';
 import PropTypes from 'prop-types';
+import * as actions from '../../../actions/user';
 
 
-export default class ChangePassword extends React.Component {
+class ChangePasswordComponent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -14,20 +16,18 @@ export default class ChangePassword extends React.Component {
     };
 
     this.handleChangePassword = this.handleChangePassword.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   handleChangePassword() {
     const { currentPassword, nextPassword, repeatPassword } = this.state;
-    if (nextPassword === repeatPassword) {
-      console.log('CHANGE PW', currentPassword, nextPassword);
-    } else {
-      console.log('PASSWORDS DONT MATCH');
-    }
+    const { changePassword } = this.props;
+    changePassword(currentPassword, nextPassword, repeatPassword);
   }
 
   handleInputChange(event) {
     const { target } = event;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { value } = target;
     const { name } = target;
 
     this.setState({
@@ -36,6 +36,7 @@ export default class ChangePassword extends React.Component {
   }
 
   render() {
+    console.log('ERRORS', this.props.errors);
     return (
       <div id="changepw-container">
         <div id="changepw-form-container">
@@ -53,8 +54,8 @@ export default class ChangePassword extends React.Component {
             }}
             placeholder="Current password"
             InputLabelProps={{
-                    required: true,
-                }}
+              required: true,
+            }}
           />
           <TextField
             className="changepw-form-field"
@@ -69,8 +70,8 @@ export default class ChangePassword extends React.Component {
             }}
             placeholder="Next password"
             InputLabelProps={{
-                    required: true,
-                }}
+              required: true,
+            }}
           />
           <TextField
             className="changepw-form-field"
@@ -85,8 +86,8 @@ export default class ChangePassword extends React.Component {
             }}
             placeholder="Repeat password"
             InputLabelProps={{
-                    required: true,
-                }}
+              required: true,
+            }}
           />
 
           <Button
@@ -96,7 +97,7 @@ export default class ChangePassword extends React.Component {
             color="primary"
             onClick={this.handleChangePassword}
           >
-                Change password
+            Change password
           </Button>
 
         </div>
@@ -105,10 +106,42 @@ export default class ChangePassword extends React.Component {
 }
 
 
-ChangePassword.propTypes = {
+ChangePasswordComponent.propTypes = {
   isFetching: PropTypes.bool,
+  errors: PropTypes.arrayOf,
+  changePassword: PropTypes.func,
 };
 
-ChangePassword.defaultProps = {
+ChangePasswordComponent.defaultProps = {
   isFetching: false,
+  errors: [],
+  changePassword: () => {},
 };
+
+
+const mapStateToProps = ({ user }) => ({
+  isFetching: user.changePw.isFetching,
+  errors: user.changePw.errors,
+});
+
+const mapDispatchToProps = dispatch => ({
+  changePassword: (currentPassword, nextPassword, repeatPassword) => {
+    if (nextPassword !== repeatPassword) {
+      dispatch(actions.changePwFailed([
+        {
+          type: 'mismatch',
+          message: 'Passwords dont match',
+        },
+      ]));
+      return;
+    }
+    dispatch(actions.changePwRequest({
+      currentPassword,
+      nextPassword,
+      repeatPassword,
+    }));
+  },
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChangePasswordComponent);

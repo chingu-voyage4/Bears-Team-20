@@ -1,0 +1,25 @@
+
+
+#change-pic-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#change-pic-content-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#change-pic-controls-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.avatar {
+    margin: 10;
+}
+
+.big-avatar {
+    width: 60;
+    height: 60;
+}

@@ -1,5 +1,13 @@
 import React from 'react';
+import ChangePassword from './ChangePassword';
 
-const Profile = () => <h1>Profile Page!</h1>;
 
-export default Profile;
+function ProfileContainer() {
+  return (
+    <React.Fragment>
+      <ChangePassword />
+    </React.Fragment>
+  );
+}
+
+export default ProfileContainer;

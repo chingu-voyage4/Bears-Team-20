@@ -1,7 +1,7 @@
 import { call, put, takeEvery, fork } from 'redux-saga/effects';
 import axios from 'axios';
 
-import * as profileActions from '../actions/profile';
+import * as userActions from '../actions/user';
 
 
 const changePwToAPI = data => axios.post('/api/auth/profile', {
@@ -20,16 +20,16 @@ export function* changePwProcess(action) {
 
     // Errors
     if (payload.data.errors) {
-      yield put(profileActions.changePwFailed(payload.data.errors));
+      yield put(userActions.changePwFailed(payload.data.errors));
     }
 
     // User data
     if (payload.data) {
-      yield put(profileActions.changePwSuccess());
+      yield put(userActions.changePwSuccess());
     }
   } catch (e) {
     console.log('profile error', e);
-    yield put(profileActions.changePwFailed({
+    yield put(userActions.changePwFailed({
       request: e.message,
     }));
   }
@@ -39,7 +39,7 @@ export function* changePwProcess(action) {
 export function* watchProfileRequest() {
   yield fork(
     takeEvery,
-    profileActions.CHANGE_PW_REQUEST,
+    userActions.CHANGE_PW_REQUEST,
     changePwProcess,
   );
 }
