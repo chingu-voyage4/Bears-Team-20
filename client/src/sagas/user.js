@@ -44,8 +44,47 @@ export function* logoutProcess() {
   }
 }
 
+//=========================================
+// CHANGE PASSWORD
 
-//= =======================================
+const changePwToAPI = data => axios.post('/api/auth/profile', {
+  currentPassword: data.currentPassword,
+  nextPassword: data.nextPassword,
+  repeatPassword: data.repeatPassword,
+});
+
+
+export function* changePwProcess(action) {
+  try {
+    const payload = yield call(
+      changePwToAPI,
+      action.changePwData,
+    );
+
+    // Errors
+    if (payload.data.errors) {
+      yield put(userActions.changePwFailed(payload.data.errors));
+    }
+
+    // User data
+    if (payload.data) {
+      yield put(userActions.changePwSuccess());
+    }
+  } catch (e) {
+    console.log('profile error', e);
+    yield put(userActions.changePwFailed([
+      {
+        type: 'request',
+        message: e.message,
+      }
+    ]));
+  }
+}
+
+
+
+
+//=========================================
 // WATCHER
 
 export function* watchUserRequest() {
@@ -58,5 +97,10 @@ export function* watchUserRequest() {
     takeEvery,
     userActions.USER_REQUEST_LOGOUT,
     logoutProcess,
+  );
+  yield fork(
+    takeEvery,
+    userActions.CHANGE_PW_REQUEST,
+    changePwProcess,
   );
 }

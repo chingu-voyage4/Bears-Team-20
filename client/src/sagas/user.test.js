@@ -4,7 +4,7 @@ import { takeEvery, fork } from 'redux-saga/effects';
 
 
 
-describe('Profile saga stuff', () => {
+describe('User saga stuff', () => {
 
     it('should trigger on CHANGE_PW_REQUEST', () => {
         const watchTask = watchProfileRequest();

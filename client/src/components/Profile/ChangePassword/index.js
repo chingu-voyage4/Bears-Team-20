@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TextField, Button } from 'material-ui';
+import { Typography, TextField, Button } from 'material-ui';
 import PropTypes from 'prop-types';
 import * as actions from '../../../actions/user';
 
+import './ChangePassword.css';
 
 class ChangePasswordComponent extends React.Component {
   constructor(props) {
@@ -36,9 +37,17 @@ class ChangePasswordComponent extends React.Component {
   }
 
   render() {
-    console.log('ERRORS', this.props.errors);
     return (
       <div id="changepw-container">
+
+        <Typography
+        id="changepw-title"
+        variant="title"
+        color="primary"
+        >
+          <strong>Change password</strong>
+        </Typography>
+
         <div id="changepw-form-container">
 
           <TextField
@@ -73,6 +82,7 @@ class ChangePasswordComponent extends React.Component {
               required: true,
             }}
           />
+
           <TextField
             className="changepw-form-field"
             id="changepw-textfield-repeat-pass"
@@ -97,7 +107,7 @@ class ChangePasswordComponent extends React.Component {
             color="primary"
             onClick={this.handleChangePassword}
           >
-            Change password
+            Change it!
           </Button>
 
         </div>
