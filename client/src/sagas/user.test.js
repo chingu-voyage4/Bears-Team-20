@@ -1,17 +1,10 @@
-import { changePwProcess, watchProfileRequest } from './profile';
-import * as actions from '../actions/profile';
+import { changePwProcess, watchUserRequest } from './user';
+import * as actions from '../actions/user';
 import { takeEvery, fork } from 'redux-saga/effects';
 
 
 
 describe('User saga stuff', () => {
-
-    it('should trigger on CHANGE_PW_REQUEST', () => {
-        const watchTask = watchProfileRequest();
-        expect( JSON.stringify(watchTask.next().value) ).toEqual(
-            JSON.stringify( takeEvery( actions.CHANGE_PW_REQUEST, changePwProcess ) )
-        );
-    })
 
     it('should try to get the payload with the changePwData provided', () => {
         const changePwData = {

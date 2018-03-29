@@ -26,7 +26,11 @@ describe('user reducer', () => {
         expect(userReducer(state, actions.userLogin(user))).toEqual({
             ...state,
             username: user.username, 
-            profilePic: user.profilePic,
+            picture: {
+                url: user.profilePic,
+                isFetching: false,
+                errors: []
+            },
             isAuthenticated: true
         });
     })
