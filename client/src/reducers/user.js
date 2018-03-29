@@ -3,8 +3,12 @@ import * as actions from '../actions/user';
 const initialState = {
   isAuthenticated: false,
   username: '',
-  profilePic: '',
   changePw: {
+    isFetching: false,
+    errors: [],
+  },
+  picture: {
+    url: 'http://santetotal.com/wp-content/uploads/2014/05/default-user.png',
     isFetching: false,
     errors: [],
   },
@@ -15,9 +19,13 @@ export default (state = initialState, action = {}) => {
     case actions.USER_LOGIN:
       return {
         ...state,
-        username: action.user.username,
-        profilePic: action.user.profilePic || 'http://santetotal.com/wp-content/uploads/2014/05/default-user.png',
         isAuthenticated: true,
+        username: action.user.username,
+        picture: {
+          isFetching: false,
+          errors: [],
+          url: action.user.profilePic || initialState.picture.url, // defaults to generic image
+        },
       };
     case actions.USER_LOGOUT:
       return {
@@ -46,6 +54,36 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         changePw: {
+          isFetching: false,
+          errors: action.errors,
+        },
+      };
+
+    case actions.CHANGE_PICTURE_REQUEST:
+      return {
+        ...state,
+        picture: {
+          ...state.picture,
+          isFetching: true,
+          errors: [],
+        },
+      };
+
+    case actions.CHANGE_PICTURE_SUCCESS:
+      return {
+        ...state,
+        picture: {
+          url: action.url,
+          isFetching: false,
+          errors: [],
+        },
+      };
+
+    case actions.CHANGE_PICTURE_FAILED:
+      return {
+        ...state,
+        picture: {
+          ...state.picture,
           isFetching: false,
           errors: action.errors,
         },

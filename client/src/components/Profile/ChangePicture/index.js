@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Button, Avatar, Input } from 'material-ui';
 import PropTypes from 'prop-types';
+import * as actions from '../../../actions/user';
 
 import './ChangePicture.css';
 
@@ -101,13 +102,13 @@ ChangePictureComponent.defaultProps = {
 
 
 const mapStateToProps = ({ user }) => ({
-  profilePic: user.profilePic,
+  profilePic: user.picture.url,
   username: user.username,
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = dispatch => ({
   changePicture: (url) => {
-    console.log('CHANGING to', url);
+    dispatch(actions.changePictureRequest(url));
   },
 });
 
