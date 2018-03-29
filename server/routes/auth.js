@@ -1,3 +1,4 @@
+const User = require('../models/user');
 
 module.exports = function (app, passport) {
 	app.get('/api/auth/logout', (req, res) => {
@@ -18,19 +19,36 @@ module.exports = function (app, passport) {
 		}
 	);
 
-	app.get('/api/auth/profile', (req, res) => {
-		if (req.isAuthenticated()) {
-			return res.json(req.user);
-		}
-		return res.sendStatus(401);
-	});
-
 	app.post('/api/auth/login', passport.authenticate('local-login'), (req, res) => {
 		res.json(req.user);
 	});
 
 	app.post('/api/auth/signup', passport.authenticate('local-signup'), (req, res) => {
 		res.json(req.user);
+	});
+
+	app.get('/api/auth/profile', passport.myAuthenticate, (req, res) => {
+		return res.json(req.user);
+	});
+
+	app.post('/api/auth/profile/picture', passport.myAuthenticate, (req, res) => {
+		User.updateUsersPassword(req.user, req.body.picture, (err, updatedUser) => {
+			if (err) {
+				console.log(err);
+				return res.sendStatus(500);
+			}
+			return res.json(updatedUser);
+		});
+	});
+
+	app.post('/api/auth/profile/password', passport.myAuthenticate, (req, res) => {
+		User.updateUsersPassword(req.user, req.body.password, (err, updatedUser) => {
+			if (err) {
+				console.log(err);
+				return res.sendStatus(500);
+			}
+			return res.json(updatedUser);
+		});
 	});
 };
 
