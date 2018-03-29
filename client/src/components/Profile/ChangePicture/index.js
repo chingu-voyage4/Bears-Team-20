@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Button, Avatar } from 'material-ui';
+import { Typography, Button, Avatar, Input } from 'material-ui';
 import PropTypes from 'prop-types';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -11,7 +11,17 @@ class ChangePictureComponent extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      url: props.profilePic
+    }
+
     this.handleUploadPicture = this.handleUploadPicture.bind(this);
+    this.handleInnerLocalChange = this.handleInnerLocalChange.bind(this);
+  }
+
+  handleInnerLocalChange(newUrl) {
+    console.log("NEW URL", newUrl);
+    this.setState({ url: newUrl });
   }
 
   handleUploadPicture() {
@@ -20,19 +30,31 @@ class ChangePictureComponent extends React.Component {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
-          <div className='custom-ui'>
-            <h1>Are you sure?</h1>
-            <p>You want to delete this file?</p>
-            <Button onClick={onClose}>No</Button>
-            <Button
+          <div id='change-pic-modal-container'>
+            <Typography
+            id="change-pic-modal-title"
+            variant="title"
             color="primary"
-            onClick={() => {
-              onClose()
-            }}
             >
-              Yes
-            </Button>
+              Enter new picture's url
+            </Typography>
+            <Input
+            value={this.state.url}
+            onChange={ (e) => this.handleInnerLocalChange(e.target.value) }
+            />
+            <div id="change-pic-modal-buttons-container">
+              <Button onClick={onClose}>Cancel</Button>
+              <Button
+              color="primary"
+              onClick={() => {
+                onClose()
+              }}
+              >
+                Change it!
+              </Button>
+            </div>
           </div>
+            
         )
       }
     })

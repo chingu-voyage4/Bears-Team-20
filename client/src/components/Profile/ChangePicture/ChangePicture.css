@@ -31,3 +31,26 @@
     width: 100px;
     height: 100px;
 }
+
+.react-confirm-alert {
+    width: 50vw;
+}
+
+#change-pic-modal-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#change-pic-modal-buttons-container {
+    display: flex;
+    flex-direction: row;
+    
+    justify-content: flex-end;
+}
+
+
+@media only screen and (max-width: 1024px) {
+    .react-confirm-alert {
+        width: 80vw;
+    }
+}
