@@ -2,7 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Button, Avatar } from 'material-ui';
 import PropTypes from 'prop-types';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
+import './ChangePicture.css';
 
 class ChangePictureComponent extends React.Component {
   constructor(props) {
@@ -13,15 +16,39 @@ class ChangePictureComponent extends React.Component {
 
   handleUploadPicture() {
     const { changePicture } = this.props;
-    changePicture();
+    //changePicture();
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className='custom-ui'>
+            <h1>Are you sure?</h1>
+            <p>You want to delete this file?</p>
+            <Button onClick={onClose}>No</Button>
+            <Button
+            color="primary"
+            onClick={() => {
+              onClose()
+            }}
+            >
+              Yes
+            </Button>
+          </div>
+        )
+      }
+    })
   }
 
   render() {
     const { username, profilePic } = this.props;
     return (
       <div id="change-pic-container">
-        <Typography>
-                    Profile picture
+
+        <Typography
+        id="change-pic-title"
+        variant="title"
+        color="primary"
+        >
+          <strong>Profile picture</strong>
         </Typography>
 
         <div id="change-pic-content-container">
@@ -30,7 +57,6 @@ class ChangePictureComponent extends React.Component {
             <Avatar
               alt={username}
               src={profilePic}
-              className="avatar big-avatar"
             />
           </div>
 
@@ -41,11 +67,11 @@ class ChangePictureComponent extends React.Component {
               color="primary"
               onClick={this.handleUploadPicture}
             >
-                        Upload new picture
+              Change picture
             </Button>
 
             <Typography>
-                        You can also drag and drop a picture from your computer
+              You can also drag and drop a picture from your computer
             </Typography>
           </div>
         </div>

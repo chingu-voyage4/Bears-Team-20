@@ -1,0 +1,19 @@
+#profile-container {
+    display: flex;
+    flex-direction: row;
+
+    
+    justify-content: space-evenly;
+
+    margin: 5vh 20vh;
+}
+
+#profile-container > div {
+    padding: 0 1em;
+}
+
+@media only screen and (max-width: 1024px) {
+    #profile-container {
+        margin: 5vh 0vh;
+    }
+}

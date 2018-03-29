@@ -1,12 +1,15 @@
 import React from 'react';
 import ChangePassword from './ChangePassword';
+import ChangePicture from './ChangePicture';
 
+import './Profile.css';
 
 function ProfileContainer() {
   return (
-    <React.Fragment>
+    <div id="profile-container">
       <ChangePassword />
-    </React.Fragment>
+      <ChangePicture />
+    </div>
   );
 }
 

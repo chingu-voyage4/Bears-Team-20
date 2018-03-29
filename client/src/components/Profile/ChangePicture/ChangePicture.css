@@ -2,7 +2,7 @@
 
 #change-pic-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 #change-pic-content-container {
@@ -10,16 +10,24 @@
     flex-direction: column;
 }
 
+#change-pic-title {
+    margin-bottom: 1em;
+}
+
+#change-pic-avatar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #change-pic-controls-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
-.avatar {
-    margin: 10;
-}
-
-.big-avatar {
-    width: 60;
-    height: 60;
+ 
+#change-pic-avatar-container > div {
+    margin: 0.5em 0;
+    width: 100px;
+    height: 100px;
 }
