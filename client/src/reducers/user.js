@@ -16,7 +16,7 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         username: action.user.username,
-        profilePic: action.user.profilePic || "http://santetotal.com/wp-content/uploads/2014/05/default-user.png",
+        profilePic: action.user.profilePic || 'http://santetotal.com/wp-content/uploads/2014/05/default-user.png',
         isAuthenticated: true,
       };
     case actions.USER_LOGOUT:

@@ -44,7 +44,7 @@ export function* logoutProcess() {
   }
 }
 
-//=========================================
+//= ========================================
 // CHANGE PASSWORD
 
 const changePwToAPI = data => axios.post('/api/auth/profile', {
@@ -76,15 +76,13 @@ export function* changePwProcess(action) {
       {
         type: 'request',
         message: e.message,
-      }
+      },
     ]));
   }
 }
 
 
-
-
-//=========================================
+//= ========================================
 // WATCHER
 
 export function* watchUserRequest() {

@@ -37,13 +37,14 @@ class ChangePasswordComponent extends React.Component {
   }
 
   render() {
+    console.log('ERRORS', this.props.errors);
     return (
       <div id="changepw-container">
 
         <Typography
-        id="changepw-title"
-        variant="title"
-        color="primary"
+          id="changepw-title"
+          variant="title"
+          color="primary"
         >
           <strong>Change password</strong>
         </Typography>

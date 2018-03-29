@@ -2,8 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Button, Avatar, Input } from 'material-ui';
 import PropTypes from 'prop-types';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import './ChangePicture.css';
 
@@ -13,8 +11,8 @@ class ChangePictureComponent extends React.Component {
 
     this.state = {
       editing: false,
-      url: props.profilePic
-    }
+      url: props.profilePic,
+    };
 
     this.handleUploadPicture = this.handleUploadPicture.bind(this);
     this.handleInnerLocalChange = this.handleInnerLocalChange.bind(this);
@@ -22,7 +20,7 @@ class ChangePictureComponent extends React.Component {
   }
 
   handleEditClick() {
-    this.setState({editing: true});
+    this.setState({ editing: true });
   }
 
   handleInnerLocalChange(newUrl) {
@@ -31,7 +29,7 @@ class ChangePictureComponent extends React.Component {
 
   handleUploadPicture() {
     const { changePicture } = this.props;
-    this.setState({editing: false});
+    this.setState({ editing: false });
     changePicture(this.state.url);
   }
 
@@ -41,9 +39,9 @@ class ChangePictureComponent extends React.Component {
       <div id="change-pic-container">
 
         <Typography
-        id="change-pic-title"
-        variant="title"
-        color="primary"
+          id="change-pic-title"
+          variant="title"
+          color="primary"
         >
           <strong>Profile picture</strong>
         </Typography>
@@ -58,10 +56,10 @@ class ChangePictureComponent extends React.Component {
           </div>
 
           <Input
-          id="change-pic-url-input"
-          disabled={!this.state.editing}
-          value={this.state.url}
-          onChange={ (e) => this.handleInnerLocalChange(e.target.value) }
+            id="change-pic-url-input"
+            disabled={!this.state.editing}
+            value={this.state.url}
+            onChange={e => this.handleInnerLocalChange(e.target.value)}
           />
 
           <div id="change-pic-controls-container">
