@@ -86,7 +86,7 @@ export function* changePwProcess(action) {
 // CHANGE PROFILE's PICTURE
 
 const changePictureToAPI = url => axios.post('/api/auth/profile/picture', {
-  url,
+  picture: url,
 });
 
 
@@ -104,7 +104,7 @@ export function* changePictureProcess(action) {
 
     // User data
     if (payload.data) {
-      yield put(userActions.changePictureSuccess(payload.data.url));
+      yield put(userActions.changePictureSuccess(payload.data.picture));
     }
   } catch (e) {
     console.log('profile error', e);

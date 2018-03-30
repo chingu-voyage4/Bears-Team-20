@@ -21,21 +21,32 @@ userSchema.statics.getUserByUserName = function (username, callback) {
 	return this.findOne({username}, callback);
 };
 
-userSchema.statics.updateUsersPassword = function (user, newPassword, cb) {
+userSchema.statics.updateUsersPassword = function (user, credentials, cb) {
+	const {currentPassword, nextPassword, repeatPassword} = credentials;
+	if (!currentPassword || !nextPassword || !repeatPassword) {
+		return cb(new Error('Bad request'));
+	}
 	try {
+		if (nextPassword !== repeatPassword) {
+			return cb(new Error('password mismatch'));
+		}
 		this.findOne({
 			username: user.username
 		}, (err, user) => {
 			if (err) {
 				return cb(err);
 			}
-			user.password = user.generateHash(newPassword);
-			user.save((err, updatedUser) => {
-				if (err) {
-					return cb(err);
-				}
-				cb(null, updatedUser);
-			});
+			if (!user.validPassword(currentPassword)) {
+				return cb(new Error('invalid password'));
+			}
+
+			user.password = user.generateHash(nextPassword);
+				user.save((err, updatedUser) => {
+					if (err) {
+						return cb(err);
+					}
+					cb(null, updatedUser);
+				});
 		});
 	} catch (err) {
 		cb(err);
@@ -43,6 +54,9 @@ userSchema.statics.updateUsersPassword = function (user, newPassword, cb) {
 };
 
 userSchema.statics.updateUsersPicture = function (user, newPicture, cb) {
+	if (!newPicture) {
+		return cb(new Error('Bad request'));
+	}
 	try {
 		this.findOne({
 			username: user.username
@@ -50,6 +64,7 @@ userSchema.statics.updateUsersPicture = function (user, newPicture, cb) {
 			if (err) {
 				return cb(err);
 			}
+
 			user.picture = newPicture;
 			user.save((err, updatedUser) => {
 				if (err) {

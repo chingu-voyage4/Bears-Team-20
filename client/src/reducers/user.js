@@ -24,7 +24,7 @@ export default (state = initialState, action = {}) => {
         picture: {
           isFetching: false,
           errors: [],
-          url: action.user.profilePic || initialState.picture.url, // defaults to generic image
+          url: action.user.picture || initialState.picture.url, // defaults to generic image
         },
       };
     case actions.USER_LOGOUT:

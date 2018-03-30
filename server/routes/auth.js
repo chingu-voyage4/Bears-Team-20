@@ -32,20 +32,20 @@ module.exports = function (app, passport) {
 	});
 
 	app.post('/api/auth/profile/picture', passport.myAuthenticate, (req, res) => {
-		User.updateUsersPassword(req.user, req.body.picture, (err, updatedUser) => {
+		User.updateUsersPicture(req.user, req.body.picture, (err, updatedUser) => {
 			if (err) {
 				console.log(err);
-				return res.sendStatus(500);
+				return res.status(400).send(err.message);
 			}
 			return res.json(updatedUser);
 		});
 	});
 
 	app.post('/api/auth/profile/password', passport.myAuthenticate, (req, res) => {
-		User.updateUsersPassword(req.user, req.body.password, (err, updatedUser) => {
+		User.updateUsersPassword(req.user, req.body, (err, updatedUser) => {
 			if (err) {
 				console.log(err);
-				return res.sendStatus(500);
+				return res.status(400).send(err.message);
 			}
 			return res.json(updatedUser);
 		});

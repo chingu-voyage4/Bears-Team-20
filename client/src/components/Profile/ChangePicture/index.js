@@ -35,7 +35,7 @@ class ChangePictureComponent extends React.Component {
   }
 
   render() {
-    const { username, profilePic } = this.props;
+    const { username, profilePic, errors } = this.props;
     return (
       <div id="change-pic-container">
 
@@ -81,6 +81,16 @@ class ChangePictureComponent extends React.Component {
               Confirm changes!
             </Button>
           </div>
+
+          <div>
+            { errors.length !== 0 &&
+              errors.map(error => (
+                <Typography key={error.type} color="error">
+                  {error.message}
+                </Typography>
+              ))
+            }
+          </div>
         </div>
       </div>
     );
@@ -91,18 +101,21 @@ class ChangePictureComponent extends React.Component {
 ChangePictureComponent.propTypes = {
   username: PropTypes.string,
   profilePic: PropTypes.string,
+  errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   changePicture: PropTypes.func,
 };
 
 ChangePictureComponent.defaultProps = {
   username: '',
   profilePic: '',
+  errors: [],
   changePicture: () => {},
 };
 
 
 const mapStateToProps = ({ user }) => ({
   profilePic: user.picture.url,
+  errors: user.picture.errors,
   username: user.username,
 });
 

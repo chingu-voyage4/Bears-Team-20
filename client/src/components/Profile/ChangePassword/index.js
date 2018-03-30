@@ -20,6 +20,20 @@ class ChangePasswordComponent extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.isFetching === false &&
+      this.props.isFetching === true &&
+      nextProps.errors.length === 0
+    ) {
+      this.setState({
+        currentPassword: '',
+        nextPassword: '',
+        repeatPassword: '',
+      });
+    }
+  }
+
   handleChangePassword() {
     const { currentPassword, nextPassword, repeatPassword } = this.state;
     const { changePassword } = this.props;
@@ -37,7 +51,7 @@ class ChangePasswordComponent extends React.Component {
   }
 
   render() {
-    console.log('ERRORS', this.props.errors);
+    const { errors } = this.props;
     return (
       <div id="changepw-container">
 
@@ -100,6 +114,14 @@ class ChangePasswordComponent extends React.Component {
               required: true,
             }}
           />
+
+          { errors.length !== 0 &&
+            errors.map(error => (
+              <Typography key={error.type} color="error">
+                {error.message}
+              </Typography>
+            ))
+          }
 
           <Button
             className="changepw-form-field"

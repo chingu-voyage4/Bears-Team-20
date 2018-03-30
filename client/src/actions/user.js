@@ -58,6 +58,7 @@ export const changePictureFailed = errors => ({
   errors,
 });
 
-export const changePictureSuccess = () => ({
+export const changePictureSuccess = url => ({
   type: CHANGE_PICTURE_SUCCESS,
+  url,
 });
