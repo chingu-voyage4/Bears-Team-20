@@ -4,7 +4,6 @@
     
 }
 
-
 .box{
     color:black;
     padding-top: 25px;
@@ -18,25 +17,14 @@
     
 }
 
-#quote{
-
-    
-    font-size: 70px;
-}
-
-
 #middle-title{
     font-size:25px;
 }
 
-
-
 #provider{
- 
    display: flex;
     justify-content: center;
-    margin-top: 25px;
-    
+    margin-top: 25px;    
 }
 
 #provider li {
