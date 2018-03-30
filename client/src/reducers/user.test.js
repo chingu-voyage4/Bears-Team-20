@@ -22,12 +22,12 @@ describe('user reducer', () => {
     })
 
     it('should set isAuthenticated and username on USER_LOGIN', () => {
-        const user = { username: "asda@test.com", profilePic: 'http.com.ar' };
+        const user = { username: "asda@test.com", picture: 'http.com.ar' };
         expect(userReducer(state, actions.userLogin(user))).toEqual({
             ...state,
             username: user.username, 
             picture: {
-                url: user.profilePic,
+                url: user.picture,
                 isFetching: false,
                 errors: []
             },
