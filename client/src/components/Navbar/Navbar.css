@@ -1,6 +1,6 @@
 nav {
-  background-color: #2196F3;
-  padding: 20px;
+  background-color: #00BCD4;
+  padding:0px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -11,6 +11,14 @@ nav h1, a {
   color: white;
 }
 
+nav h1{
+  padding-left: 65px;
+}
+
+
+
+
+n
 h1 {
   margin-left: 100px;
 }
@@ -22,6 +30,10 @@ ul {
   flex-direction: row;
 }
 
-li {
-  padding: 10px;
+li { 
+  margin-right: 10px;  
+}
+
+nav li:hover {
+  background-color: rgba(124, 217, 230, 0.404);
 }
