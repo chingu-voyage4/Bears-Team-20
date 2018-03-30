@@ -109,5 +109,12 @@ module.exports = function (passport) {
 		});
 		})
 	));
+
+	passport.myAuthenticate = (req, res, next) => {
+		if (req.isAuthenticated()) {
+			return next();
+		}
+		return res.sendStatus(401);
+	};
 };
 

@@ -44,8 +44,81 @@ export function* logoutProcess() {
   }
 }
 
+//= ========================================
+// CHANGE PASSWORD
 
-//= =======================================
+const changePwToAPI = data => axios.post('/api/auth/profile/password', {
+  currentPassword: data.currentPassword,
+  nextPassword: data.nextPassword,
+  repeatPassword: data.repeatPassword,
+});
+
+
+export function* changePwProcess(action) {
+  try {
+    const payload = yield call(
+      changePwToAPI,
+      action.changePwData,
+    );
+
+    // Errors
+    if (payload.data.errors) {
+      yield put(userActions.changePwFailed(payload.data.errors));
+    }
+
+    // User data
+    if (payload.data) {
+      yield put(userActions.changePwSuccess());
+    }
+  } catch (e) {
+    console.log('profile error', e);
+    yield put(userActions.changePwFailed([
+      {
+        type: 'request',
+        message: e.message,
+      },
+    ]));
+  }
+}
+
+
+//= ========================================
+// CHANGE PROFILE's PICTURE
+
+const changePictureToAPI = url => axios.post('/api/auth/profile/picture', {
+  picture: url,
+});
+
+
+export function* changePictureProcess(action) {
+  try {
+    const payload = yield call(
+      changePictureToAPI,
+      action.url,
+    );
+
+    // Errors
+    if (payload.data.errors) {
+      yield put(userActions.changePictureFailed(payload.data.errors));
+    }
+
+    // User data
+    if (payload.data) {
+      yield put(userActions.changePictureSuccess(payload.data.picture));
+    }
+  } catch (e) {
+    console.log('profile error', e);
+    yield put(userActions.changePictureFailed([
+      {
+        type: 'request',
+        message: e.message,
+      },
+    ]));
+  }
+}
+
+
+//= ========================================
 // WATCHER
 
 export function* watchUserRequest() {
@@ -58,5 +131,15 @@ export function* watchUserRequest() {
     takeEvery,
     userActions.USER_REQUEST_LOGOUT,
     logoutProcess,
+  );
+  yield fork(
+    takeEvery,
+    userActions.CHANGE_PW_REQUEST,
+    changePwProcess,
+  );
+  yield fork(
+    takeEvery,
+    userActions.CHANGE_PICTURE_REQUEST,
+    changePictureProcess,
   );
 }

@@ -13,7 +13,6 @@ import Navbar from './components/Navbar';
 
 import * as userActions from './actions/user';
 
-import logo from './logo.svg';
 import './App.css';
 
 
