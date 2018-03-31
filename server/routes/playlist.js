@@ -1,5 +1,6 @@
 const router = require('express').Router(); // eslint-disable-line new-cap
 const User = require('../models/user');
+const Playlist = require('../models/playlist');
 
 /**
 * GET /api/playlist/public -> Get all public playlists
@@ -44,18 +45,52 @@ router.get('/:id?', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	res.sendStatus(200);
+	const data = {
+		name: req.body.name,
+		description: req.body.description,
+		public: req.body.public
+	};
+	User.createNewPlaylist(req.user.username, data, (err, newPlaylist) => {
+		if (err) {
+			return res.status(400).send(err.message);
+		}
+		res.json(newPlaylist);
+	});
 });
 
 router.delete('/', (req, res) => {
-	res.sendStatus(200);
+	Playlist.deletePlaylist(req.user._id, req.body.playlistId, err => {
+		if (err) {
+			return res.status(400).send(err.message);
+		}
+		res.sendStatus(200);
+	});
 });
 
 router.post('/song', (req, res) => {
-	res.sendStatus(200);
+	const songData = {
+		link: req.body.link,
+		title: req.body.title,
+		artist: req.body.artist,
+		service: req.body.service,
+		descripcion: req.body.description,
+		thumbnail: req.body.thumbnail
+	};
+	Playlist.addSong(req.user._id, req.body.playlistId, songData, (err, playlist) => {
+		if (err) {
+			return res.status(400).send(err.message);
+		}
+		res.json(playlist);
+	});
 });
+
 router.delete('/song', (req, res) => {
-	res.sendStatus(200);
+	Playlist.deleteSong(req.user._id, req.body.playlistId, req.body.songId, err => {
+		if (err) {
+			return res.status(400).send(err.message);
+		}
+		res.sendStatus(200);
+	});
 });
 
 module.exports = router;

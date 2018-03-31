@@ -1,6 +1,6 @@
-
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const Playlist = require('./playlist');
 
 const Schema = mongoose.Schema;
 
@@ -49,6 +49,28 @@ userSchema.statics.getPublicPlaylists = function (cb) {
 		}, [])
 		);
 	});
+};
+
+userSchema.statics.createNewPlaylist = function (username, playlistData, cb) {
+	return this.findOne({username})
+		.populate('playlists')
+		.exec((err, user) => {
+			if (err) {
+				return cb(err);
+			}
+
+			const newPlaylist = new Playlist({
+				...playlistData,
+				creator: user._id
+			});
+
+			newPlaylist.save(err => {
+				if (err) {
+					return cb(err);
+				}
+				return cb(null, newPlaylist);
+			});
+		});
 };
 
 userSchema.statics.getUserByUserName = function (username, callback) {
