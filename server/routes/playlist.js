@@ -4,13 +4,19 @@ const Playlist = require('../models/playlist');
 
 /**
 * GET /api/playlist/public -> Get all public playlists
-* GET /api/playlist/:id? -> Get a playlist by the user or all of them if id not present
+* GET /api/playlist&id=? -> Get a playlist by the user or all of them if id not present
 *
 * POST /api/playlist -> Add or modify a playlist (owned by current user)
+*	required body params: name, description, public
+*
 * DELETE /api/playlist -> Delete a playlist (owned by current user)
+*	required query params: id
 *
 * POST /api/playlist/song -> Add song to playlist
+*	required body params: link, service, playlistId
+*
 * DELETE /api/playlist/song -> Delete song from playlist
+*	required body params: playlistId, songId
 */
 
 router.get('/public', (req, res) => {
@@ -22,10 +28,10 @@ router.get('/public', (req, res) => {
 	});
 });
 
-router.get('/:id?', (req, res) => {
-	const id = req.params.id;
+router.get('/', (req, res) => {
+	const id = req.query.id;
 	if (id) {
-		User.getUsersPlaylist(req.user.username, id, (err, playlist) => {
+		Playlist.getUsersPlaylist(req.user._id, id, (err, playlist) => {
 			if (err) {
 				return res.sendStatus(400);
 			}
@@ -35,7 +41,7 @@ router.get('/:id?', (req, res) => {
 			res.json(playlist);
 		});
 	} else {
-		User.getUsersPlaylists(req.user.username, (err, playlists) => {
+		Playlist.getUsersPlaylists(req.user._id, (err, playlists) => {
 			if (err) {
 				return res.sendStatus(400);
 			}
@@ -59,7 +65,7 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/', (req, res) => {
-	Playlist.deletePlaylist(req.user._id, req.body.playlistId, err => {
+	Playlist.deletePlaylist(req.user._id, req.query.id, err => {
 		if (err) {
 			return res.status(400).send(err.message);
 		}

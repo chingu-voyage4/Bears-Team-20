@@ -16,28 +16,6 @@ const userSchema = new Schema({
 	admin: {type: Boolean, default: false}
 });
 
-userSchema.statics.getUsersPlaylists = function (username, cb) {
-	return this.findOne({username})
-		.populate('playlists')
-		.exec((err, user) => {
-			if (err) {
-				return cb(err);
-			}
-		cb(null, user.playlists);
-		});
-};
-
-userSchema.statics.getUsersPlaylist = function (username, playlistID, cb) {
-	return this.findOne({username})
-		.populate('playlists')
-		.exec((err, user) => {
-			if (err) {
-				return cb(err);
-			}
-		cb(null, user.playlists.find(e => e._id === playlistID));
-		});
-};
-
 userSchema.statics.getPublicPlaylists = function (cb) {
 	return this.find({}, (err, users) => {
 		if (err) {

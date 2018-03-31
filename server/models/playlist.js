@@ -11,6 +11,29 @@ const playlist = new Schema({
 	songs: [Song.schema]
 });
 
+playlist.statics.getUsersPlaylist = function (userId, playlistId, cb) {
+	return this.findOne({
+		_id: playlistId,
+		creator: userId
+	}, (err, playlist) => {
+		if (err) {
+			return cb(err);
+		}
+		cb(null, playlist);
+	});
+};
+
+playlist.statics.getUsersPlaylists = function (userId, cb) {
+	return this.find({
+		creator: userId
+	}, (err, playlists) => {
+		if (err) {
+			return cb(err);
+		}
+		cb(null, playlists);
+	});
+};
+
 playlist.statics.deletePlaylist = function (userId, playlistId, cb) {
 	return this.remove({
 		_id: playlistId,
@@ -24,7 +47,7 @@ playlist.statics.deletePlaylist = function (userId, playlistId, cb) {
 };
 
 playlist.statics.addSong = function (userId, playlistId, songData, cb) {
-	if (!playlistId) {
+	if (!playlistId || !songData.link || !songData.service) {
 		return cb(new Error('Bad request'));
 	}
 	return this.findOne({
@@ -35,7 +58,7 @@ playlist.statics.addSong = function (userId, playlistId, songData, cb) {
 			return cb(err);
 		}
 		const newSong = new Song(songData);
-		playlist.push(newSong);
+		playlist.songs.push(newSong);
 		playlist.save(err => {
 			if (err) {
 				return cb(err);
@@ -46,7 +69,7 @@ playlist.statics.addSong = function (userId, playlistId, songData, cb) {
 };
 
 playlist.statics.deleteSong = function (userId, playlistId, songId, cb) {
-	if (!playlistId || songId) {
+	if (!playlistId || !songId) {
 		return cb(new Error('Bad request'));
 	}
 
