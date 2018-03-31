@@ -6,6 +6,7 @@ import * as actions from '../actions/user';
 const initialState = {
     isAuthenticated: false,
     username: '',
+    profilePic: ''
 };
 
 describe('user reducer', () => {
@@ -21,10 +22,15 @@ describe('user reducer', () => {
     })
 
     it('should set isAuthenticated and username on USER_LOGIN', () => {
-        const user = { username: "asda@test.com" };
+        const user = { username: "asda@test.com", picture: 'http.com.ar' };
         expect(userReducer(state, actions.userLogin(user))).toEqual({
             ...state,
             username: user.username, 
+            picture: {
+                url: user.picture,
+                isFetching: false,
+                errors: []
+            },
             isAuthenticated: true
         });
     })
@@ -33,6 +39,7 @@ describe('user reducer', () => {
         expect(userReducer(state, actions.userLogout())).toEqual({
             ...state,
             username: '',
+            profilePic: '',
             isAuthenticated: false
         });
     })

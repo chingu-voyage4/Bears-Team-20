@@ -1,5 +1,16 @@
 import React from 'react';
+import ChangePassword from './ChangePassword';
+import ChangePicture from './ChangePicture';
 
-const Profile = () => <h1>Profile Page!</h1>;
+import './Profile.css';
 
-export default Profile;
+function ProfileContainer() {
+  return (
+    <div id="profile-container">
+      <ChangePassword />
+      <ChangePicture />
+    </div>
+  );
+}
+
+export default ProfileContainer;
