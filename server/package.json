@@ -12,19 +12,11 @@
   },
   "dependencies": {
     "async": "^2.6.0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 13a785f316ee8905a8ef2c9ccb725aba6efd4d59
     "axios": "^0.18.0",
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
-<<<<<<< HEAD
     "connect-flash": "^0.1.1",
->>>>>>> feature/playlist
-=======
->>>>>>> 13a785f316ee8905a8ef2c9ccb725aba6efd4d59
     "cookie-parser": "^1.4.3",
     "dotenv": "^5.0.1",
     "express": "^4.16.2",
