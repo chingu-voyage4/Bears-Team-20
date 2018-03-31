@@ -1,5 +1,17 @@
+
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web');
+
+
+body{
+  
+}
+
 .App {
   text-align: center;
+  font-family: 'Titillium Web', sans-serif;
+  
+  
+
 }
 
 .App-logo {
