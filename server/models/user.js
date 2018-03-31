@@ -1,7 +1,6 @@
-
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const playlistSchema = require('./playlist').schema;
+const Playlist = require('./playlist');
 
 const Schema = mongoose.Schema;
 
@@ -11,11 +10,46 @@ const userSchema = new Schema({
 	password: {type: String},
 	createdAt: Date,
 	updatedAt: Date,
-	playlists: [playlistSchema],
+	playlists: [{type: Schema.Types.ObjectId, ref: 'Playlist'}],
 	googleId: {type: String},
 	picture: {type: String},
 	admin: {type: Boolean, default: false}
 });
+
+userSchema.statics.getPublicPlaylists = function (cb) {
+	return this.find({}, (err, users) => {
+		if (err) {
+			return cb(err);
+		}
+		cb(null, users.reduce((acc, user) => {
+			const publicPlaylists = user.playlists.filter(playlist => playlist.public);
+			return acc.concat(publicPlaylists);
+		}, [])
+		);
+	});
+};
+
+userSchema.statics.createNewPlaylist = function (username, playlistData, cb) {
+	return this.findOne({username})
+		.populate('playlists')
+		.exec((err, user) => {
+			if (err) {
+				return cb(err);
+			}
+
+			const newPlaylist = new Playlist({
+				...playlistData,
+				creator: user._id
+			});
+
+			newPlaylist.save(err => {
+				if (err) {
+					return cb(err);
+				}
+				return cb(null, newPlaylist);
+			});
+		});
+};
 
 userSchema.statics.getUserByUserName = function (username, callback) {
 	return this.findOne({username}, callback);
