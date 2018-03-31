@@ -1,9 +1,7 @@
 
 #img{
-    width:50%;
-    
+    width:50%;   
 }
-
 .box{
     color:black;
     padding-top: 25px;
@@ -33,5 +31,13 @@
 
 #provider li:nth-last-child(1) {
     margin-right: 0px;
+}
+
+
+#link{
+    color:white;
+    background-color:#00BCD4;
+    border-radius: 3px;
+    padding :10px
 }
 

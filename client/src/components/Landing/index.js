@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom'
-import Button from 'material-ui/Button';
+import { Link } from 'react-router-dom';
 import React from 'react';
 import './Landing.css';
 
@@ -8,9 +7,9 @@ import './Landing.css';
 
 const LandingPage = () => {
   return (
-        <div className ="box" >
-            <h1 id="head-title">Play music from everywhere</h1> 
-            <img src = "/cell.png"/>
+    <div className="box" >
+      <h1 id="head-title">Play music from everywhere</h1> 
+      <img src = "/cell.png" alt = ""/>
             <p id="middle-title">Search, play, create, and share from anywhere</p>
 
             <div>
@@ -22,7 +21,7 @@ const LandingPage = () => {
                     <li><img src = "/icons/spotify.png" /></li>
                 </ul>
               
-                <Link to = "/login">  <Button to="/music" id="sign-btn" >Sign up for free    </Button></Link>
+              <Link id="link" to="/login">Sign up for free</Link>
 
             </div>
         </div>
