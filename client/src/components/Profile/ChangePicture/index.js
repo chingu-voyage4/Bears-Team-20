@@ -9,7 +9,6 @@ import { deepPurple } from 'material-ui/colors';
 import * as actions from '../../../actions/user';
 
 
-
 const ChangePictureContainer = styled.div`
   display: flex;
   align-items: center;
@@ -34,7 +33,7 @@ const StyledAvatar = styled(Avatar)`
   width: 100px !important;
   height: 100px !important;
   box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.75);
-`
+`;
 
 const AvatarContainer = styled.div`
   display: flex;
@@ -96,8 +95,8 @@ class ChangePictureComponent extends React.Component {
 
           <AvatarContainer>
             <StyledAvatar
-            alt={username}
-            src={profilePic}
+              alt={username}
+              src={profilePic}
             />
           </AvatarContainer>
 
@@ -138,7 +137,6 @@ class ChangePictureComponent extends React.Component {
     );
   }
 }
-
 
 
 ChangePictureComponent.propTypes = {

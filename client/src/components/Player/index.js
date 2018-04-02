@@ -14,8 +14,6 @@ import CurrentPlaylist from './CurrentPlaylist';
 import * as actions from '../../actions/player';
 
 
-
-
 const PlayerContainer = styled.div`
   display: flex;
   min-height: 10vh;
@@ -67,14 +65,14 @@ const StyledPlayerSongInfo = styled(PlayerSongInfo)`
   text-align: center;
 
   overflow: hidden;
-`
+`;
 
 const PlayerVolumeControls = styled.div`
   display: flex;
   flex-direction: row;
   
   min-width: 30vh;
-`
+`;
 
 const VolumeSliderContainer = styled.div`
   width: 100%;
@@ -83,7 +81,7 @@ const VolumeSliderContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   text-align: center;
-`
+`;
 
 function parseToHHMMSS(value) {
   const secNum = parseInt(value, 10);
@@ -242,13 +240,13 @@ function DurationLabel(props) {
 }
 
 function PlayerSongInfo(props) {
-  return(
+  return (
     <div className={props.className}>
       <Typography noWrap>
         {props.children}
       </Typography>
     </div>
-  )
+  );
 }
 
 
