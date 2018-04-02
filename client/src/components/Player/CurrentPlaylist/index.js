@@ -4,7 +4,19 @@ import styled from 'styled-components';
 
 
 const CurrentPlaylistContainer = styled.div`
-  display: ${props => (props.isShowing ? 'none' : 'flex')};
+  display: ${props => (props.isShowing ? 'flex' : 'none')};
+  position: absolute;
+
+  width: 33vw;
+  height: 45vh;
+  
+  top: -45vh;
+  left: 0vw;
+
+
+  background-color: white;
+  border: 1px solid black;
+  border-bottom: none;
 `;
 
 

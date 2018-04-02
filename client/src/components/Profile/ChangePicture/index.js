@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Button, Avatar, Input } from 'material-ui';
@@ -6,7 +8,6 @@ import styled from 'styled-components';
 import { deepPurple } from 'material-ui/colors';
 import * as actions from '../../../actions/user';
 
-import './ChangePicture.css';
 
 
 const ChangePictureContainer = styled.div`
@@ -27,6 +28,13 @@ const Title = styled.div`
   font-size: 1.5em;
   margin-bottom: 1em;
 `;
+
+const StyledAvatar = styled(Avatar)`
+  margin: 0.5em 0;
+  width: 100px !important;
+  height: 100px !important;
+  box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.75);
+`
 
 const AvatarContainer = styled.div`
   display: flex;
@@ -87,14 +95,13 @@ class ChangePictureComponent extends React.Component {
         <FormContainer>
 
           <AvatarContainer>
-            <Avatar
-              alt={username}
-              src={profilePic}
+            <StyledAvatar
+            alt={username}
+            src={profilePic}
             />
           </AvatarContainer>
 
           <Input
-            id="change-pic-url-input"
             disabled={!this.state.editing}
             value={this.state.url}
             onChange={e => this.handleInnerLocalChange(e.target.value)}
@@ -102,7 +109,6 @@ class ChangePictureComponent extends React.Component {
 
           <ButtonsContainer>
             <StyledButton
-              id="edit-pic-button"
               disabled={this.state.editing}
               color="primary"
               onClick={this.handleEditClick}
@@ -110,7 +116,6 @@ class ChangePictureComponent extends React.Component {
               Modify url
             </StyledButton>
             <StyledButton
-              id="change-pic-button"
               disabled={!this.state.editing}
               color="primary"
               onClick={this.handleUploadPicture}
@@ -133,6 +138,7 @@ class ChangePictureComponent extends React.Component {
     );
   }
 }
+
 
 
 ChangePictureComponent.propTypes = {

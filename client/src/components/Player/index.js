@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import CurrentPlaylist from './CurrentPlaylist';
 import * as actions from '../../actions/player';
 
-import './Player.css';
+
 
 
 const PlayerContainer = styled.div`
@@ -56,9 +56,34 @@ const PlayerRowContainer = styled.div`
 
 const PlayerDurationLabel = styled(DurationLabel)`
   display: flex !important;
-  margin-left: 1em !important;
-  overflow: hidden !important;
+  margin-left: 1em !important;  
 `;
+
+const StyledPlayerSongInfo = styled(PlayerSongInfo)`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+
+  overflow: hidden;
+`
+
+const PlayerVolumeControls = styled.div`
+  display: flex;
+  flex-direction: row;
+  
+  min-width: 30vh;
+`
+
+const VolumeSliderContainer = styled.div`
+  width: 100%;
+  display: flex;
+
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+`
 
 function parseToHHMMSS(value) {
   const secNum = parseInt(value, 10);
@@ -142,13 +167,12 @@ class PlayerComponent extends React.Component {
             </IconButton>
           </div>
 
-          <div id="player-song-info">
-            <Typography noWrap id="player-song-title">
-              {currentSong.title}
-            </Typography>
-          </div>
+          <StyledPlayerSongInfo>
+            {currentSong.title}
+          </StyledPlayerSongInfo>
 
-          <div id="player-controls-volume">
+          <PlayerVolumeControls>
+
             <IconButton aria-label="Volume" color="primary" onClick={toggleMute}>
               { isMuted ?
                 <VolumeOff className="player-control-icon" color="secondary" />
@@ -157,7 +181,8 @@ class PlayerComponent extends React.Component {
               }
 
             </IconButton>
-            <div id="player-volume-slider">
+
+            <VolumeSliderContainer>
               <Slider
                 min={0}
                 max={100}
@@ -165,8 +190,10 @@ class PlayerComponent extends React.Component {
                 onChange={setVolume}
                 disabled={isMuted}
               />
-            </div>
-          </div>
+            </VolumeSliderContainer>
+
+          </PlayerVolumeControls>
+
         </PlayerRowContainer>
 
         {/* Progress bar, duration stuff */}
@@ -212,6 +239,16 @@ function DurationLabel(props) {
 
     </div>
   );
+}
+
+function PlayerSongInfo(props) {
+  return(
+    <div className={props.className}>
+      <Typography noWrap>
+        {props.children}
+      </Typography>
+    </div>
+  )
 }
 
 
