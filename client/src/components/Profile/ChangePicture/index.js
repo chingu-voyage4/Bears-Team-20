@@ -2,9 +2,52 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Button, Avatar, Input } from 'material-ui';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { deepPurple } from 'material-ui/colors';
 import * as actions from '../../../actions/user';
 
 import './ChangePicture.css';
+
+
+const ChangePictureContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const FormContainer = styled.div`
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.div`
+  color: ${deepPurple[900]};
+  font-size: 1.5em;
+  margin-bottom: 1em;
+`;
+
+const AvatarContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 1em !important;
+`;
+
+const ErrorContainer = styled.div`
+`;
+
 
 class ChangePictureComponent extends React.Component {
   constructor(props) {
@@ -37,24 +80,18 @@ class ChangePictureComponent extends React.Component {
   render() {
     const { username, profilePic, errors } = this.props;
     return (
-      <div id="change-pic-container">
+      <ChangePictureContainer>
 
-        <Typography
-          id="change-pic-title"
-          variant="title"
-          color="primary"
-        >
-          <strong>Profile picture</strong>
-        </Typography>
+        <Title>Profile picture</Title>
 
-        <div id="change-pic-content-container">
+        <FormContainer>
 
-          <div id="change-pic-avatar-container">
+          <AvatarContainer>
             <Avatar
               alt={username}
               src={profilePic}
             />
-          </div>
+          </AvatarContainer>
 
           <Input
             id="change-pic-url-input"
@@ -63,26 +100,26 @@ class ChangePictureComponent extends React.Component {
             onChange={e => this.handleInnerLocalChange(e.target.value)}
           />
 
-          <div id="change-pic-controls-container">
-            <Button
+          <ButtonsContainer>
+            <StyledButton
               id="edit-pic-button"
               disabled={this.state.editing}
               color="primary"
               onClick={this.handleEditClick}
             >
               Modify url
-            </Button>
-            <Button
+            </StyledButton>
+            <StyledButton
               id="change-pic-button"
               disabled={!this.state.editing}
               color="primary"
               onClick={this.handleUploadPicture}
             >
               Confirm changes!
-            </Button>
-          </div>
+            </StyledButton>
+          </ButtonsContainer>
 
-          <div>
+          <ErrorContainer>
             { errors.length !== 0 &&
               errors.map(error => (
                 <Typography key={error.type} color="error">
@@ -90,9 +127,9 @@ class ChangePictureComponent extends React.Component {
                 </Typography>
               ))
             }
-          </div>
-        </div>
-      </div>
+          </ErrorContainer>
+        </FormContainer>
+      </ChangePictureContainer>
     );
   }
 }

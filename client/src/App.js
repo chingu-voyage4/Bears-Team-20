@@ -36,29 +36,27 @@ export class AppComponent extends React.Component {
       <div className="App">
         <Navbar user={user} />
         <React.Fragment>
-          <div>
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/signup" component={Signup} />
-              <Route path="/playlists" component={Playlist} />
-              <Route path="/music" component={Music} />
-              { user.isAuthenticated &&
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/playlists" component={Playlist} />
+            <Route path="/music" component={Music} />
+            { user.isAuthenticated &&
               <Route path="/profile" component={Profile} />
             }
-              <Route
-                path="/logout"
-                render={() => {
+            <Route
+              path="/logout"
+              render={() => {
               userLogout();
               return <Redirect to="/" />;
             }}
-              />
-              <Route path="/" exact component={Landing} />
-              <Route
-                path="/*"
-                render={() => <Redirect to="/" />}
-              />
-            </Switch>
-          </div>
+            />
+            <Route path="/" exact component={Landing} />
+            <Route
+              path="/*"
+              render={() => <Redirect to="/" />}
+            />
+          </Switch>
         </React.Fragment>
       </div>
     );

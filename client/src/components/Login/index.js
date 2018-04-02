@@ -2,9 +2,53 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { TextField, Button, Typography } from 'material-ui';
+import { TextField, Button } from 'material-ui';
+import styled from 'styled-components';
+import { deepPurple } from 'material-ui/colors';
+
 import * as actions from '../../actions/login';
-import './Login.css';
+
+
+const LoginContainer = styled.div`
+  margin-top: 10vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const FormContainer = styled.div`
+  min-width: 120px;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Logo = styled.div`
+  color: ${deepPurple[900]};
+  user-select: none;
+  font-size: 3em;
+  padding: 0 0.2em;
+  font-family: 'Pacifico', sans-serif;
+
+  margin-bottom: 5vh;
+`;
+
+const Title = styled.div`
+  color: ${deepPurple[900]};
+  font-size: 1.5em;
+  margin-bottom: 1em;
+`;
+
+const StyledTextField = styled(TextField)`
+  text-align: center;
+  padding-bottom: 3px !important;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 1em !important;
+`;
 
 
 export class LoginComponent extends Component {
@@ -62,13 +106,14 @@ export class LoginComponent extends Component {
     if (redirectSignup) return <Redirect to="/signup" />;
 
     return (
-      <div id="login-container">
-        <div id="login-form-container">
-          <Typography align="center" id="login-logo">
-                    App logo here
-          </Typography>
+      <LoginContainer>
 
-          <TextField
+        <Logo>MusicHub</Logo>
+
+        <Title>Login!</Title>
+
+        <FormContainer>
+          <StyledTextField
             className="login-form-field"
             id="login-textfield-email"
             type="email"
@@ -86,7 +131,7 @@ export class LoginComponent extends Component {
                 }}
           />
 
-          <TextField
+          <StyledTextField
             className="login-form-field"
             id="login-textfield-password"
             type="password"
@@ -103,7 +148,7 @@ export class LoginComponent extends Component {
                 }}
           />
 
-          <Button
+          <StyledButton
             className="login-form-field"
             id="login-button"
             disabled={this.props.isFetching}
@@ -111,28 +156,29 @@ export class LoginComponent extends Component {
             onClick={this.handleLoginClick}
           >
                 Login
-          </Button>
+          </StyledButton>
 
-        </div>
+        </FormContainer>
 
-        <Button
+        <StyledButton
           id="login-google-button"
           disabled={this.props.isFetching}
           color="primary"
           onClick={this.handleLocalSignup}
         >
           Signup locally
-        </Button>
+        </StyledButton>
 
-        <Button
+        <StyledButton
           id="login-google-button"
           disabled={this.props.isFetching}
           color="primary"
           onClick={this.handleGoogleLogin}
         >
           Login with google
-        </Button>
-      </div>);
+        </StyledButton>
+      </LoginContainer>
+    );
   }
 }
 
