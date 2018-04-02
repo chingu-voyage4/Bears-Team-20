@@ -1,3 +1,5 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
 import ReactPlayer from 'react-player';
@@ -6,10 +8,57 @@ import { Typography, IconButton } from 'material-ui';
 import { PlayArrow, Pause, VolumeUp, VolumeOff, Loop, PlaylistPlay } from 'material-ui-icons';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
+import styled from 'styled-components';
+
 import CurrentPlaylist from './CurrentPlaylist';
 import * as actions from '../../actions/player';
+
 import './Player.css';
 
+
+const PlayerContainer = styled.div`
+  display: flex;
+  min-height: 10vh;
+  flex-direction: column;
+  
+  border-top: 1px solid black;
+  background-color: white;
+  padding: 0 2em;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
+
+const PlayerOverlay = styled.div`
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-color: rgba(255,255,255,0.5);
+
+  display: ${props => (props.isShowing ? 'none' : 'block')};
+`;
+
+const PlayerRowContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex: 1;
+
+  align-items: center;
+`;
+
+const PlayerDurationLabel = styled(DurationLabel)`
+  display: flex !important;
+  margin-left: 1em !important;
+  overflow: hidden !important;
+`;
 
 function parseToHHMMSS(value) {
   const secNum = parseInt(value, 10);
@@ -57,14 +106,17 @@ class PlayerComponent extends React.Component {
     } = this.props;
 
     return (
-      <div id="player-container" disabled={!isReady || !currentSong.link}>
-        <div id="player-overlay" className={`${!isReady || !currentSong.link ? '' : 'player-hidden'}`} />
+      <PlayerContainer>
+
+        <PlayerOverlay isShowing={Boolean(isReady) && Boolean(currentSong.link)} />
+
         <CurrentPlaylist
           isShowing={plShowing}
           playlist={currentPlaylist}
           setSong={setCurrentSong}
         />
-        <div className="player-row-container">
+
+        <PlayerRowContainer>
           <div id="player-controls-playback">
             <IconButton aria-label="Play/pause" color="primary" onClick={togglePlayPause}>
               { isPlaying ?
@@ -115,17 +167,15 @@ class PlayerComponent extends React.Component {
               />
             </div>
           </div>
-        </div>
+        </PlayerRowContainer>
 
         {/* Progress bar, duration stuff */}
-        <div className="player-row-container">
+        <PlayerRowContainer>
           <Slider min={0} max={duration} value={progress} onChange={this.handleSeek} />
-          <div id="player-duration-label" >
-            <Typography noWrap>
-              {`${parseToHHMMSS(progress)} / ${parseToHHMMSS(duration)}`}
-            </Typography>
-          </div>
-        </div>
+          <PlayerDurationLabel >
+            {`${parseToHHMMSS(progress)} / ${parseToHHMMSS(duration)}`}
+          </PlayerDurationLabel>
+        </PlayerRowContainer>
 
 
         <ReactPlayer
@@ -146,9 +196,22 @@ class PlayerComponent extends React.Component {
           width="0px"
           height="0px"
         />
-      </div>
+
+      </PlayerContainer>
     );
   }
+}
+
+
+function DurationLabel(props) {
+  return (
+    <div className={props.className}>
+      <Typography noWrap>
+        { props.children }
+      </Typography>
+
+    </div>
+  );
 }
 
 

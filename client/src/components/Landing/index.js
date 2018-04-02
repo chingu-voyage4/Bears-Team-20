@@ -80,7 +80,7 @@ const StyledLink = styled(Link)`
 
 const LandingPage = () => (
   <LandingContainer >
-    <BackgroundImage src="/landing-bg-image.jpg" />
+    <BackgroundImage src="/landing-bg-image-low.jpg" />
     <Headline>
       Play music from everywhere
     </Headline>
