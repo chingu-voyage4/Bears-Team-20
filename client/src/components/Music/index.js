@@ -4,10 +4,10 @@ import Search from '../Search';
 
 function Music() {
   return (
-    <div>
+    <React.Fragment>
       <Search />
       <Player />
-    </div>
+    </React.Fragment>
   );
 }
 

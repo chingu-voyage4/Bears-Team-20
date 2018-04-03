@@ -1,19 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './CurrentPlaylist.css';
+import styled from 'styled-components';
+
+
+const CurrentPlaylistContainer = styled.div`
+  display: ${props => (props.isShowing ? 'flex' : 'none')};
+  position: absolute;
+
+  width: 33vw;
+  height: 45vh;
+  
+  top: -45vh;
+  left: 0vw;
+
+
+  background-color: white;
+  border: 1px solid black;
+  border-bottom: none;
+`;
 
 
 export default function CurrentPlaylist(props) {
   const { playlist, isShowing } = props;
 
   return (
-    <div
-      id="current-playlist-container"
-      className={`${isShowing ? '' : 'player-hidden'}`}
-    >
+    <CurrentPlaylistContainer isShowing={isShowing}>
       <p>PLAYLIST</p>
       { playlist.map(songObj => <PlaylistItem key={songObj.link} song={songObj} />)}
-    </div>
+    </CurrentPlaylistContainer>
   );
 }
 

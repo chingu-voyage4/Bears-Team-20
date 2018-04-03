@@ -2,9 +2,39 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, TextField, Button } from 'material-ui';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { deepPurple } from 'material-ui/colors';
+
 import * as actions from '../../../actions/user';
 
-import './ChangePassword.css';
+const ChangePasswordContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const FormContainer = styled.div`
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Title = styled.div`
+  color: ${deepPurple[900]};
+  font-size: 1.5em;
+  margin-bottom: 1em;
+`;
+
+const StyledTextField = styled(TextField)`
+  text-align: center;
+  padding-bottom: 3px !important;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 1em !important;
+`;
+
 
 class ChangePasswordComponent extends React.Component {
   constructor(props) {
@@ -53,21 +83,13 @@ class ChangePasswordComponent extends React.Component {
   render() {
     const { errors } = this.props;
     return (
-      <div id="changepw-container">
+      <ChangePasswordContainer>
 
-        <Typography
-          id="changepw-title"
-          variant="title"
-          color="primary"
-        >
-          <strong>Change password</strong>
-        </Typography>
+        <Title>Change password</Title>
 
-        <div id="changepw-form-container">
+        <FormContainer>
 
-          <TextField
-            className="changepw-form-field"
-            id="changepw-textfield-current-pass"
+          <StyledTextField
             type="password"
             name="currentPassword"
             value={this.state.currentPassword}
@@ -81,9 +103,7 @@ class ChangePasswordComponent extends React.Component {
               required: true,
             }}
           />
-          <TextField
-            className="changepw-form-field"
-            id="changepw-textfield-next-pass"
+          <StyledTextField
             type="password"
             name="nextPassword"
             value={this.state.nextPassword}
@@ -98,9 +118,7 @@ class ChangePasswordComponent extends React.Component {
             }}
           />
 
-          <TextField
-            className="changepw-form-field"
-            id="changepw-textfield-repeat-pass"
+          <StyledTextField
             type="password"
             name="repeatPassword"
             value={this.state.repeatPassword}
@@ -123,18 +141,17 @@ class ChangePasswordComponent extends React.Component {
             ))
           }
 
-          <Button
-            className="changepw-form-field"
-            id="changepw-button"
+          <StyledButton
             disabled={this.props.isFetching}
             color="primary"
             onClick={this.handleChangePassword}
           >
             Change it!
-          </Button>
+          </StyledButton>
 
-        </div>
-      </div>);
+        </FormContainer>
+      </ChangePasswordContainer>
+    );
   }
 }
 

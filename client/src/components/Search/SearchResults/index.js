@@ -35,10 +35,10 @@ export default class SearchResults extends Component {
     const { results, playSong } = this.props;
 
     return (
-      <div>
+      <React.Fragment>
         {results.map((r, i) =>
           <ResultItem key={generateKey(r.title, i)} result={r} playSong={playSong} />)}
-      </div>);
+      </React.Fragment>);
   }
 }
 

@@ -43,8 +43,8 @@ app.use(passport.session());
 
 require('./routes/auth')(app, passport);
 
-app.use('/api', authenticate);
 app.use('/api/search', require('./routes/search'));
+app.use('/api', authenticate);
 app.use('/api/playlist', require('./routes/playlist'));
 
 // Serve react app

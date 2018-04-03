@@ -2,8 +2,26 @@ import React from 'react';
 import { Input, InputAdornment, IconButton } from 'material-ui';
 import { Search } from 'material-ui-icons';
 import PropTypes from 'prop-types';
-import './SearchInput.css';
+import styled from 'styled-components';
+import { deepPurple } from 'material-ui/colors';
 
+
+const SearchContainer = styled.div`
+  width: 100%;
+  overflow: hidden;
+`;
+
+const StyledInput = styled(Input)`
+  padding: 0 1em;
+`;
+
+const StyledInputAdornment = styled(InputAdornment)`
+  padding-right: 1em !important;
+
+  &:hover {
+    background-color: ${deepPurple[100]}
+  }
+`;
 
 export default class SearchInput extends React.Component {
   componentDidMount() {
@@ -15,11 +33,10 @@ export default class SearchInput extends React.Component {
       value, onChange, onEnter, isFetching,
     } = this.props;
     return (
-      <div id="search-container">
-        <Input
+      <SearchContainer>
+        <StyledInput
           inputRef={(refInput) => { this.refInput = refInput; }}
           placeholder="Search for music, artists or albums"
-          id="search-input"
           fullWidth
           onChange={onChange}
           value={value}
@@ -28,7 +45,7 @@ export default class SearchInput extends React.Component {
             if (e.keyCode === 13) onEnter();
           }}
           endAdornment={
-            <InputAdornment position="end">
+            <StyledInputAdornment position="end">
               <IconButton
                 aria-label="Search"
                 color={isFetching ? 'default' : 'primary'}
@@ -36,9 +53,9 @@ export default class SearchInput extends React.Component {
               >
                 <Search />
               </IconButton>
-            </InputAdornment>}
+            </StyledInputAdornment>}
         />
-      </div>
+      </SearchContainer>
     );
   }
 }

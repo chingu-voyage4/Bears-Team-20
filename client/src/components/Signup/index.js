@@ -2,10 +2,53 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { TextField, Button, Typography } from 'material-ui';
-import * as actions from '../../actions/signup';
-import './Signup.css';
+import { TextField, Button } from 'material-ui';
+import styled from 'styled-components';
+import { deepPurple } from 'material-ui/colors';
 
+import * as actions from '../../actions/signup';
+
+
+const SignupContainer = styled.div`
+  margin-top: 10vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const FormContainer = styled.div`
+  min-width: 120px;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Logo = styled.div`
+  color: ${deepPurple[900]};
+  user-select: none;
+  font-size: 3em;
+  padding: 0 0.2em;
+  font-family: 'Pacifico', sans-serif;
+
+  margin-bottom: 5vh;
+`;
+
+const Title = styled.div`
+  color: ${deepPurple[900]};
+  font-size: 1.5em;
+  margin-bottom: 1em;
+`;
+
+const StyledTextField = styled(TextField)`
+  text-align: center;
+  padding-bottom: 3px !important;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 1em !important;
+`;
 
 export class SignupComponent extends Component {
   constructor(props) {
@@ -59,24 +102,14 @@ export class SignupComponent extends Component {
     if (redirectLogin) return <Redirect to="/login" />;
 
     return (
-      <div id="signup-container">
-        <div id="signup-form-container">
-          <Typography align="center" id="signup-logo">
-                    App logo here
-          </Typography>
+      <SignupContainer>
+        <Logo>MusicHub</Logo>
 
-          <Button
-            className="signup-form-field"
-            id="signup-redirect-login-button"
-            disabled={this.props.isFetching}
-            color="primary"
-            onClick={this.handleBackToLogin}
-          >
-          Back to login
-          </Button>
+        <Title>Sign up!</Title>
 
-          <TextField
-            className="signup-form-field"
+        <FormContainer>
+
+          <StyledTextField
             id="signup-textfield-username"
             type="username"
             name="username"
@@ -93,12 +126,10 @@ export class SignupComponent extends Component {
                 }}
           />
 
-          <TextField
-            className="signup-form-field"
+          <StyledTextField
             id="signup-textfield-email"
             type="email"
             name="email"
-            autoFocus
             value={this.state.email}
             onChange={this.handleInputChange}
             onKeyDown={(e) => {
@@ -111,8 +142,7 @@ export class SignupComponent extends Component {
                 }}
           />
 
-          <TextField
-            className="signup-form-field"
+          <StyledTextField
             id="signup-textfield-password"
             type="password"
             name="password"
@@ -128,18 +158,28 @@ export class SignupComponent extends Component {
                 }}
           />
 
-          <Button
-            className="signup-form-field"
+          <StyledButton
+
             id="signup-button"
             disabled={this.props.isFetching}
             color="primary"
             onClick={this.handleLoginClick}
           >
           Signup
-          </Button>
+          </StyledButton>
 
-        </div>
-      </div>);
+          <StyledButton
+            id="signup-redirect-login-button"
+            disabled={this.props.isFetching}
+            color="primary"
+            onClick={this.handleBackToLogin}
+          >
+          Already registered
+          </StyledButton>
+
+        </FormContainer>
+      </SignupContainer>
+    );
   }
 }
 
