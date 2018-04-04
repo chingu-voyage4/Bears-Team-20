@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { deepPurple } from 'material-ui/colors';
+import List, { ListItem, ListItemText } from 'material-ui/List';
 
+const playLists = ['Play1', 'Play2', 'Play3'];
 
 const PlaylistContainer = styled.div`
     display: flex;
@@ -17,6 +19,13 @@ const Title = styled.div`
 const Playlist = () => (
   <PlaylistContainer>
     <Title>Playlist management</Title>
+    <List>
+      {playLists.map(x =>
+        (
+          <ListItem button>
+            <ListItemText primary={x} />
+          </ListItem>))}
+    </List>
   </PlaylistContainer>
 );
 
