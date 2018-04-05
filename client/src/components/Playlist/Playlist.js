@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -26,9 +27,9 @@ export default function Playlist(props) {
   const { playlist } = props;
   return (
     <Droppable
-      droppableId={playlist.id}
-      type={playlist.id}
-      key={playlist.id}
+      droppableId={playlist._id}
+      type={playlist._id}
+      key={playlist._id}
     >
       {(dropProvided, dropSnapshot) => (
         <Container
@@ -39,9 +40,9 @@ export default function Playlist(props) {
           <h3>{playlist.name}</h3>
           {playlist.songs.map((song, index) => (
             <Draggable
-              key={song.id}
-              draggableId={song.id}
-              type={playlist.id}
+              key={song._id}
+              draggableId={song._id}
+              type={playlist._id}
               index={index}
             >
               {(provided, snapshot) => (

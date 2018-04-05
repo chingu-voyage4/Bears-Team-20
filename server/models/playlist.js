@@ -35,38 +35,39 @@ playlist.statics.getUsersPlaylists = function (userId, cb) {
 	});
 };
 
-
 playlist.statics.setUserPlaylists = function (userId, playlistsData, cb) {
 	return this.remove({
 		creator: userId
-	}, (err) => {
+	}, err => {
 		if (err) {
 			return cb(err);
 		}
 
-
-		const playlistsObjects = playlistsData.map( (data) => {
-			const playlist = new Playlist({
+		const playlistsObjects = playlistsData.map(data => {
+			const playlist = new Playlist({	 // eslint-disable-line no-use-before-define
 				name: data.name,
 				public: false,
 				creator: userId,
 				songs: []
 			});
-			data.songs.forEach( (song) => {
+			data.songs.forEach(song => {
 				const newSong = new Song(song);
-				console.log("NEW SONG", newSong);
 				playlist.songs.push(newSong);
-			})
+			});
 			return playlist;
 		});
 
-		const mws = playlistsObjects.map( (pl) => pl.save );
+		// Const mws = playlistsObjects.map( (pl) => pl.save );
 
-		each( mws, (__mw, __cb) => {
-			__mw( (err) => {
-				if(err) cb(err); 
-				else __cb();
-			})
+		each(playlistsObjects, (__mw, __cb) => {
+			__mw.save(err => {
+				if (err) {
+					console.log(err);
+					cb(err);
+				} else {
+					__cb();
+				}
+			});
 		}, () => {
 			cb(null, playlistsObjects);
 		});

@@ -2,35 +2,35 @@ import * as actions from '../actions/user';
 
 const eraseSamplePlaylists = [
   {
-    id: 'pl_1',
+    _id: 'pl_1',
     name: 'playlistName 1',
     songs: [
       {
-        title: 'Play1', id: 'song_1', url: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
+        title: 'Play1', _id: 'song_1', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
       },
       {
-        title: 'Play2', id: 'song_2', url: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
+        title: 'Play2', _id: 'song_2', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
       },
       {
-        title: 'Play3', id: 'song_3', url: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
+        title: 'Play3', _id: 'song_3', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
       },
     ],
   },
   {
-    id: 'pl_2',
+    _id: 'pl_2',
     name: 'playlistName 2',
     songs: [
       {
-        title: 'Play4', id: 'song_4', url: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
+        title: 'Play4', _id: 'song_4', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
       },
       {
-        title: 'Play5', id: 'song_5', url: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
+        title: 'Play5', _id: 'song_5', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
       },
       {
-        title: 'Play6', id: 'song_6', url: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
+        title: 'Play6', _id: 'song_6', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
       },
       {
-        title: 'Play7', id: 'song_7', url: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
+        title: 'Play7', _id: 'song_7', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
       },
     ],
   },

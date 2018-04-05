@@ -65,12 +65,14 @@ router.post('/', (req, res) => {
 });
 
 router.post('/all', (req, res) => {
-	const { playlists } = req.body;
+	const {playlists} = req.body;
 	Playlist.setUserPlaylists(req.user._id, playlists, (err, newPlaylists) => {
 		if (err) {
 			return res.status(400).send(err.message);
 		}
-		res.json(newPlaylists);
+		res.json({
+			playlists: newPlaylists
+		});
 	});
 });
 

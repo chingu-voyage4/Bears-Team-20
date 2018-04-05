@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -40,8 +41,8 @@ export class PlaylistIndex extends React.Component {
     }
 
     // Moving songs
-    if (playlists.find(pl => pl.id === result.type)) {
-      const target = playlists.find(pl => pl.id === result.type);
+    if (playlists.find(pl => pl._id === result.type)) {
+      const target = playlists.find(pl => pl._id === result.type);
       const updated = {
         ...target,
         songs: reorder(
@@ -51,7 +52,7 @@ export class PlaylistIndex extends React.Component {
         ),
       };
 
-      const targetIndex = playlists.findIndex(pl => pl.id === result.type);
+      const targetIndex = playlists.findIndex(pl => pl._id === result.type);
       const newPlaylists = Array.from(playlists);
       newPlaylists[targetIndex] = updated;
 

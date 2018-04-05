@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -57,9 +58,9 @@ export default function PlaylistContainer(props) {
           >
             {props.playlists.map((playlist, index) => (
               <Draggable
-                draggableId={playlist.id}
+                draggableId={playlist._id}
                 type="PLAYLIST"
-                key={playlist.id}
+                key={playlist._id}
                 index={index}
               >
                 {(dragProvided, dragSnapshot) => (
