@@ -20,6 +20,7 @@ export class PlaylistIndex extends React.Component {
     super();
 
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.togglePublic = this.togglePublic.bind(this);
   }
 
   onDragEnd(result) {
@@ -60,6 +61,23 @@ export class PlaylistIndex extends React.Component {
     }
   }
 
+  togglePublic(id) {
+    const { playlists, setPlaylists } = this.props;
+    const found = playlists.find(pl => pl._id === id);
+    if (!found) return;
+
+    const updated = {
+      ...found,
+      public: !found.public,
+    };
+
+    const targetIndex = playlists.findIndex(pl => pl._id === id);
+    const newPlaylists = Array.from(playlists);
+    newPlaylists[targetIndex] = updated;
+
+    setPlaylists(newPlaylists);
+  }
+
 
   render() {
     const { isFetching, errors } = this.props;
@@ -67,7 +85,10 @@ export class PlaylistIndex extends React.Component {
 
     return (
       <DragDropContext onDragEnd={this.onDragEnd}>
-        <PlaylistContainer playlists={this.props.playlists} />
+        <PlaylistContainer
+          playlists={this.props.playlists}
+          togglePublic={this.togglePublic}
+        />
       </DragDropContext>
     );
   }

@@ -2,7 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { colors } from 'material-ui';
+import { colors, IconButton } from 'material-ui';
+import { Delete } from 'material-ui-icons';
 
 const grid = 8;
 const borderRadius = 2;
@@ -107,6 +108,9 @@ export default class SongItem extends React.PureComponent {
           </Footer>
         </Content>
 
+        <IconButton>
+          <Delete />
+        </IconButton>
       </Container>
     );
   }

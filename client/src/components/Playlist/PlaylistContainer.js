@@ -71,7 +71,12 @@ export default function PlaylistContainer(props) {
                       {...dragProvided.draggableProps}
                       {...dragProvided.dragHandleProps}
                     >
-                      <Playlist playlist={playlist} />
+                      <Playlist
+                        playlist={playlist}
+                        togglePublic={() => {
+                        props.togglePublic(playlist._id);
+                      }}
+                      />
                     </NestedContainer>
                     {dragProvided.placeholder}
                   </div>

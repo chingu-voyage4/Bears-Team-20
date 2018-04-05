@@ -4,6 +4,7 @@ const eraseSamplePlaylists = [
   {
     _id: 'pl_1',
     name: 'playlistName 1',
+    public: false,
     songs: [
       {
         title: 'Play1', _id: 'song_1', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
@@ -19,6 +20,7 @@ const eraseSamplePlaylists = [
   {
     _id: 'pl_2',
     name: 'playlistName 2',
+    public: true,
     songs: [
       {
         title: 'Play4', _id: 'song_4', link: 'https://www.youtube.com/watch?v=DViZWwGPLM8', service: 'youtube',
@@ -68,10 +70,15 @@ export default (state = initialState, action = {}) => {
           errors: [],
           url: action.user.picture || initialState.picture.url, // defaults to generic image
         },
+        playlists: {
+          isFetching: false,
+          errors: [],
+          data: action.user.playlists || eraseSamplePlaylists || [], // defaults
+        },
       };
     case actions.USER_LOGOUT:
       return {
-        ...state, username: '', profilePic: '', isAuthenticated: false,
+        ...initialState,
       };
 
     case actions.CHANGE_PW_REQUEST:

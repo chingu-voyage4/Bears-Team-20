@@ -2,6 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Checkbox, IconButton } from 'material-ui';
+import { Delete } from 'material-ui-icons';
+import { FormControlLabel } from 'material-ui/Form';
 import { deepPurple } from 'material-ui/colors';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import SongItem from './SongItem';
@@ -23,8 +26,20 @@ const Container = styled.div`
 `;
 
 
+const PlaylistHead = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Title = styled.div`
+  color: ${deepPurple[900]};
+  font-size: 1.5em;
+  flex: 1;
+`;
+
+
 export default function Playlist(props) {
-  const { playlist } = props;
+  const { playlist, togglePublic } = props;
   return (
     <Droppable
       droppableId={playlist._id}
@@ -37,7 +52,24 @@ export default function Playlist(props) {
           isDraggingOver={dropSnapshot.isDraggingOver}
           {...dropProvided.droppableProps}
         >
-          <h3>{playlist.name}</h3>
+          <PlaylistHead>
+            <Title>{playlist.name}</Title>
+            <IconButton>
+              <Delete />
+            </IconButton>
+          </PlaylistHead>
+
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={playlist.public}
+                onChange={togglePublic}
+                value="checkedB"
+                color="primary"
+              />
+            }
+            label="Public"
+          />
           {playlist.songs.map((song, index) => (
             <Draggable
               key={song._id}
@@ -66,8 +98,10 @@ export default function Playlist(props) {
 
 Playlist.propTypes = {
   playlist: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  togglePublic: PropTypes.func,
 };
 
 Playlist.defaultProps = {
   playlist: {},
+  togglePublic: () => {},
 };

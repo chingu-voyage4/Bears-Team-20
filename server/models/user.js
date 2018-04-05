@@ -29,6 +29,27 @@ userSchema.statics.getPublicPlaylists = function (cb) {
 	});
 };
 
+userSchema.statics.retriveFullUser = function (_id, cb) {
+	return this.findOne({_id})
+		.exec((err, user) => {
+			if (err) {
+				return cb(err);
+			}
+			Playlist.getUsersPlaylists(user._id, (err, playlists) => {
+				if (err) {
+					return cb(err);
+				}
+				const retu = {
+					_id: user._id,
+					username: user.username,
+					picture: user.picture,
+					playlists
+				};
+				return cb(null, retu);
+			});
+		});
+};
+
 userSchema.statics.createNewPlaylist = function (username, playlistData, cb) {
 	return this.findOne({username})
 		.populate('playlists')

@@ -46,7 +46,7 @@ playlist.statics.setUserPlaylists = function (userId, playlistsData, cb) {
 		const playlistsObjects = playlistsData.map(data => {
 			const playlist = new Playlist({	 // eslint-disable-line no-use-before-define
 				name: data.name,
-				public: false,
+				public: data.public,
 				creator: userId,
 				songs: []
 			});
