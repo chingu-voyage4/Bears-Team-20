@@ -17,6 +17,7 @@ const eraseSamplePlaylists = [
       { title: 'Play4', id: 'song_4' },
       { title: 'Play5', id: 'song_5' },
       { title: 'Play6', id: 'song_6' },
+      { title: 'Play7', id: 'song_7' },
     ],
   },
 ];
@@ -113,6 +114,16 @@ export default (state = initialState, action = {}) => {
           ...state.picture,
           isFetching: false,
           errors: action.errors,
+        },
+      };
+
+    case actions.SET_PLAYLISTS_LOCALLY:
+      return {
+        ...state,
+        playlists: {
+          data: action.playlists,
+          isFetching: false,
+          errors: [],
         },
       };
 

@@ -10,7 +10,7 @@ const borderRadius = 2;
 const Container = styled.a`
 border-radius: ${borderRadius}px;
 border: 1px solid grey;
-background-color: ${({ isDragging }) => (isDragging ? colors.green : colors.white)};
+background-color: ${({ isDragging }) => (isDragging ? colors.deepPurple[50] : colors.deepPurple[100])};
 
 box-shadow: ${({ isDragging }) => (isDragging ? `2px 2px 1px ${colors.shadow}` : 'none')};
 padding: ${grid}px;
@@ -18,7 +18,6 @@ min-height: 40px;
 margin-bottom: ${grid}px;
 user-select: none;
 transition: background-color 0.1s ease;
-
 /* anchor overrides */
 color: ${colors.black};
 
@@ -30,10 +29,11 @@ color: ${colors.black};
     outline: 2px solid ${colors.purple};
     box-shadow: none;
 }
-
 /* flexbox */
 display: flex;
 align-items: center;
+
+min-width: 20vw;
 `;
 
 const Avatar = styled.img`

@@ -119,6 +119,42 @@ export function* changePictureProcess(action) {
 
 
 //= ========================================
+// SET PLAYLISTS
+
+const setPlaylistsToAPI = playlists => axios.post('/api/playlist/all', {
+  playlists,
+});
+
+
+export function* setPlaylistsProcess(action) {
+  try {
+    const payload = yield call(
+      setPlaylistsToAPI,
+      action.playlists,
+    );
+
+    // Errors
+    if (payload.data.errors) {
+      yield put(userActions.setPlaylistsFailed(payload.data.errors));
+    }
+
+    // User data
+    if (payload.data) {
+      yield put(userActions.setPlaylistsSuccess(payload.data.playlists));
+    }
+  } catch (e) {
+    console.log('profile error', e);
+    yield put(userActions.setPlaylistsFailed([
+      {
+        type: 'request',
+        message: e.message,
+      },
+    ]));
+  }
+}
+
+
+//= ========================================
 // WATCHER
 
 export function* watchUserRequest() {
@@ -141,5 +177,10 @@ export function* watchUserRequest() {
     takeEvery,
     userActions.CHANGE_PICTURE_REQUEST,
     changePictureProcess,
+  );
+  yield fork(
+    takeEvery,
+    userActions.SET_PLAYLISTS_REQUEST,
+    setPlaylistsProcess,
   );
 }

@@ -14,6 +14,7 @@ export const CHANGE_PICTURE_SUCCESS = 'CHANGE_PICTURE_SUCCESS';
 export const SET_PLAYLISTS_REQUEST = 'SET_PLAYLISTS_REQUEST';
 export const SET_PLAYLISTS_FAILED = 'SET_PLAYLISTS_FAILED';
 export const SET_PLAYLISTS_SUCCESS = 'SET_PLAYLISTS_SUCCESS';
+export const SET_PLAYLISTS_LOCALLY = 'SET_PLAYLISTS_LOCALLY';
 
 
 // for login or signup
@@ -65,6 +66,11 @@ export const changePictureFailed = errors => ({
 export const changePictureSuccess = url => ({
   type: CHANGE_PICTURE_SUCCESS,
   url,
+});
+
+export const setPlaylistsLocally = playlists => ({
+  type: SET_PLAYLISTS_LOCALLY,
+  playlists,
 });
 
 

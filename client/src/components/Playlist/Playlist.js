@@ -8,7 +8,7 @@ import SongItem from './SongItem';
 const grid = 8;
 
 const Container = styled.div`
-  background-color: ${({ isDraggingOver }) => (isDraggingOver ? deepPurple.lighter : deepPurple.light)};
+  background-color: ${({ isDraggingOver }) => (isDraggingOver ? deepPurple[300] : deepPurple[200])};
   display: flex;
   flex-direction: column;
   padding: ${grid}px;

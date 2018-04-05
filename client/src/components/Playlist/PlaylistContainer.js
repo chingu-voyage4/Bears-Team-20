@@ -6,26 +6,28 @@ import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Playlist from './Playlist';
 
 
-const grid = 8;
-
-
 const Title = styled.div`
 color: ${deepPurple[900]};
 font-size: 2em;
 margin: 1em 0;
 `;
 
+const StyledPlaylistContainer = styled.div`
+  margin: 0 5vw;
+`;
 
 const Container = styled.div`
-  background-color: ${({ isDraggingOver }) => (isDraggingOver ? deepPurple.lighter : deepPurple.light)};
+  background-color: ${({ isDraggingOver }) => (isDraggingOver ? deepPurple[50] : deepPurple[0])};
   display: flex;
-  flex-direction: column;
-  padding: ${grid}px;
+  flex-direction: row;
+  padding: 8px;
+  margin: 0px 4px;
   padding-bottom: 0;
   user-select: none;
   transition: background-color 0.1s ease;
+
   &:focus {
-    outline: 2px solid ${deepPurple[500]};
+    outline: 2px solid ${deepPurple[100]};
     outline-offset: 2px;
   }
 `;
@@ -33,18 +35,19 @@ const Container = styled.div`
 
 const NestedContainer = Container.extend`
   padding: 0;
-  margin-bottom: ${grid}px;
+  margin-bottom: 8px;
 `;
 
 
 export default function PlaylistContainer(props) {
   return (
-    <div>
+    <StyledPlaylistContainer>
       <Title>Playlist management</Title>
       <Droppable
         droppableId="PLAYLIST"
         type="PLAYLIST"
         key="PLAYLIST"
+        direction="horizontal"
       >
         {(dropProvided, dropSnapshot) => (
           <Container
@@ -77,7 +80,7 @@ export default function PlaylistContainer(props) {
           </Container>
         )}
       </Droppable>
-    </div>
+    </StyledPlaylistContainer>
   );
 }
 
