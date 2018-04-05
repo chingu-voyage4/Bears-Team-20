@@ -39,7 +39,7 @@ const eraseSamplePlaylists = [
 ];
 
 
-const initialState = {
+export const initialState = {
   isAuthenticated: false,
   username: '',
   changePw: {

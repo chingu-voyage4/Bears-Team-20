@@ -2,6 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import equal from 'fast-deep-equal';
 import { DragDropContext } from 'react-beautiful-dnd';
 import PlaylistContainer from './PlaylistContainer';
 
@@ -19,12 +20,35 @@ export class PlaylistIndex extends React.Component {
   constructor() {
     super();
 
+    this.state = {
+      dragging: false,
+    };
+
     this.onDragEnd = this.onDragEnd.bind(this);
+    this.onDragStart = this.onDragStart.bind(this);
     this.togglePublic = this.togglePublic.bind(this);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.state.dragging && !equal(nextProps.playlists, this.props.playlists)) {
+      return false;
+    }
+    return true;
+  }
+
+  componentWillUnmount() {
+    const { playlists, setPlaylists } = this.props;
+    setPlaylists(playlists);
+  }
+
+  onDragStart() {
+    this.setState({ dragging: true });
   }
 
   onDragEnd(result) {
     const { playlists, setPlaylists } = this.props;
+
+    this.setState({ dragging: false });
     if (!result.destination) {
       return;
     }
@@ -84,7 +108,10 @@ export class PlaylistIndex extends React.Component {
     console.log(isFetching, errors);
 
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext
+        onDragEnd={this.onDragEnd}
+        onDragStart={this.onDragStart}
+      >
         <PlaylistContainer
           playlists={this.props.playlists}
           togglePublic={this.togglePublic}
