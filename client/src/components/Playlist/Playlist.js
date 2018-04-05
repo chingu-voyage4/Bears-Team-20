@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Checkbox, IconButton } from 'material-ui';
-import { Delete } from 'material-ui-icons';
+import { Delete, PlayArrow } from 'material-ui-icons';
 import { FormControlLabel } from 'material-ui/Form';
 import { deepPurple } from 'material-ui/colors';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
@@ -37,6 +37,12 @@ const Title = styled.div`
   flex: 1;
 `;
 
+const IconButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row ;
+  flex: 1;
+  justify-content: center;
+`;
 
 export default function Playlist(props) {
   const { playlist, togglePublic } = props;
@@ -58,6 +64,12 @@ export default function Playlist(props) {
               <Delete />
             </IconButton>
           </PlaylistHead>
+
+          <IconButtonContainer>
+            <IconButton>
+              <PlayArrow />
+            </IconButton>
+          </IconButtonContainer>
 
           <FormControlLabel
             control={
