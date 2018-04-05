@@ -36,7 +36,7 @@ export default function Playlist(props) {
           isDraggingOver={dropSnapshot.isDraggingOver}
           {...dropProvided.droppableProps}
         >
-          <h3>{playlist.title}</h3>
+          <h3>{playlist.name}</h3>
           {playlist.songs.map((song, index) => (
             <Draggable
               key={song.id}

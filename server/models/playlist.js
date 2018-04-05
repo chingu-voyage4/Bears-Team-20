@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const each = require('async/each');
 const Song = require('./song');
 
 const Schema = mongoose.Schema;
@@ -31,6 +32,44 @@ playlist.statics.getUsersPlaylists = function (userId, cb) {
 			return cb(err);
 		}
 		cb(null, playlists);
+	});
+};
+
+
+playlist.statics.setUserPlaylists = function (userId, playlistsData, cb) {
+	return this.remove({
+		creator: userId
+	}, (err) => {
+		if (err) {
+			return cb(err);
+		}
+
+
+		const playlistsObjects = playlistsData.map( (data) => {
+			const playlist = new Playlist({
+				name: data.name,
+				public: false,
+				creator: userId,
+				songs: []
+			});
+			data.songs.forEach( (song) => {
+				const newSong = new Song(song);
+				console.log("NEW SONG", newSong);
+				playlist.songs.push(newSong);
+			})
+			return playlist;
+		});
+
+		const mws = playlistsObjects.map( (pl) => pl.save );
+
+		each( mws, (__mw, __cb) => {
+			__mw( (err) => {
+				if(err) cb(err); 
+				else __cb();
+			})
+		}, () => {
+			cb(null, playlistsObjects);
+		});
 	});
 };
 

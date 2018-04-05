@@ -9,7 +9,6 @@ const songSchema = new Schema({
 	service: {type: String, required: true},
 	description: {type: String},
 	thumbnail: {type: String}
-
 });
 
 const Song = mongoose.model('Song', songSchema);
