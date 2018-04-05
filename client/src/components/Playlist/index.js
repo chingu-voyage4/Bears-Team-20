@@ -105,7 +105,7 @@ export class PlaylistIndex extends React.Component {
 
   render() {
     const { isFetching, errors } = this.props;
-    console.log(isFetching, errors);
+    console.log(errors);
 
     return (
       <DragDropContext
@@ -115,6 +115,7 @@ export class PlaylistIndex extends React.Component {
         <PlaylistContainer
           playlists={this.props.playlists}
           togglePublic={this.togglePublic}
+          isFetching={isFetching}
         />
       </DragDropContext>
     );

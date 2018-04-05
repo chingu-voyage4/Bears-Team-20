@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { Button } from 'material-ui';
 import { deepPurple } from 'material-ui/colors';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Playlist from './Playlist';
@@ -11,6 +12,9 @@ const Title = styled.div`
 color: ${deepPurple[900]};
 font-size: 2em;
 margin: 1em 0;
+display: flex;
+flex-direction: row;
+justify-content: center;
 `;
 
 const StyledPlaylistContainer = styled.div`
@@ -39,11 +43,31 @@ const NestedContainer = Container.extend`
   margin-bottom: 8px;
 `;
 
+const StyledButton = styled(Button)`
+  margin-bottom: 2em !important;
+`;
+
+const Loading = styled.div`
+  display: ${({ show }) => (show ? 'flex' : 'none')};
+  font-size: 0.5em;
+  justify-content: center;
+`;
 
 export default function PlaylistContainer(props) {
   return (
     <StyledPlaylistContainer>
-      <Title>Playlist management</Title>
+      <Title>
+        Playlist management
+        <Loading show={props.isFetching}>
+          Loading
+        </Loading>
+      </Title>
+      <StyledButton
+        color="primary"
+        size="large"
+      >
+        Add playlist
+      </StyledButton>
       <Droppable
         droppableId="PLAYLIST"
         type="PLAYLIST"
@@ -93,8 +117,10 @@ export default function PlaylistContainer(props) {
 
 PlaylistContainer.propTypes = {
   playlists: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  isFetching: PropTypes.bool,
 };
 
 PlaylistContainer.defaultProps = {
   playlists: [],
+  isFetching: false,
 };
