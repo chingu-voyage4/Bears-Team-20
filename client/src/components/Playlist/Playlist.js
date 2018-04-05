@@ -1,0 +1,72 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { deepPurple } from 'material-ui/colors';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import SongItem from './SongItem';
+
+const grid = 8;
+
+const Container = styled.div`
+  background-color: ${({ isDraggingOver }) => (isDraggingOver ? deepPurple.lighter : deepPurple.light)};
+  display: flex;
+  flex-direction: column;
+  padding: ${grid}px;
+  padding-bottom: 0;
+  user-select: none;
+  transition: background-color 0.1s ease;
+  &:focus {
+    outline: 2px solid ${deepPurple[500]};
+    outline-offset: 2px;
+  }
+`;
+
+
+export default function Playlist(props) {
+  const { playlist } = props;
+  return (
+    <Droppable
+      droppableId={playlist.id}
+      type={playlist.id}
+      key={playlist.id}
+    >
+      {(dropProvided, dropSnapshot) => (
+        <Container
+          innerRef={dropProvided.innerRef}
+          isDraggingOver={dropSnapshot.isDraggingOver}
+          {...dropProvided.droppableProps}
+        >
+          <h3>{playlist.title}</h3>
+          {playlist.songs.map((song, index) => (
+            <Draggable
+              key={song.id}
+              draggableId={song.id}
+              type={playlist.id}
+              index={index}
+            >
+              {(provided, snapshot) => (
+                <div>
+                  <SongItem
+                    song={song}
+                    isDragging={snapshot.isDragging}
+                    provided={provided}
+                  />
+                  {provided.placeholder}
+                </div>
+              )}
+            </Draggable>
+          ))}
+        </Container>
+      )}
+    </Droppable>
+  );
+}
+
+
+Playlist.propTypes = {
+  playlist: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+};
+
+Playlist.defaultProps = {
+  playlist: {},
+};

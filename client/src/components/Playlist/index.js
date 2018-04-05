@@ -1,19 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
-import { deepPurple } from 'material-ui/colors';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { DragDropContext } from 'react-beautiful-dnd';
+import PlaylistContainer from './PlaylistContainer';
 
-const PlaylistContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
+import * as actions from '../../actions/user';
 
-const Title = styled.div`
-  color: ${deepPurple[900]};
-  font-size: 2em;
-  margin: 1em 0;
-`;
-const grid = 8;
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -22,72 +14,109 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-  // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
-  // styles we need to apply on draggables
-  ...draggableStyle,
-});
-
-export default class Playlist extends React.Component {
+export class PlaylistIndex extends React.Component {
   constructor() {
     super();
     this.state = {
-      playLists: [
-        { name: 'Play1', id: '1' },
-        { name: 'Play2', id: '2' },
-        { name: 'Play3', id: '3' },
+      playlists: [
+        {
+          id: 'pl_1',
+          title: 'playlistName 1',
+          songs: [
+            { title: 'Play1', id: 'song_1' },
+            { title: 'Play2', id: 'song_2' },
+            { title: 'Play3', id: 'song_3' },
+          ],
+        },
+        {
+          id: 'pl_2',
+          title: 'playlistName 2',
+          songs: [
+            { title: 'Play4', id: 'song_4' },
+            { title: 'Play5', id: 'song_5' },
+            { title: 'Play6', id: 'song_6' },
+          ],
+        },
       ],
     };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
+
   onDragEnd(result) {
     if (!result.destination) {
       return;
     }
-    const items = reorder(
-      this.state.playLists,
-      result.source.index,
-      result.destination.index,
-    );
-    this.setState({ playLists: items });
+
+    // Moving playlists
+    if (result.type === 'PLAYLIST') {
+      const items = reorder(
+        this.state.playlists,
+        result.source.index,
+        result.destination.index,
+      );
+      this.setState({ playlists: items });
+
+      this.props.setPlaylists(items);
+      return;
+    }
+
+    // Moving songs
+    if (this.state.playlists.find(pl => pl.id === result.type)) {
+      const target = this.state.playlists.find(pl => pl.id === result.type);
+      const updated = {
+        ...target,
+        songs: reorder(
+          target.songs,
+          result.source.index,
+          result.destination.index,
+        ),
+      };
+
+      const targetIndex = this.state.playlists.findIndex(pl => pl.id === result.type);
+      const playlists = Array.from(this.state.playlists);
+      playlists[targetIndex] = updated;
+
+
+      this.setState({
+        playlists,
+      });
+
+      this.props.setPlaylists(playlists);
+    }
   }
+
+
   render() {
     return (
-      <DragDropContext onDragEnd={this.onDragEnd}>
-        <PlaylistContainer>
-          <Title>Playlist management</Title>
-          <Droppable droppableId="playlist">
-            {provided => (
-              <div ref={provided.innerRef}>
-                {this.state.playLists.map((x, index) =>
-            (
-              <Draggable draggableId={x.id} key={x.id} index={index}>
-                {(draggableProvided, snapshot) => (
-                  <div ref={draggableProvided.innerRef}>
-                    <div
-                      {...draggableProvided.draggableProps}
-                      {...draggableProvided.dragHandleProps}
-                      style={getItemStyle(
-                        snapshot.isDragging,
-                        draggableProvided.draggableProps.style,
-                      )}
-                    >
-                      {x.name}
-                    </div>
-                    {draggableProvided.placeholder}
-                  </div>
-              )}
-              </Draggable >))}
-              </div>
-            )}
-          </Droppable>
-        </PlaylistContainer>
+      <DragDropContext
+        onDragEnd={this.onDragEnd}
+      >
+        <PlaylistContainer playlists={this.state.playlists} />
       </DragDropContext>
     );
   }
 }
+
+
+PlaylistIndex.propTypes = {
+  setPlaylists: PropTypes.func,
+};
+
+PlaylistIndex.defaultProps = {
+  setPlaylists: () => {},
+};
+
+
+const mapStateToProps = ({ user }) => ({
+  playlists: user.playlists.data,
+  isFetching: user.playlists.isFetching,
+  errors: user.playlists.errors,
+});
+
+
+const mapDispatchToProps = dispatch => ({
+  setPlaylists: playlists => dispatch(actions.setPlaylistsRequest(playlists)),
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaylistIndex);

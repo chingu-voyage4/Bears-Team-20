@@ -11,6 +11,10 @@ export const CHANGE_PICTURE_REQUEST = 'CHANGE_PICTURE_REQUEST';
 export const CHANGE_PICTURE_FAILED = 'CHANGE_PICTURE_FAILED';
 export const CHANGE_PICTURE_SUCCESS = 'CHANGE_PICTURE_SUCCESS';
 
+export const SET_PLAYLISTS_REQUEST = 'SET_PLAYLISTS_REQUEST';
+export const SET_PLAYLISTS_FAILED = 'SET_PLAYLISTS_FAILED';
+export const SET_PLAYLISTS_SUCCESS = 'SET_PLAYLISTS_SUCCESS';
+
 
 // for login or signup
 export const userLogin = user => ({
@@ -62,3 +66,20 @@ export const changePictureSuccess = url => ({
   type: CHANGE_PICTURE_SUCCESS,
   url,
 });
+
+
+export const setPlaylistsRequest = playlists => ({
+  type: SET_PLAYLISTS_REQUEST,
+  playlists,
+});
+
+export const setPlaylistsFailed = errors => ({
+  type: SET_PLAYLISTS_FAILED,
+  errors,
+});
+
+export const setPlaylistsSuccess = playlists => ({
+  type: SET_PLAYLISTS_SUCCESS,
+  playlists,
+});
+

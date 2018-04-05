@@ -54,7 +54,7 @@ const StyledPlayArrow = styled(PlayArrow)`
   height: 1.5em !important;
   width: 1.5em !important;
 
-  color: ${deepPurple[900]}
+  color: ${deepPurple[900]};
 `;
 
 
