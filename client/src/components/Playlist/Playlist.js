@@ -60,7 +60,7 @@ export default function Playlist(props) {
         >
           <PlaylistHead>
             <Title>{playlist.name}</Title>
-            <IconButton>
+            <IconButton onClick={props.deletePlaylist}>
               <Delete />
             </IconButton>
           </PlaylistHead>
@@ -111,9 +111,11 @@ export default function Playlist(props) {
 Playlist.propTypes = {
   playlist: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   togglePublic: PropTypes.func,
+  deletePlaylist: PropTypes.func,
 };
 
 Playlist.defaultProps = {
   playlist: {},
   togglePublic: () => {},
+  deletePlaylist: () => {},
 };

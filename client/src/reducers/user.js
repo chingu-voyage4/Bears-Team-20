@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as actions from '../actions/user';
 
 const eraseSamplePlaylists = [
@@ -162,6 +163,8 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         playlists: {
+          ...state.playlists,
+          // DISABLED NEXT LINE DUE TO BUGGED Behaviour when syncing in and updating
           data: action.playlists,
           isFetching: false,
           errors: [],
@@ -175,6 +178,33 @@ export default (state = initialState, action = {}) => {
           ...state.playlists,
           isFetching: false,
           errors: action.errors,
+        },
+      };
+
+    case actions.ADD_PLAYLIST_LOCALLY:
+      return {
+        ...state,
+        playlists: {
+          ...state.playlists,
+          data: [
+            ...state.playlists.data,
+            {
+              // not sure what to put here, since we need an unique key each time
+              _id: String(Date.now()),
+              name: 'new playlist',
+              public: false,
+              songs: [],
+            },
+          ],
+        },
+      };
+
+    case actions.DELETE_PLAYLIST_LOCALLY:
+      return {
+        ...state,
+        playlists: {
+          ...state.playlists,
+          data: state.playlists.data.filter(e => e._id !== action.id),
         },
       };
 

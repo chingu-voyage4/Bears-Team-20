@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import equal from 'fast-deep-equal';
 import { DragDropContext } from 'react-beautiful-dnd';
-import PlaylistContainer from './PlaylistContainer';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
+import PlaylistContainer from './PlaylistContainer';
 import * as actions from '../../actions/user';
 
 
@@ -113,6 +115,8 @@ export class PlaylistIndex extends React.Component {
         onDragStart={this.onDragStart}
       >
         <PlaylistContainer
+          deletePlaylist={this.props.deletePlaylist}
+          addPlaylist={this.props.addPlaylist}
           playlists={this.props.playlists}
           togglePublic={this.togglePublic}
           isFetching={isFetching}
@@ -125,6 +129,8 @@ export class PlaylistIndex extends React.Component {
 
 PlaylistIndex.propTypes = {
   setPlaylists: PropTypes.func,
+  addPlaylist: PropTypes.func,
+  deletePlaylist: PropTypes.func,
   playlists: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
   errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
@@ -132,6 +138,8 @@ PlaylistIndex.propTypes = {
 
 PlaylistIndex.defaultProps = {
   setPlaylists: () => {},
+  addPlaylist: () => {},
+  deletePlaylist: () => {},
   playlists: [],
   isFetching: false,
   errors: [],
@@ -151,6 +159,24 @@ const mapDispatchToProps = dispatch => ({
 
     // TODO debounce playlist request
     dispatch(actions.setPlaylistsRequest(playlists));
+  },
+  addPlaylist: () => dispatch(actions.addPlaylistLocally()),
+  deletePlaylist: (id) => {
+    confirmAlert({
+      title: 'Confirm to submit',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: () => {
+            dispatch(actions.deletePlaylistLocally(id));
+          },
+        },
+        {
+          label: 'No',
+        },
+      ],
+    });
   },
 });
 

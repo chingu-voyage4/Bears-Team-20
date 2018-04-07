@@ -65,6 +65,7 @@ export default function PlaylistContainer(props) {
       <StyledButton
         color="primary"
         size="large"
+        onClick={props.addPlaylist}
       >
         Add playlist
       </StyledButton>
@@ -96,6 +97,7 @@ export default function PlaylistContainer(props) {
                       {...dragProvided.dragHandleProps}
                     >
                       <Playlist
+                        deletePlaylist={() => props.deletePlaylist(playlist._id)}
                         playlist={playlist}
                         togglePublic={() => {
                         props.togglePublic(playlist._id);
@@ -118,9 +120,13 @@ export default function PlaylistContainer(props) {
 PlaylistContainer.propTypes = {
   playlists: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
+  addPlaylist: PropTypes.func,
+  deletePlaylist: PropTypes.func,
 };
 
 PlaylistContainer.defaultProps = {
   playlists: [],
   isFetching: false,
+  addPlaylist: () => {},
+  deletePlaylist: () => {},
 };

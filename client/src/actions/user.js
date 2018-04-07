@@ -15,6 +15,8 @@ export const SET_PLAYLISTS_REQUEST = 'SET_PLAYLISTS_REQUEST';
 export const SET_PLAYLISTS_FAILED = 'SET_PLAYLISTS_FAILED';
 export const SET_PLAYLISTS_SUCCESS = 'SET_PLAYLISTS_SUCCESS';
 export const SET_PLAYLISTS_LOCALLY = 'SET_PLAYLISTS_LOCALLY';
+export const ADD_PLAYLIST_LOCALLY = 'ADD_PLAYLIST_LOCALLY';
+export const DELETE_PLAYLIST_LOCALLY = 'DELETE_PLAYLIST_LOCALLY';
 
 
 // for login or signup
@@ -68,11 +70,21 @@ export const changePictureSuccess = url => ({
   url,
 });
 
+// Playlists
+
+export const addPlaylistLocally = () => ({
+  type: ADD_PLAYLIST_LOCALLY,
+});
+
+export const deletePlaylistLocally = id => ({
+  type: DELETE_PLAYLIST_LOCALLY,
+  id,
+});
+
 export const setPlaylistsLocally = playlists => ({
   type: SET_PLAYLISTS_LOCALLY,
   playlists,
 });
-
 
 export const setPlaylistsRequest = playlists => ({
   type: SET_PLAYLISTS_REQUEST,
