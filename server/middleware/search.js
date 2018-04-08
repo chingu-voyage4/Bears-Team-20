@@ -5,6 +5,7 @@ const YouTube = require('youtube-node');
 const SC = require('node-soundcloud');
 const each = require('async/each');
 
+
 /**
  * Parameters:
  * 	-query: text to be searched
@@ -109,6 +110,38 @@ function __soundcloud(req, res, next) {
 		})
 		.catch(console.log);
 }
+
+//Dailymotion API call 
+
+function _dailymotion(req,res,next){
+	 const {query} = req.query;
+	 let url = `https://api.dailymotion.com/videos?fields=description,thumbnail_60_url,title,url,&search=${query}&limit=10`;
+
+	 if(!res.locals.searchResults){
+		 res.locals.searchResults=[];
+	 }
+
+	 try{
+		const response = await axios.get(url)
+		const tracks = response.data.data;
+		res.locals.searchResults = [
+				//que significa esto
+			...res.locals,searchResults,
+			...tracks.map( t => ({
+				title: t.title,
+				serviceSource: 'Dailymotion',
+				link: t.link,
+				description : t.description,
+				thumbnail: t.thumbnail_60_url
+			}))
+		];
+	 }catch(err){
+		console.log("err at _dailymotion",err);
+	 }finally{
+		 next();
+	 }
+}
+
 
 /**
  * Middleware that handles all the different services in parallel
