@@ -150,7 +150,7 @@ function _dailymotion(req,res,next){
  * @param {*} next
  */
 function parallelSearch(req, res, next) {
-	const middlewares = [__youtube, __deezer];
+	const middlewares = [__youtube, __deezer,_dailymotion];
 	each(middlewares, (mw, cb) => {
 		mw(req, res, cb);
 	}, next);
@@ -160,5 +160,6 @@ module.exports = {
 	parallelSearch,
 	__youtube,
 	__soundcloud,
-	__deezer
+	__deezer,
+	_dailymotion
 };
