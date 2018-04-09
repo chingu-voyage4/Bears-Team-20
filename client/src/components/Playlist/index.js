@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import equal from 'fast-deep-equal';
 import { DragDropContext } from 'react-beautiful-dnd';
@@ -9,6 +10,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import PlaylistContainer from './PlaylistContainer';
 import * as actions from '../../actions/user';
+import * as playerActions from '../../actions/player';
 
 
 const reorder = (list, startIndex, endIndex) => {
@@ -24,11 +26,13 @@ export class PlaylistIndex extends React.Component {
 
     this.state = {
       dragging: false,
+      redirect: false,
     };
 
     this.onDragEnd = this.onDragEnd.bind(this);
     this.onDragStart = this.onDragStart.bind(this);
     this.togglePublic = this.togglePublic.bind(this);
+    this.setRedirect = this.setRedirect.bind(this);
   }
 
   shouldComponentUpdate(nextProps) {
@@ -87,6 +91,11 @@ export class PlaylistIndex extends React.Component {
     }
   }
 
+
+  setRedirect() {
+    this.setState({ redirect: true });
+  }
+
   togglePublic(id) {
     const { playlists, setPlaylists } = this.props;
     const found = playlists.find(pl => pl._id === id);
@@ -107,7 +116,10 @@ export class PlaylistIndex extends React.Component {
 
   render() {
     const { isFetching, errors } = this.props;
+    const { redirect } = this.state;
     console.log(errors);
+
+    if (redirect) return <Redirect to="/music" />;
 
     return (
       <DragDropContext
@@ -117,9 +129,11 @@ export class PlaylistIndex extends React.Component {
         <PlaylistContainer
           deletePlaylist={this.props.deletePlaylist}
           addPlaylist={this.props.addPlaylist}
+          setCurrentPlaylist={this.props.setCurrentPlaylist}
           playlists={this.props.playlists}
           togglePublic={this.togglePublic}
           isFetching={isFetching}
+          setRedirect={this.setRedirect}
         />
       </DragDropContext>
     );
@@ -131,6 +145,7 @@ PlaylistIndex.propTypes = {
   setPlaylists: PropTypes.func,
   addPlaylist: PropTypes.func,
   deletePlaylist: PropTypes.func,
+  setCurrentPlaylist: PropTypes.func,
   playlists: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
   errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
@@ -140,6 +155,7 @@ PlaylistIndex.defaultProps = {
   setPlaylists: () => {},
   addPlaylist: () => {},
   deletePlaylist: () => {},
+  setCurrentPlaylist: () => {},
   playlists: [],
   isFetching: false,
   errors: [],
@@ -177,6 +193,12 @@ const mapDispatchToProps = dispatch => ({
         },
       ],
     });
+  },
+  setCurrentPlaylist: (playlist) => {
+    dispatch(playerActions.playerSetPlaylist(playlist));
+    if (playlist.songs.length > 0) {
+      dispatch(playerActions.playerPlaySong(playlist.songs[0]));
+    }
   },
 });
 

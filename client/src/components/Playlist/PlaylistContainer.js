@@ -97,7 +97,9 @@ export default function PlaylistContainer(props) {
                       {...dragProvided.dragHandleProps}
                     >
                       <Playlist
+                        setCurrentPlaylist={() => props.setCurrentPlaylist(playlist)}
                         deletePlaylist={() => props.deletePlaylist(playlist._id)}
+                        setRedirect={props.setRedirect}
                         playlist={playlist}
                         togglePublic={() => {
                         props.togglePublic(playlist._id);
@@ -122,6 +124,7 @@ PlaylistContainer.propTypes = {
   isFetching: PropTypes.bool,
   addPlaylist: PropTypes.func,
   deletePlaylist: PropTypes.func,
+  setCurrentPlaylist: PropTypes.func,
 };
 
 PlaylistContainer.defaultProps = {
@@ -129,4 +132,5 @@ PlaylistContainer.defaultProps = {
   isFetching: false,
   addPlaylist: () => {},
   deletePlaylist: () => {},
+  setCurrentPlaylist: () => {},
 };
