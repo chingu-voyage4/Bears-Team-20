@@ -64,6 +64,11 @@ export default class ResultItem extends React.Component {
     return () => playSong(songObj);
   }
 
+  addToPlaylist(songObj, playlist = 1) {
+    const { result } = this.props;
+    console.log(result);
+  }
+
   render() {
     const { result } = this.props;
     return (
@@ -80,7 +85,11 @@ export default class ResultItem extends React.Component {
             </Typography>
           </div>
           <ResultItemControls>
-            <IconButton aria-label="Add to playlist" color="primary">
+            <IconButton
+              aria-label="Add to playlist"
+              color="primary"
+              onClick={this.addToPlaylist}
+            >
               <PlaylistAdd />
             </IconButton>
             <IconButton

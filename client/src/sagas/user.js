@@ -153,6 +153,41 @@ export function* setPlaylistsProcess(action) {
   }
 }
 
+//= ========================================
+// ADD SONG TO PLAYLIST
+
+// const addSongToPlaylist = (song, playlist) => axios.post('/api/playlist/all', {
+//   playlists,
+// });
+
+
+// export function* setPlaylistsProcess(action) {
+//   try {
+//     const payload = yield call(
+//       setPlaylistsToAPI,
+//       action.playlists,
+//     );
+
+//     // Errors
+//     if (payload.data.errors) {
+//       yield put(userActions.setPlaylistsFailed(payload.data.errors));
+//     }
+
+//     // User data
+//     if (payload.data) {
+//       yield put(userActions.setPlaylistsSuccess(payload.data.playlists));
+//     }
+//   } catch (e) {
+//     console.log('profile error', e);
+//     yield put(userActions.setPlaylistsFailed([
+//       {
+//         type: 'request',
+//         message: e.message,
+//       },
+//     ]));
+//   }
+// }
+
 
 //= ========================================
 // WATCHER
