@@ -32,9 +32,19 @@ const PlaylistHead = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  vertical-align: middle;
+
   color: ${deepPurple[900]};
-  font-size: 1.5em;
+  font-size: 1.25rem;
   flex: 1;
+
+  &:hover {
+    background-color: ${deepPurple[300]}
+  }
 `;
 
 const IconButtonContainer = styled.div`
@@ -66,7 +76,11 @@ export default function Playlist(props) {
           </PlaylistHead>
 
           <IconButtonContainer>
-            <IconButton>
+            <IconButton onClick={() => {
+              props.setCurrentPlaylist();
+              props.setRedirect();
+            }}
+            >
               <PlayArrow />
             </IconButton>
           </IconButtonContainer>
@@ -112,10 +126,14 @@ Playlist.propTypes = {
   playlist: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   togglePublic: PropTypes.func,
   deletePlaylist: PropTypes.func,
+  setCurrentPlaylist: PropTypes.func,
+  setRedirect: PropTypes.func,
 };
 
 Playlist.defaultProps = {
   playlist: {},
   togglePublic: () => {},
   deletePlaylist: () => {},
+  setCurrentPlaylist: () => {},
+  setRedirect: () => {},
 };

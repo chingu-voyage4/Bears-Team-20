@@ -8,7 +8,10 @@ const initialState = {
   volume: 1,
   isMuted: false,
   currentSong: {},
-  currentPlaylist: [],
+  currentPlaylist: {
+    name: '',
+    songs: [],
+  },
   plShowing: false,
   duration: 0,
   progress: 0,
