@@ -116,7 +116,6 @@ function __soundcloud(req, res, next) {
 async function _dailymotion(req,res,next){
 	 const {query} = req.query;
 		const url = `https://api.dailymotion.com/videos?fields=description,thumbnail_60_url,title,url,&search=${query}&limit=10`;
-		console.log(url)
 	 if(!res.locals.searchResults){
 		 res.locals.searchResults=[];
 	 }
