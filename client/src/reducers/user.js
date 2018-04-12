@@ -208,6 +208,14 @@ export default (state = initialState, action = {}) => {
         },
       };
 
+    case actions.ADD_TRACK_LOCALLY:
+      return {
+        ...state,
+        playlists: {
+          ...state.playlists,
+          data: state.playlists.data.filter(e => e._id === action.playlist.id)[0],
+        },
+      };
     default: return state;
   }
 };

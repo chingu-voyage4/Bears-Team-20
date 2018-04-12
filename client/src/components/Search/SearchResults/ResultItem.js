@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { deepPurple } from 'material-ui/colors';
 
 
+
 const ResultItemContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -64,13 +65,13 @@ export default class ResultItem extends React.Component {
     return () => playSong(songObj);
   }
 
-  addToPlaylist(songObj, playlist = 1) {
-    const { result } = this.props;
-    console.log(result);
-  }
+  // addToPlaylist(songObj, playlist = 1) {
+  //   const { result } = this.props;
+  //   console.log(result, playlist);
+  // }
 
   render() {
-    const { result } = this.props;
+    const { result, addTrackToPlaylist } = this.props;
     return (
       <ResultItemContainer>
         <ResultItemDetails>
@@ -88,7 +89,7 @@ export default class ResultItem extends React.Component {
             <IconButton
               aria-label="Add to playlist"
               color="primary"
-              onClick={this.addToPlaylist}
+              onClick={addTrackToPlaylist}
             >
               <PlaylistAdd />
             </IconButton>
@@ -122,12 +123,14 @@ function ItemCover(props) {
 
 
 ResultItem.propTypes = {
+  addTrackToPlaylist: PropTypes.func,
   result: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   playSong: PropTypes.func,
 };
 
 ResultItem.defaultProps = {
   result: {},
+  addTrackToPlaylist: () => {},
   playSong: () => {},
 };
 
