@@ -1,6 +1,6 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
-import axios from 'axios';
-
+// import axios from 'axios';
+const axios = require('axios');
 const YouTube = require('youtube-node');
 const SC = require('node-soundcloud');
 const each = require('async/each');
@@ -110,6 +110,35 @@ function __soundcloud(req, res, next) {
 		.catch(console.log);
 }
 
+// Dailymotion API call
+
+async function __dailymotion(req, res, next) {
+	 const {query} = req.query;
+	const url = `https://api.dailymotion.com/videos?fields=description,thumbnail_60_url,title,url,&search=${query}&limit=10`;
+	 if (!res.locals.searchResults) {
+		 res.locals.searchResults = [];
+	 }
+
+	 try {
+		const response = await axios.get(url);
+		const tracks = response.data.list;
+		res.locals.searchResults = [
+			...res.locals.searchResults,
+			...tracks.map(t => ({
+				title: t.title,
+				serviceSource: 'Dailymotion',
+				link: t.link,
+				description: t.description,
+				thumbnail: t.thumbnail_60_url
+			}))
+		];
+	 } catch (err) {
+		console.log('err at __dailymotion', err);
+	 } finally {
+		 next();
+	 }
+}
+
 /**
  * Middleware that handles all the different services in parallel
  * @param {*} req
@@ -117,7 +146,7 @@ function __soundcloud(req, res, next) {
  * @param {*} next
  */
 function parallelSearch(req, res, next) {
-	const middlewares = [__youtube, __deezer];
+	const middlewares = [__youtube, __deezer, __dailymotion];
 	each(middlewares, (mw, cb) => {
 		mw(req, res, cb);
 	}, next);
@@ -127,5 +156,6 @@ module.exports = {
 	parallelSearch,
 	__youtube,
 	__soundcloud,
-	__deezer
+	__deezer,
+	__dailymotion
 };
