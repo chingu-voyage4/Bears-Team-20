@@ -65,6 +65,7 @@ export default class ResultItem extends React.Component {
     super();
     this.state = { openPlaylists: null };
     this.openPlaylistsMenu = this.openPlaylistsMenu.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
   handlePlayClickGen(songObj) {
     const { playSong } = this.props;
@@ -110,6 +111,11 @@ export default class ResultItem extends React.Component {
               open={!!this.state.openPlaylists}
               onClose={this.handleClose}
             >
+              <MenuItem
+                onClick={() => {}}
+              >
+                {'Add to current playlist'}
+              </MenuItem>
               {playlists.map(playlist => (
                 <MenuItem
                   onClick={() => addTrackToPlaylist(result, playlist._id)}

@@ -105,7 +105,7 @@ export class SearchComponent extends Component {
 SearchComponent.propTypes = {
   errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   results: PropTypes.array, // eslint-disable-line react/forbid-prop-types
-  playlists: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  playlists: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
   input: PropTypes.string,
   inputChange: PropTypes.func,
@@ -118,7 +118,7 @@ SearchComponent.defaultProps = {
   errors: [],
   isFetching: false,
   results: [],
-  playlists: {},
+  playlists: [],
   input: '',
   inputChange: () => {},
   search: () => {},

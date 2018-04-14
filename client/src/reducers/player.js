@@ -9,7 +9,9 @@ const initialState = {
   isMuted: false,
   currentSong: {},
   currentPlaylist: {
+    _id: '1',
     name: '',
+    public: false,
     songs: [],
   },
   plShowing: false,

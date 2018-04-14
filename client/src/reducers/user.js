@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 import * as actions from '../actions/user';
 
+/*
 const eraseSamplePlaylists = [
   {
     _id: 'pl_1',
@@ -38,7 +39,7 @@ const eraseSamplePlaylists = [
     ],
   },
 ];
-
+ */
 
 export const initialState = {
   isAuthenticated: false,
@@ -53,7 +54,7 @@ export const initialState = {
     errors: [],
   },
   playlists: {
-    data: eraseSamplePlaylists,
+    data: [],
     isFetching: false,
     errors: [],
   },
@@ -74,7 +75,7 @@ export default (state = initialState, action = {}) => {
         playlists: {
           isFetching: false,
           errors: [],
-          data: action.user.playlists || eraseSamplePlaylists || [], // defaults
+          data: action.user.playlists || [], // defaults
         },
       };
     case actions.USER_LOGOUT:
