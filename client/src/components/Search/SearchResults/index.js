@@ -32,12 +32,17 @@ export default class SearchResults extends Component {
   }
 
   render() {
-    const { results, playSong } = this.props;
+    const { results, playSong, addTrackToPlaylist } = this.props;
 
     return (
       <React.Fragment>
-        {results.map((r, i) =>
-          <ResultItem key={generateKey(r.title, i)} result={r} playSong={playSong} />)}
+        {results.map((r, i) => (
+          <ResultItem
+            key={generateKey(r.title, i)}
+            result={r}
+            playSong={playSong}
+            addTrackToPlaylist={addTrackToPlaylist}
+          />))}
       </React.Fragment>);
   }
 }
@@ -47,11 +52,13 @@ SearchResults.propTypes = {
   results: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
   playSong: PropTypes.func,
+  addTrackToPlaylist: PropTypes.func,
 };
 
 SearchResults.defaultProps = {
   results: [],
   isFetching: false,
   playSong: () => {},
+  addTrackToPlaylist: () => {},
 };
 

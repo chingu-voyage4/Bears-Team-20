@@ -9,6 +9,7 @@ import SearchInput from './SearchInput';
 import SearchResults from './SearchResults';
 import * as actions from '../../actions/search';
 import * as playerActions from '../../actions/player';
+import * as userActions from '../../actions/user';
 
 
 const SearchContainer = styled.div`
@@ -65,7 +66,7 @@ export class SearchComponent extends Component {
   render() {
     const {
       errors, input, isFetching, results,
-      playSong,
+      playSong, addTrackToPlaylist,
     } = this.props;
     if (errors.length) console.log('ERRORS', errors);
 
@@ -85,6 +86,7 @@ export class SearchComponent extends Component {
               results={results}
               isFetching={isFetching}
               playSong={playSong}
+              addTrackToPlaylist={addTrackToPlaylist}
             />
           :
             <SearchResultsPlaceholder>
@@ -107,6 +109,7 @@ SearchComponent.propTypes = {
   inputChange: PropTypes.func,
   search: PropTypes.func,
   playSong: PropTypes.func,
+  addTrackToPlaylist: PropTypes.func,
 };
 
 SearchComponent.defaultProps = {
@@ -117,6 +120,7 @@ SearchComponent.defaultProps = {
   inputChange: () => {},
   search: () => {},
   playSong: () => {},
+  addTrackToPlaylist: () => {},
 };
 
 const mapStateToProps = ({ search }) => ({
@@ -134,6 +138,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.searchRequest(input));
   },
   playSong: song => dispatch(playerActions.playerPlaySong(song)),
+  addTrackToPlaylist: (track, playlist) =>
+    dispatch(userActions.addTrackToPlaylist(track, playlist)),
 });
 
 

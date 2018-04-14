@@ -7,8 +7,6 @@ import { PlaylistAdd, PlayArrow } from 'material-ui-icons';
 import styled from 'styled-components';
 import { deepPurple } from 'material-ui/colors';
 
-
-
 const ResultItemContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -65,9 +63,9 @@ export default class ResultItem extends React.Component {
     return () => playSong(songObj);
   }
 
-  // addToPlaylist(songObj, playlist = 1) {
+  // handleAddToPlaylistClick(songObj, playlist = 1) {
   //   const { result } = this.props;
-  //   console.log(result, playlist);
+  //   return () =>
   // }
 
   render() {
@@ -89,7 +87,7 @@ export default class ResultItem extends React.Component {
             <IconButton
               aria-label="Add to playlist"
               color="primary"
-              onClick={addTrackToPlaylist}
+              onClick={() => addTrackToPlaylist(result, '5ad1482814e35f19b049129d')}
             >
               <PlaylistAdd />
             </IconButton>

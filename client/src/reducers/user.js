@@ -213,7 +213,14 @@ export default (state = initialState, action = {}) => {
         ...state,
         playlists: {
           ...state.playlists,
-          data: state.playlists.data.filter(e => e._id === action.playlist.id)[0],
+          data: [
+            ...state.playlists.data.filter(e => e._id !== action.playlist),
+            {
+              ...state.playlists.data.filter(e => e._id === action.playlist)[0],
+              songs: [...state.playlists.data.filter(e => e._id === action.playlist)[0]
+                .songs.concat(action.track)],
+            },
+          ],
         },
       };
     default: return state;
