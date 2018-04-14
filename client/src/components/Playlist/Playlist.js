@@ -17,6 +17,7 @@ const Container = styled.div`
   flex-direction: column;
   padding: ${grid}px;
   padding-bottom: 0;
+  max-width: 400px;
   user-select: none;
   transition: background-color 0.1s ease;
   &:focus {

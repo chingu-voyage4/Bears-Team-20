@@ -79,6 +79,10 @@ margin: 0;
 margin-left: ${grid}px;
 text-align: right;
 flex-grow: 1;
+
+max-height: 3rem;
+overflow: hidden;
+text-overflow: ellipsis;
 `;
 
 // Previously this extended React.Component
