@@ -56,7 +56,7 @@ SearchResults.propTypes = {
   isFetching: PropTypes.bool,
   playSong: PropTypes.func,
   addTrackToPlaylist: PropTypes.func,
-  playlists: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  playlists: PropTypes.array, // eslint-disable-line react/forbid-prop-types
 };
 
 SearchResults.defaultProps = {
@@ -64,6 +64,6 @@ SearchResults.defaultProps = {
   isFetching: false,
   playSong: () => {},
   addTrackToPlaylist: () => {},
-  playlists: {},
+  playlists: [],
 };
 
