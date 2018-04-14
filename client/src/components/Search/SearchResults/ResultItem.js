@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, IconButton } from 'material-ui';
@@ -111,13 +112,9 @@ export default class ResultItem extends React.Component {
               open={!!this.state.openPlaylists}
               onClose={this.handleClose}
             >
-              <MenuItem
-                onClick={() => {}}
-              >
-                {'Add to current playlist'}
-              </MenuItem>
-              {playlists.map(playlist => (
+              {playlists.map((playlist, i) => (
                 <MenuItem
+                  key={i}
                   onClick={() => addTrackToPlaylist(result, playlist._id)}
                 >
                   {playlist.name}
