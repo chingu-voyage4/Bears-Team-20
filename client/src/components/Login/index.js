@@ -102,7 +102,7 @@ export class LoginComponent extends Component {
     const { redirectSignup } = this.state;
     if (errors.length) console.log(errors);
 
-    if (isAuthenticated) return <Redirect to="/" />;
+    if (isAuthenticated) return <Redirect to="/music" />;
     if (redirectSignup) return <Redirect to="/signup" />;
 
     return (
