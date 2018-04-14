@@ -111,8 +111,12 @@ class PlayerComponent extends React.Component {
   }
 
   handleShowPlaylist() {
-    const { setPlaylistShow, plShowing } = this.props;
-    setPlaylistShow(!plShowing);
+    const { setPlaylistShow, plShowing, currentPlaylist } = this.props;
+    if (currentPlaylist.songs.length === 0) {
+      setPlaylistShow(false);
+    } else {
+      setPlaylistShow(!plShowing);
+    }
   }
 
   render() {
