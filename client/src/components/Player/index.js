@@ -136,6 +136,7 @@ class PlayerComponent extends React.Component {
         <CurrentPlaylist
           isShowing={plShowing}
           playlist={currentPlaylist}
+          currentSong={currentSong}
           setSong={setCurrentSong}
         />
 
