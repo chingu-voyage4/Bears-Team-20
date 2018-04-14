@@ -32,7 +32,9 @@ export default class SearchResults extends Component {
   }
 
   render() {
-    const { results, playSong, addTrackToPlaylist } = this.props;
+    const {
+      results, playSong, addTrackToPlaylist, playlists,
+    } = this.props;
 
     return (
       <React.Fragment>
@@ -42,6 +44,7 @@ export default class SearchResults extends Component {
             result={r}
             playSong={playSong}
             addTrackToPlaylist={addTrackToPlaylist}
+            playlists={playlists}
           />))}
       </React.Fragment>);
   }
@@ -53,6 +56,7 @@ SearchResults.propTypes = {
   isFetching: PropTypes.bool,
   playSong: PropTypes.func,
   addTrackToPlaylist: PropTypes.func,
+  playlists: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
 SearchResults.defaultProps = {
@@ -60,5 +64,6 @@ SearchResults.defaultProps = {
   isFetching: false,
   playSong: () => {},
   addTrackToPlaylist: () => {},
+  playlists: {},
 };
 

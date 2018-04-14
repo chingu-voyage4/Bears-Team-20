@@ -1,11 +1,14 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, IconButton } from 'material-ui';
 import { PlaylistAdd, PlayArrow } from 'material-ui-icons';
 import styled from 'styled-components';
 import { deepPurple } from 'material-ui/colors';
+import Menu, { MenuItem } from 'material-ui/Menu';
+
 
 const ResultItemContainer = styled.div`
   display: flex;
@@ -58,18 +61,26 @@ const StyledPlayArrow = styled(PlayArrow)`
 
 
 export default class ResultItem extends React.Component {
+  constructor() {
+    super();
+    this.state = { openPlaylists: null };
+    this.openPlaylistsMenu = this.openPlaylistsMenu.bind(this);
+  }
   handlePlayClickGen(songObj) {
     const { playSong } = this.props;
     return () => playSong(songObj);
   }
 
-  // handleAddToPlaylistClick(songObj, playlist = 1) {
-  //   const { result } = this.props;
-  //   return () =>
-  // }
+  openPlaylistsMenu(event) {
+    this.setState({ openPlaylists: event.currentTarget });
+  }
+
+  handleClose() {
+    this.setState({ openPlaylists: null });
+  }
 
   render() {
-    const { result, addTrackToPlaylist } = this.props;
+    const { result, addTrackToPlaylist, playlists } = this.props;
     return (
       <ResultItemContainer>
         <ResultItemDetails>
@@ -85,12 +96,28 @@ export default class ResultItem extends React.Component {
           </div>
           <ResultItemControls>
             <IconButton
+              aria-owns={this.state.openPlaylists ? 'playlist-menu' : null}
+              aria-haspopup="true"
               aria-label="Add to playlist"
               color="primary"
-              onClick={() => addTrackToPlaylist(result, '5ad1482814e35f19b049129d')}
+              onClick={this.openPlaylistsMenu}
             >
               <PlaylistAdd />
             </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={this.state.openPlaylists}
+              open={!!this.state.openPlaylists}
+              onClose={this.handleClose}
+            >
+              {playlists.map(playlist => (
+                <MenuItem
+                  onClick={() => addTrackToPlaylist(result, playlist._id)}
+                >
+                  {playlist.name}
+                </MenuItem>
+              ))}
+            </Menu>
             <IconButton
               aria-label="Play/pause"
               color="primary"

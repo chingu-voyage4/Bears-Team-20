@@ -66,7 +66,7 @@ export class SearchComponent extends Component {
   render() {
     const {
       errors, input, isFetching, results,
-      playSong, addTrackToPlaylist,
+      playSong, addTrackToPlaylist, playlists,
     } = this.props;
     if (errors.length) console.log('ERRORS', errors);
 
@@ -87,6 +87,7 @@ export class SearchComponent extends Component {
               isFetching={isFetching}
               playSong={playSong}
               addTrackToPlaylist={addTrackToPlaylist}
+              playlists={playlists}
             />
           :
             <SearchResultsPlaceholder>
@@ -104,6 +105,7 @@ export class SearchComponent extends Component {
 SearchComponent.propTypes = {
   errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   results: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  playlists: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
   input: PropTypes.string,
   inputChange: PropTypes.func,
@@ -116,6 +118,7 @@ SearchComponent.defaultProps = {
   errors: [],
   isFetching: false,
   results: [],
+  playlists: {},
   input: '',
   inputChange: () => {},
   search: () => {},
@@ -123,11 +126,12 @@ SearchComponent.defaultProps = {
   addTrackToPlaylist: () => {},
 };
 
-const mapStateToProps = ({ search }) => ({
+const mapStateToProps = ({ search, user }) => ({
   errors: search.errors,
   isFetching: search.isFetching,
   results: search.results,
   input: search.input,
+  playlists: user.playlists.data,
 });
 
 
