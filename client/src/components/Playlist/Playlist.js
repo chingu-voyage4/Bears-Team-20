@@ -34,6 +34,7 @@ const PlaylistHead = styled.div`
 
 const Title = styled.div`
   display: flex;
+  flex: 1;
   justify-content: center;
   align-content: center;
   text-align: center;
@@ -46,13 +47,6 @@ const Title = styled.div`
   &:hover {
     background-color: ${deepPurple[300]}
   }
-`;
-
-const IconButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row ;
-  flex: 1;
-  justify-content: center;
 `;
 
 export default function Playlist(props) {
@@ -70,13 +64,6 @@ export default function Playlist(props) {
           {...dropProvided.droppableProps}
         >
           <PlaylistHead>
-            <Title>{playlist.name}</Title>
-            <IconButton onClick={props.deletePlaylist}>
-              <Delete />
-            </IconButton>
-          </PlaylistHead>
-
-          <IconButtonContainer>
             <IconButton onClick={() => {
               props.setCurrentPlaylist();
               props.setRedirect();
@@ -84,7 +71,11 @@ export default function Playlist(props) {
             >
               <PlayArrow />
             </IconButton>
-          </IconButtonContainer>
+            <Title>{playlist.name}</Title>
+            <IconButton onClick={props.deletePlaylist}>
+              <Delete />
+            </IconButton>
+          </PlaylistHead>
 
           <FormControlLabel
             control={
