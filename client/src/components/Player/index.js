@@ -28,7 +28,7 @@ const PlayerContainer = styled.div`
   left: 0;
   right: 0;
 `;
-
+/*
 const PlayerOverlay = styled.div`
   z-index: 999;
   position: absolute;
@@ -41,7 +41,7 @@ const PlayerOverlay = styled.div`
   background-color: rgba(255,255,255,0.5);
 
   display: ${props => (props.isShowing ? 'none' : 'block')};
-`;
+`; */
 
 const PlayerRowContainer = styled.div`
   display: flex;
@@ -117,7 +117,7 @@ class PlayerComponent extends React.Component {
 
   render() {
     const {
-      setReady, isReady,
+      setReady,
       togglePlayPause, isPlaying, setPlay, setPause,
       setVolume, volume,
       toggleMute, isMuted,
@@ -131,7 +131,7 @@ class PlayerComponent extends React.Component {
     return (
       <PlayerContainer>
 
-        <PlayerOverlay isShowing={Boolean(isReady) && Boolean(currentSong.link)} />
+        {/* <PlayerOverlay isShowing={Boolean(isReady) && Boolean(currentSong.link)} /> */}
 
         <CurrentPlaylist
           isShowing={plShowing}
@@ -263,7 +263,6 @@ PlayerComponent.propTypes = {
   setCurrentSong: PropTypes.func,
   setPlaylistShow: PropTypes.func,
 
-  isReady: PropTypes.bool,
   isPlaying: PropTypes.bool,
   volume: PropTypes.number,
   isMuted: PropTypes.bool,
@@ -289,7 +288,6 @@ PlayerComponent.defaultProps = {
   setCurrentSong: () => {},
   setPlaylistShow: () => {},
 
-  isReady: false,
   isPlaying: false,
   volume: 1,
   isMuted: false,
