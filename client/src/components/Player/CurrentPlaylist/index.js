@@ -2,6 +2,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -29,6 +30,10 @@ const Title = styled.div`
   font-size: 1.1rem;
   font-weight: bold;
   overflow: hidden;
+
+
+  color: white;
+  background-color: ${deepPurple[600]};
 `;
 
 const SongContainer = styled.div`
@@ -42,6 +47,7 @@ const StyledSong = styled(Song)`
   flex: 1;
   cursor: pointer;
   user-select: none;
+  background-color: ${props => (props.active ? deepPurple[100] : 'inline')};
 
   &:hover {
     background-color: ${deepPurple[100]};
@@ -59,7 +65,9 @@ const SongArtist = styled.div`
 `;
 
 export default function CurrentPlaylist(props) {
-  const { playlist, isShowing, setSong } = props;
+  const {
+    playlist, isShowing, setSong, currentSong,
+  } = props;
 
   return (
     <CurrentPlaylistContainer isShowing={isShowing}>
@@ -68,6 +76,11 @@ export default function CurrentPlaylist(props) {
         { playlist.songs.map((songObj, i) =>
           (<StyledSong
             key={`${i}_${songObj.link}`}
+            active={
+              Boolean(songObj._id) &&
+              Boolean(currentSong._id) &&
+              songObj._id === currentSong._id
+            }
             song={songObj}
             onClick={() => setSong(songObj)}
           />)) }
@@ -90,12 +103,14 @@ function Song(props) {
 
 CurrentPlaylist.propTypes = {
   playlist: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  currentSong: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isShowing: PropTypes.bool,
   setSong: PropTypes.func,
 };
 
 CurrentPlaylist.defaultProps = {
   playlist: {},
+  currentSong: {},
   isShowing: false,
   setSong: () => {},
 };

@@ -9,7 +9,9 @@ const initialState = {
   isMuted: false,
   currentSong: {},
   currentPlaylist: {
+    _id: '1',
     name: '',
+    public: false,
     songs: [],
   },
   plShowing: false,
@@ -23,7 +25,12 @@ export default (state = initialState, action = {}) => {
     case actions.PLAYER_READY:
       return { ...state, isReady: action.isReady };
     case actions.PLAYER_PLAY_PAUSE:
-      return { ...state, isPlaying: !state.isPlaying };
+      if (Object.keys(state.currentSong).length) {
+        return { ...state, isPlaying: !state.isPlaying };
+      }
+
+      return { ...state };
+
     case actions.PLAYER_PLAY:
       return { ...state, isPlaying: true };
     case actions.PLAYER_PAUSE:

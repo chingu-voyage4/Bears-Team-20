@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, IconButton } from 'material-ui';
@@ -65,6 +66,7 @@ export default class ResultItem extends React.Component {
     super();
     this.state = { openPlaylists: null };
     this.openPlaylistsMenu = this.openPlaylistsMenu.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
   handlePlayClickGen(songObj) {
     const { playSong } = this.props;
@@ -110,8 +112,9 @@ export default class ResultItem extends React.Component {
               open={!!this.state.openPlaylists}
               onClose={this.handleClose}
             >
-              {playlists.map(playlist => (
+              {playlists.map((playlist, i) => (
                 <MenuItem
+                  key={i}
                   onClick={() => addTrackToPlaylist(result, playlist._id)}
                 >
                   {playlist.name}
