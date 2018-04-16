@@ -99,6 +99,9 @@ export default function PlaylistContainer(props) {
                       <Playlist
                         setCurrentPlaylist={() => props.setCurrentPlaylist(playlist)}
                         deletePlaylist={() => props.deletePlaylist(playlist._id)}
+                        changeName={
+                          name => props.updatePlaylistName(playlist._id, name)
+                        }
                         setRedirect={props.setRedirect}
                         playlist={playlist}
                         togglePublic={() => {

@@ -8,6 +8,7 @@ import { Delete, PlayArrow } from 'material-ui-icons';
 import { FormControlLabel } from 'material-ui/Form';
 import { deepPurple } from 'material-ui/colors';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
+import InlineEdit from 'react-edit-inline';
 import SongItem from './SongItem';
 
 const grid = 8;
@@ -33,7 +34,7 @@ const PlaylistHead = styled.div`
   flex-direction: row;
 `;
 
-const Title = styled.div`
+const Title = styled(InlineEdit)`
   display: flex;
   flex: 1;
   justify-content: center;
@@ -72,7 +73,11 @@ export default function Playlist(props) {
             >
               <PlayArrow />
             </IconButton>
-            <Title>{playlist.name}</Title>
+            <Title
+              text={playlist.name}
+              paramName="name"
+              change={data => props.changeName(data.name)}
+            />
             <IconButton onClick={props.deletePlaylist}>
               <Delete />
             </IconButton>
@@ -121,6 +126,7 @@ Playlist.propTypes = {
   deletePlaylist: PropTypes.func,
   setCurrentPlaylist: PropTypes.func,
   setRedirect: PropTypes.func,
+  changeName: PropTypes.func,
 };
 
 Playlist.defaultProps = {
@@ -129,4 +135,5 @@ Playlist.defaultProps = {
   deletePlaylist: () => {},
   setCurrentPlaylist: () => {},
   setRedirect: () => {},
+  changeName: () => {},
 };

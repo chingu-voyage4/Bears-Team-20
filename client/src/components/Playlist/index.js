@@ -134,6 +134,7 @@ export class PlaylistIndex extends React.Component {
           togglePublic={this.togglePublic}
           isFetching={isFetching}
           setRedirect={this.setRedirect}
+          updatePlaylistName={this.props.updatePlaylistName}
         />
       </DragDropContext>
     );
@@ -146,6 +147,7 @@ PlaylistIndex.propTypes = {
   addPlaylist: PropTypes.func,
   deletePlaylist: PropTypes.func,
   setCurrentPlaylist: PropTypes.func,
+  updatePlaylistName: PropTypes.func,
   playlists: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
   errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
@@ -156,6 +158,7 @@ PlaylistIndex.defaultProps = {
   addPlaylist: () => {},
   deletePlaylist: () => {},
   setCurrentPlaylist: () => {},
+  updatePlaylistName: () => {},
   playlists: [],
   isFetching: false,
   errors: [],
@@ -199,6 +202,9 @@ const mapDispatchToProps = dispatch => ({
     if (playlist.songs.length > 0) {
       dispatch(playerActions.playerPlaySong(playlist.songs[0]));
     }
+  },
+  updatePlaylistName: (playlistId, name) => {
+    dispatch(actions.updatePlaylistName(playlistId, name));
   },
 });
 

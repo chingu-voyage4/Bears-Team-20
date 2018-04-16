@@ -21,6 +21,8 @@ export const DELETE_PLAYLIST_LOCALLY = 'DELETE_PLAYLIST_LOCALLY';
 export const ADD_TRACK_LOCALLY = 'ADD_TRACK_LOCALLY';
 export const REMOVE_TRACK_LOCALLY = 'REMOVE_TRACK_LOCALLY';
 
+export const UPDATE_PLAYLIST_NAME = 'UPDATE_PLAYLIST_NAME';
+
 
 // for login or signup
 export const userLogin = user => ({
@@ -115,4 +117,10 @@ export const removeTrackFromPlaylist = (trackId, playlistId) => ({
   type: REMOVE_TRACK_LOCALLY,
   playlistId,
   trackId,
+});
+
+export const updatePlaylistName = (playlistId, name) => ({
+  type: UPDATE_PLAYLIST_NAME,
+  playlistId,
+  name,
 });

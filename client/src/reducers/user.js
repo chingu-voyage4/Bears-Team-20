@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-case-declarations */
 import * as actions from '../actions/user';
 
 /*
@@ -191,7 +192,7 @@ export default (state = initialState, action = {}) => {
             ...state.playlists.data,
             {
               // not sure what to put here, since we need an unique key each time
-              _id: String(Date.now()),
+              _id: btoa(String(Math.random())),
               name: 'new playlist',
               public: false,
               songs: [],
@@ -236,6 +237,24 @@ export default (state = initialState, action = {}) => {
               ...state.playlists.data.filter(e => e._id === action.playlistId)[0],
               songs: state.playlists.data.filter(e => e._id === action.playlistId)[0]
                 .songs.filter(s => s._id !== action.trackId),
+            },
+          ],
+        },
+      };
+
+    /** TODO: FIX. There is a BUG in this reducer */
+    case actions.UPDATE_PLAYLIST_NAME:
+      const p = state.playlists.data.find(pl => pl._id === action.playlistId);
+      if (!p) return state;
+      return {
+        ...state,
+        playlists: {
+          ...state.playlists,
+          data: [
+            ...state.playlists.data.filter(pl => pl._id !== action.playlistId),
+            ...{
+              ...p,
+              name: action.name,
             },
           ],
         },
