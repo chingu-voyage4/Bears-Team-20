@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -90,7 +91,7 @@ export default function Playlist(props) {
           />
           {playlist.songs.map((song, index) => (
             <Draggable
-              key={song._id}
+              key={`${index}_${song._id}`}
               draggableId={song._id}
               type={playlist._id}
               index={index}

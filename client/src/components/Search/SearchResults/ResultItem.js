@@ -102,6 +102,7 @@ export default class ResultItem extends React.Component {
               aria-haspopup="true"
               aria-label="Add to playlist"
               color="primary"
+              disabled={!playlists.length}
               onClick={this.openPlaylistsMenu}
             >
               <PlaylistAdd />

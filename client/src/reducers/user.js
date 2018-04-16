@@ -166,7 +166,7 @@ export default (state = initialState, action = {}) => {
         playlists: {
           ...state.playlists,
           // DISABLED NEXT LINE DUE TO BUGGED Behaviour when syncing in and updating
-          data: action.playlists,
+          // data: action.playlists,
           isFetching: false,
           errors: [],
         },

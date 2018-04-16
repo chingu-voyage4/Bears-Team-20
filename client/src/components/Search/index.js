@@ -143,7 +143,6 @@ const mapDispatchToProps = dispatch => ({
   },
   playSong: song => dispatch(playerActions.playerPlaySong(song)),
   addTrackToPlaylist: (track, playlist) => {
-    console.log('TRACK', track);
     dispatch(userActions.addTrackToPlaylist(track, playlist));
   },
 });
