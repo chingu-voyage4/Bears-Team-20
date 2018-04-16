@@ -214,11 +214,27 @@ export default (state = initialState, action = {}) => {
         playlists: {
           ...state.playlists,
           data: [
-            ...state.playlists.data.filter(e => e._id !== action.playlist),
+            ...state.playlists.data.filter(e => e._id !== action.playlistId),
             {
-              ...state.playlists.data.filter(e => e._id === action.playlist)[0],
-              songs: [...state.playlists.data.filter(e => e._id === action.playlist)[0]
+              ...state.playlists.data.filter(e => e._id === action.playlistId)[0],
+              songs: [...state.playlists.data.filter(e => e._id === action.playlistId)[0]
                 .songs.concat(action.track)],
+            },
+          ],
+        },
+      };
+
+    case actions.REMOVE_TRACK_LOCALLY:
+      return {
+        ...state,
+        playlists: {
+          ...state.playlists,
+          data: [
+            ...state.playlists.data.filter(e => e._id !== action.playlistId),
+            {
+              ...state.playlists.data.filter(e => e._id === action.playlistId)[0],
+              songs: state.playlists.data.filter(e => e._id === action.playlistId)[0]
+                .songs.filter(s => s._id !== action.trackId),
             },
           ],
         },
