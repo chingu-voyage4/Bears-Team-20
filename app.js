@@ -49,7 +49,7 @@ app.use('/api', authenticate);
 app.use('/api/playlist', require('./routes/playlist'));
 
 // Serve react app
-app.use(express.static(path.resolve(__dirname, '..', 'client', 'build')));
+app.use(express.static(path.resolve(__dirname, '.', 'client', 'build')));
 
 app.listen(port, () => {
 	console.log('Listening port ' + port);
