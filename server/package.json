@@ -8,8 +8,7 @@
     "prepush": "npx xo",
     "start": "npx babel-node app.js",
     "dev": "  npx nodemon --watch 'app.js' --exec 'clear && babel-node app.js'",
-    "test": "mocha \"./{,!(node_modules)/**}/*.test.js\"",
-    "heroku-postbuild": "cd ../client && yarn --production=false && yarn run build"
+    "test": "mocha \"./{,!(node_modules)/**}/*.test.js\""
   },
   "dependencies": {
     "async": "^2.6.0",
