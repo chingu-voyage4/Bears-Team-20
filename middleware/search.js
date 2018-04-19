@@ -146,7 +146,7 @@ async function __dailymotion(req, res, next) {
  * @param {*} next
  */
 function parallelSearch(req, res, next) {
-	const middlewares = [__youtube, __deezer, __dailymotion];
+	const middlewares = [__youtube, __dailymotion];
 	each(middlewares, (mw, cb) => {
 		mw(req, res, cb);
 	}, next);
