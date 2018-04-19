@@ -242,7 +242,6 @@ export default (state = initialState, action = {}) => {
         },
       };
 
-    /** TODO: FIX. There is a BUG in this reducer */
     case actions.UPDATE_PLAYLIST_NAME:
       const p = state.playlists.data.find(pl => pl._id === action.playlistId);
       if (!p) return state;
@@ -252,7 +251,7 @@ export default (state = initialState, action = {}) => {
           ...state.playlists,
           data: [
             ...state.playlists.data.filter(pl => pl._id !== action.playlistId),
-            ...{
+            {
               ...p,
               name: action.name,
             },
