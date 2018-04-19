@@ -60,7 +60,9 @@ const Navbar = (props) => {
       <NavEnd>
         <StyledNavLinkItem to="/">Home</StyledNavLinkItem>
         <StyledNavLinkItem to="/music">Music</StyledNavLinkItem>
-        <StyledNavLinkItem to="/playlists">Playlists</StyledNavLinkItem>
+        { user.isAuthenticated &&
+          <StyledNavLinkItem to="/playlists">Playlists</StyledNavLinkItem>
+        }
 
         <StyledNavLinkItem to={user.isAuthenticated ? '/profile' : '/login'}>
           { user.isAuthenticated ?

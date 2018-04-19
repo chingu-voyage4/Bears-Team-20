@@ -19,7 +19,7 @@ const PlayerContainer = styled.div`
   min-height: 10vh;
   flex-direction: column;
   
-  border-top: 1px solid black;
+  border-top: 1px solid rgba(0,0,0,0.4);
   background-color: white;
   padding: 0 2em;
 
@@ -28,7 +28,7 @@ const PlayerContainer = styled.div`
   left: 0;
   right: 0;
 `;
-
+/*
 const PlayerOverlay = styled.div`
   z-index: 999;
   position: absolute;
@@ -41,7 +41,7 @@ const PlayerOverlay = styled.div`
   background-color: rgba(255,255,255,0.5);
 
   display: ${props => (props.isShowing ? 'none' : 'block')};
-`;
+`; */
 
 const PlayerRowContainer = styled.div`
   display: flex;
@@ -111,13 +111,17 @@ class PlayerComponent extends React.Component {
   }
 
   handleShowPlaylist() {
-    const { setPlaylistShow, plShowing } = this.props;
-    setPlaylistShow(!plShowing);
+    const { setPlaylistShow, plShowing, currentPlaylist } = this.props;
+    if (currentPlaylist.songs.length === 0) {
+      setPlaylistShow(false);
+    } else {
+      setPlaylistShow(!plShowing);
+    }
   }
 
   render() {
     const {
-      setReady, isReady,
+      setReady,
       togglePlayPause, isPlaying, setPlay, setPause,
       setVolume, volume,
       toggleMute, isMuted,
@@ -131,11 +135,12 @@ class PlayerComponent extends React.Component {
     return (
       <PlayerContainer>
 
-        <PlayerOverlay isShowing={Boolean(isReady) && Boolean(currentSong.link)} />
+        {/* <PlayerOverlay isShowing={Boolean(isReady) && Boolean(currentSong.link)} /> */}
 
         <CurrentPlaylist
           isShowing={plShowing}
           playlist={currentPlaylist}
+          currentSong={currentSong}
           setSong={setCurrentSong}
         />
 
@@ -214,7 +219,6 @@ class PlayerComponent extends React.Component {
           onProgress={setProgress}
           onError={console.log}
           onReady={setReady}
-          onBuffer={() => console.log('BUFFER!')}
           onStart={setPlay}
           onPause={setPause}
           id="player-engine"
@@ -264,7 +268,6 @@ PlayerComponent.propTypes = {
   setCurrentSong: PropTypes.func,
   setPlaylistShow: PropTypes.func,
 
-  isReady: PropTypes.bool,
   isPlaying: PropTypes.bool,
   volume: PropTypes.number,
   isMuted: PropTypes.bool,
@@ -272,7 +275,7 @@ PlayerComponent.propTypes = {
   duration: PropTypes.number,
   progress: PropTypes.number,
   currentSong: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  currentPlaylist: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  currentPlaylist: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   plShowing: PropTypes.bool,
 };
 
@@ -290,7 +293,6 @@ PlayerComponent.defaultProps = {
   setCurrentSong: () => {},
   setPlaylistShow: () => {},
 
-  isReady: false,
   isPlaying: false,
   volume: 1,
   isMuted: false,
@@ -298,7 +300,7 @@ PlayerComponent.defaultProps = {
   duration: 0,
   progress: 0,
   currentSong: {},
-  currentPlaylist: [],
+  currentPlaylist: {},
   plShowing: false,
 };
 
@@ -327,7 +329,11 @@ const mapDispatchToProps = dispatch => ({
   setDuration: duration => dispatch(actions.playerSetDuration(duration)),
   setProgress: progressObj => dispatch(actions.playerSetProgress(progressObj.playedSeconds)),
   seekProgress: seekSeconds => dispatch(actions.playerSetProgress(seekSeconds)),
-  setCurrentSong: song => dispatch(actions.playerSetSong(song)),
+  setCurrentSong: (song) => {
+    console.log('SONGG', song);
+    dispatch(actions.playerPlaySong(song));
+    dispatch(actions.playerSetPlaylistShow(false));
+  },
   setPlaylistShow: isShowing => dispatch(actions.playerSetPlaylistShow(isShowing)),
 });
 

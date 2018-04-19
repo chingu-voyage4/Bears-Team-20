@@ -11,6 +11,18 @@ export const CHANGE_PICTURE_REQUEST = 'CHANGE_PICTURE_REQUEST';
 export const CHANGE_PICTURE_FAILED = 'CHANGE_PICTURE_FAILED';
 export const CHANGE_PICTURE_SUCCESS = 'CHANGE_PICTURE_SUCCESS';
 
+export const SET_PLAYLISTS_REQUEST = 'SET_PLAYLISTS_REQUEST';
+export const SET_PLAYLISTS_FAILED = 'SET_PLAYLISTS_FAILED';
+export const SET_PLAYLISTS_SUCCESS = 'SET_PLAYLISTS_SUCCESS';
+export const SET_PLAYLISTS_LOCALLY = 'SET_PLAYLISTS_LOCALLY';
+export const ADD_PLAYLIST_LOCALLY = 'ADD_PLAYLIST_LOCALLY';
+export const DELETE_PLAYLIST_LOCALLY = 'DELETE_PLAYLIST_LOCALLY';
+
+export const ADD_TRACK_LOCALLY = 'ADD_TRACK_LOCALLY';
+export const REMOVE_TRACK_LOCALLY = 'REMOVE_TRACK_LOCALLY';
+
+export const UPDATE_PLAYLIST_NAME = 'UPDATE_PLAYLIST_NAME';
+
 
 // for login or signup
 export const userLogin = user => ({
@@ -61,4 +73,54 @@ export const changePictureFailed = errors => ({
 export const changePictureSuccess = url => ({
   type: CHANGE_PICTURE_SUCCESS,
   url,
+});
+
+// Playlists
+
+export const addPlaylistLocally = () => ({
+  type: ADD_PLAYLIST_LOCALLY,
+});
+
+export const deletePlaylistLocally = id => ({
+  type: DELETE_PLAYLIST_LOCALLY,
+  id,
+});
+
+export const setPlaylistsLocally = playlists => ({
+  type: SET_PLAYLISTS_LOCALLY,
+  playlists,
+});
+
+export const setPlaylistsRequest = playlists => ({
+  type: SET_PLAYLISTS_REQUEST,
+  playlists,
+});
+
+export const setPlaylistsFailed = errors => ({
+  type: SET_PLAYLISTS_FAILED,
+  errors,
+});
+
+export const setPlaylistsSuccess = playlists => ({
+  type: SET_PLAYLISTS_SUCCESS,
+  playlists,
+});
+
+
+export const addTrackToPlaylist = (track, playlistId) => ({
+  type: ADD_TRACK_LOCALLY,
+  playlistId,
+  track,
+});
+
+export const removeTrackFromPlaylist = (trackId, playlistId) => ({
+  type: REMOVE_TRACK_LOCALLY,
+  playlistId,
+  trackId,
+});
+
+export const updatePlaylistName = (playlistId, name) => ({
+  type: UPDATE_PLAYLIST_NAME,
+  playlistId,
+  name,
 });

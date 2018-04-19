@@ -20,7 +20,12 @@ module.exports = function (app, passport) {
 	);
 
 	app.post('/api/auth/login', passport.authenticate('local-login'), (req, res) => {
-		res.json(req.user);
+		User.retriveFullUser(req.user._id, (err, user) => {
+			if (err) {
+				return res.sendStatus(400);
+			}
+			return res.json(user);
+		});
 	});
 
 	app.post('/api/auth/signup', passport.authenticate('local-signup'), (req, res) => {
@@ -28,7 +33,12 @@ module.exports = function (app, passport) {
 	});
 
 	app.get('/api/auth/profile', passport.myAuthenticate, (req, res) => {
-		return res.json(req.user);
+		User.retriveFullUser(req.user._id, (err, user) => {
+			if (err) {
+				return res.sendStatus(400);
+			}
+			return res.json(user);
+		});
 	});
 
 	app.post('/api/auth/profile/picture', passport.myAuthenticate, (req, res) => {

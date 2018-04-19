@@ -9,6 +9,7 @@ import SearchInput from './SearchInput';
 import SearchResults from './SearchResults';
 import * as actions from '../../actions/search';
 import * as playerActions from '../../actions/player';
+import * as userActions from '../../actions/user';
 
 
 const SearchContainer = styled.div`
@@ -65,7 +66,7 @@ export class SearchComponent extends Component {
   render() {
     const {
       errors, input, isFetching, results,
-      playSong,
+      playSong, addTrackToPlaylist, playlists,
     } = this.props;
     if (errors.length) console.log('ERRORS', errors);
 
@@ -85,6 +86,8 @@ export class SearchComponent extends Component {
               results={results}
               isFetching={isFetching}
               playSong={playSong}
+              addTrackToPlaylist={addTrackToPlaylist}
+              playlists={playlists}
             />
           :
             <SearchResultsPlaceholder>
@@ -102,28 +105,33 @@ export class SearchComponent extends Component {
 SearchComponent.propTypes = {
   errors: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   results: PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  playlists: PropTypes.array, // eslint-disable-line react/forbid-prop-types
   isFetching: PropTypes.bool,
   input: PropTypes.string,
   inputChange: PropTypes.func,
   search: PropTypes.func,
   playSong: PropTypes.func,
+  addTrackToPlaylist: PropTypes.func,
 };
 
 SearchComponent.defaultProps = {
   errors: [],
   isFetching: false,
   results: [],
+  playlists: [],
   input: '',
   inputChange: () => {},
   search: () => {},
   playSong: () => {},
+  addTrackToPlaylist: () => {},
 };
 
-const mapStateToProps = ({ search }) => ({
+const mapStateToProps = ({ search, user }) => ({
   errors: search.errors,
   isFetching: search.isFetching,
   results: search.results,
   input: search.input,
+  playlists: user.playlists.data,
 });
 
 
@@ -134,6 +142,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.searchRequest(input));
   },
   playSong: song => dispatch(playerActions.playerPlaySong(song)),
+  addTrackToPlaylist: (track, playlist) => {
+    dispatch(userActions.addTrackToPlaylist(track, playlist));
+  },
 });
 
 

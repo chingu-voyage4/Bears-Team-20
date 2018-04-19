@@ -1,5 +1,6 @@
+/* eslint-disable  no-underscore-dangle */
 import * as actions from '../actions/player';
-
+import * as userActions from '../actions/user';
 
 const initialState = {
   isReady: false,
@@ -8,7 +9,12 @@ const initialState = {
   volume: 1,
   isMuted: false,
   currentSong: {},
-  currentPlaylist: [],
+  currentPlaylist: {
+    _id: '1',
+    name: '',
+    public: false,
+    songs: [],
+  },
   plShowing: false,
   duration: 0,
   progress: 0,
@@ -20,7 +26,12 @@ export default (state = initialState, action = {}) => {
     case actions.PLAYER_READY:
       return { ...state, isReady: action.isReady };
     case actions.PLAYER_PLAY_PAUSE:
-      return { ...state, isPlaying: !state.isPlaying };
+      if (Object.keys(state.currentSong).length) {
+        return { ...state, isPlaying: !state.isPlaying };
+      }
+
+      return { ...state };
+
     case actions.PLAYER_PLAY:
       return { ...state, isPlaying: true };
     case actions.PLAYER_PAUSE:
@@ -43,6 +54,23 @@ export default (state = initialState, action = {}) => {
       return { ...state, progress: action.progress };
     case actions.PLAYER_SET_PLAYLIST_SHOW:
       return { ...state, plShowing: action.plShowing };
+    case userActions.ADD_TRACK_LOCALLY:
+      if (action.playlistId !== state.currentPlaylist._id) {
+        return state;
+      }
+      if (state.currentPlaylist.songs.find(s => s.title === action.track.title)) {
+        return state;
+      }
+      return {
+        ...state,
+        currentPlaylist: {
+          ...state.currentPlaylist,
+          songs: [
+            ...state.currentPlaylist.songs,
+            { ...action.track },
+          ],
+        },
+      };
     default: return state;
   }
 };

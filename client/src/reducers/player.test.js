@@ -42,6 +42,12 @@ describe('player reducer', () => {
     })
 
     it('should toogle isPlaying on PLAYER_PLAY_PAUSE', () => {
+        const state = {
+            ...initialState,
+            currentSong: {
+                name: "asdasd"
+            }
+        };
         const initialIsPlaying = state.isPlaying;
 
         expect(playerReducer(state, actions.playerPlayPause())).toEqual({

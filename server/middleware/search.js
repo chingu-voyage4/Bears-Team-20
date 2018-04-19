@@ -15,7 +15,7 @@ const each = require('async/each');
  * Return format:
  * {
  * 		title: String
- * 		serviceSource: String
+ * 		service: String
  * 		link: String
  * 		description: String || null
  * 		thumbnail: String || null
@@ -49,7 +49,7 @@ function __youtube(req, res, next) {
     			...res.locals.searchResults,
     			...result.items.map(e => ({
     				title: e.snippet.title,
-    				serviceSource: 'Youtube',
+    				service: 'Youtube',
     				link: 'https://www.youtube.com/watch?v=' + e.id.videoId,
     				description: e.snippet.description,
     				thumbnail: e.snippet.thumbnails.default.url
@@ -73,7 +73,7 @@ async function __deezer(req, res, next) {
 			...res.locals.searchResults,
 			...tracks.map(t => ({
 			  title: t.title,
-			  serviceSource: 'Deezer',
+			  service: 'Deezer',
 			  link: t.link,
 			  description: t.artist.name,
 			  thumbnail: t.album.cover_small
@@ -126,7 +126,7 @@ async function __dailymotion(req, res, next) {
 			...res.locals.searchResults,
 			...tracks.map(t => ({
 				title: t.title,
-				serviceSource: 'Dailymotion',
+				service: 'Dailymotion',
 				link: t.link,
 				description: t.description,
 				thumbnail: t.thumbnail_60_url

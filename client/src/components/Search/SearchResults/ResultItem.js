@@ -1,11 +1,14 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Typography, IconButton } from 'material-ui';
 import { PlaylistAdd, PlayArrow } from 'material-ui-icons';
 import styled from 'styled-components';
 import { deepPurple } from 'material-ui/colors';
+import Menu, { MenuItem } from 'material-ui/Menu';
 
 
 const ResultItemContainer = styled.div`
@@ -54,18 +57,32 @@ const StyledPlayArrow = styled(PlayArrow)`
   height: 1.5em !important;
   width: 1.5em !important;
 
-  color: ${deepPurple[900]}
+  color: ${deepPurple[900]};
 `;
 
 
 export default class ResultItem extends React.Component {
+  constructor() {
+    super();
+    this.state = { openPlaylists: null };
+    this.openPlaylistsMenu = this.openPlaylistsMenu.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
   handlePlayClickGen(songObj) {
     const { playSong } = this.props;
     return () => playSong(songObj);
   }
 
+  openPlaylistsMenu(event) {
+    this.setState({ openPlaylists: event.currentTarget });
+  }
+
+  handleClose() {
+    this.setState({ openPlaylists: null });
+  }
+
   render() {
-    const { result } = this.props;
+    const { result, addTrackToPlaylist, playlists } = this.props;
     return (
       <ResultItemContainer>
         <ResultItemDetails>
@@ -80,9 +97,31 @@ export default class ResultItem extends React.Component {
             </Typography>
           </div>
           <ResultItemControls>
-            <IconButton aria-label="Add to playlist" color="primary">
+            <IconButton
+              aria-owns={this.state.openPlaylists ? 'playlist-menu' : null}
+              aria-haspopup="true"
+              aria-label="Add to playlist"
+              color="primary"
+              disabled={!playlists.length}
+              onClick={this.openPlaylistsMenu}
+            >
               <PlaylistAdd />
             </IconButton>
+            <Menu
+              id="simple-menu"
+              anchorEl={this.state.openPlaylists}
+              open={!!this.state.openPlaylists}
+              onClose={this.handleClose}
+            >
+              {playlists.map((playlist, i) => (
+                <MenuItem
+                  key={i}
+                  onClick={() => addTrackToPlaylist(result, playlist._id)}
+                >
+                  {playlist.name}
+                </MenuItem>
+              ))}
+            </Menu>
             <IconButton
               aria-label="Play/pause"
               color="primary"
@@ -113,12 +152,14 @@ function ItemCover(props) {
 
 
 ResultItem.propTypes = {
+  addTrackToPlaylist: PropTypes.func,
   result: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   playSong: PropTypes.func,
 };
 
 ResultItem.defaultProps = {
   result: {},
+  addTrackToPlaylist: () => {},
   playSong: () => {},
 };
 
