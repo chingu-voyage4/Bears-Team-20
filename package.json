@@ -2,13 +2,14 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "precommit": "npx xo",
     "prepush": "npx xo",
-    "start": "npx babel-node app.js",
+    "start": "node app.js",
     "dev": "  npx nodemon --watch 'app.js' --exec 'clear && babel-node app.js'",
-    "test": "mocha \"./{,!(node_modules)/**}/*.test.js\""
+    "test": "mocha \"./{,!(node_modules)/**}/*.test.js\"",
+    "heroku-postbuild": "cd client && yarn --production=true && yarn run build"
   },
   "dependencies": {
     "async": "^2.6.0",
