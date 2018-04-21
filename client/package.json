@@ -1,0 +1,54 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:3000"
+    }
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "debounce": "^1.1.0",
+    "fast-deep-equal": "^1.1.0",
+    "material-ui": "^1.0.0-beta.34",
+    "material-ui-icons": "^1.0.0-beta.36",
+    "prop-types": "^15.6.1",
+    "rc-slider": "^8.6.1",
+    "react": "^16.2.0",
+    "react-beautiful-dnd": "^6.0.2",
+    "react-confirm-alert": "^2.0.2",
+    "react-dom": "^16.2.0",
+    "react-edit-inline": "https://github.com/marianoheller/ReactInlineEdit.git",
+    "react-player": "^1.2.1",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "react-select": "^1.2.1",
+    "redux": "^3.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-saga": "^0.16.0",
+    "styled-components": "^3.2.5",
+    "typeface-roboto": "^0.0.54"
+  },
+  "scripts": {
+    "lint": "node_modules/.bin/eslint src --quiet",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom --silent",
+    "eject": "react-scripts eject",
+    "precommit": "npm run lint",
+    "prepush": "npm run lint"
+  },
+  "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "eslint": "^4.18.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "husky": "^0.14.3"
+  }
+}
